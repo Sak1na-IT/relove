@@ -60,7 +60,7 @@ function TopNav({ dept, sub, pool, onPick }) {
         <button role="tab" aria-selected={!dept} className={`topcat-tab ${!dept ? 'is-on' : ''}`} onClick={() => onPick('', '')} onMouseEnter={() => enter('')}>
           Hamısı<sup>{pool.length}</sup>
         </button>
-        {DEPARTMENTS.map((d) => {
+        {DEPARTMENTS.filter((d) => count(d.id) > 0).map((d) => {
           const n = count(d.id)
           return (
             <button
