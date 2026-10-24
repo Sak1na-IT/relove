@@ -17,20 +17,20 @@ export const DISTRICTS = [
 ]
 
 export const CATEGORIES = [
-  { id: 'geyim', label: 'Geyim', short: 'Geyim', icon: 'Shirt' },
-  { id: 'ayaqqabi', label: 'Ayaqqabı', short: 'Ayaqqabı', icon: 'Footprints' },
-  { id: 'canta', label: 'Çanta', short: 'Çanta', icon: 'ShoppingBag' },
-  { id: 'ev', label: 'Ev əşyaları', short: 'Ev əşyaları', icon: 'Sofa' },
-  { id: 'elektronika', label: 'Elektronika', short: 'Elektronika', icon: 'Smartphone' },
-  { id: 'kitab', label: 'Kitab', short: 'Kitab', icon: 'BookOpen' },
-  { id: 'usaq', label: 'Uşaq', short: 'Uşaq', icon: 'Baby' },
-  { id: 'idman', label: 'İdman', short: 'İdman', icon: 'Bike' },
-  { id: 'kolleksiya', label: 'Kolleksiya', short: 'Kolleksiya', icon: 'Gem' },
-  { id: 'diger', label: 'Digər', short: 'Digər', icon: 'Ellipsis' },
+  { id: 'geyim', label: 'Geyim', short: 'Geyim', icon: 'Shirt', photo: img('1434389677669-e08b4cac3105', 240) },
+  { id: 'ayaqqabi', label: 'Ayaqqabı', short: 'Ayaqqabı', icon: 'Footprints', photo: img('1542291026-7eec264c27ff', 240) },
+  { id: 'canta', label: 'Çanta', short: 'Çanta', icon: 'ShoppingBag', photo: img('1548036328-c9fa89d128fa', 240) },
+  { id: 'ev', label: 'Ev əşyaları', short: 'Ev əşyaları', icon: 'Sofa', photo: img('1507473885765-e6ed057f782c', 240) },
+  { id: 'elektronika', label: 'Elektronika', short: 'Elektronika', icon: 'Smartphone', photo: img('1505740420928-5e560c06d30e', 240) },
+  { id: 'kitab', label: 'Kitab', short: 'Kitab', icon: 'BookOpen', photo: img('1544947950-fa07a98d237f', 240) },
+  { id: 'usaq', label: 'Uşaq', short: 'Uşaq', icon: 'Baby', photo: img('1515488042361-ee00e0ddd4e4', 240) },
+  { id: 'idman', label: 'İdman', short: 'İdman', icon: 'Bike', photo: img('1485965120184-e220f721d03e', 240) },
+  { id: 'kolleksiya', label: 'Kolleksiya', short: 'Kolleksiya', icon: 'Gem', photo: img('1526170375885-4d8ecf77b99f', 240) },
+  { id: 'diger', label: 'Digər', short: 'Digər', icon: 'Ellipsis', photo: img('1614594975525-e45190c55d0b', 240) },
 ]
 
 export const HERO_SLIDES = [
-  { image: img('1586023492125-27b2c045efd7', 1800), title: ['Əşyaların', 'ikinci həyatı.'], text: 'Sat. Dəyiş. Paylaş. Yenidən sev.' },
+  { image: img('1555041469-a586c61ea9bc', 2000), title: ['Əşyaların', 'ikinci həyatı.'], text: 'Sat. Dəyiş. Paylaş. Yenidən sev.' },
   { image: img('1490481651871-ab68de25d43d', 1800), title: ['Stilinə', 'yeni bir həyat ver.'], text: 'İkinci əl geyim, yeni hekayələr.' },
   { image: img('1513506003901-1e6a229e2d15', 1800), title: ['Evinə', 'xarakter qat.'], text: 'Hər əşyanın bir keçmişi, sənin evində gələcəyi var.' },
 ]
@@ -38,7 +38,7 @@ export const HERO_SLIDES = [
 export const HOME_COLLECTIONS = [
   { title: 'Minimalizm', image: img('1524758631624-e2822e304c36', 700), to: '/kesf?cat=ev' },
   { title: 'Vintage', image: img('1551028719-00167b16eac5', 700), to: '/kesf?q=vintage' },
-  { title: 'Rahatlıq', image: img('1555041469-a586c61ea9bc', 700), to: '/kesf?cat=ev' },
+  { title: 'Rahatlıq', image: img('1586023492125-27b2c045efd7', 700), to: '/kesf?cat=ev' },
   { title: 'Payız kolleksiyası', image: img('1591047139829-d91aecb6caea', 700), to: '/kesf?cat=geyim' },
   { title: 'Eko seçimlər', image: img('1614594975525-e45190c55d0b', 700), to: '/kesf?mode=free' },
 ]

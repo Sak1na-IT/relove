@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ArrowRight, Search, Repeat, Gift, ShieldCheck, MessageCircle, Star } from 'lucide-react'
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
-import CategoryIcon from '../components/CategoryIcon'
+import CategoryThumb from '../components/CategoryThumb'
 import Leaves from '../components/Leaves'
 import { CATEGORIES, HERO_SLIDES, HOME_COLLECTIONS, USERS, img } from '../data'
 import { useApp } from '../store'
@@ -76,9 +76,7 @@ export default function Home() {
         <div className="cat-row">
           {CATEGORIES.map((c) => (
             <Link key={c.id} to={`/kesf?cat=${c.id}`} className="cat-item">
-              <span className="cat-circle">
-                <CategoryIcon name={c.icon} />
-              </span>
+              <CategoryThumb category={c} />
               <span className="cat-label">{c.label}</span>
             </Link>
           ))}

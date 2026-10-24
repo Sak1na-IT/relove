@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
-import CategoryIcon from '../components/CategoryIcon'
+import CategoryThumb from '../components/CategoryThumb'
 import { CATEGORIES, CONDITIONS, DISTRICTS, MODES, catById } from '../data'
 import { useApp } from '../store'
 
@@ -77,9 +77,7 @@ export default function Explore() {
       <div className="cat-row cat-row-sm">
         {CATEGORIES.map((c) => (
           <button key={c.id} className={`cat-item ${cat === c.id ? 'is-on' : ''}`} onClick={() => set('cat', cat === c.id ? '' : c.id)}>
-            <span className="cat-circle">
-              <CategoryIcon name={c.icon} size={20} />
-            </span>
+            <CategoryThumb category={c} small />
             <span className="cat-label">{c.label}</span>
           </button>
         ))}
