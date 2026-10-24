@@ -102,6 +102,13 @@ export default function Product() {
               </div>
             </dl>
 
+            {item.defect && (
+              <div className="defect-box">
+                <strong>İkinci şans · {item.repair}</strong>
+                <p>{item.defect}</p>
+              </div>
+            )}
+
             {!isMine ? (
               <div className="product-ctas">
                 <button className="btn btn-primary btn-lg btn-block" onClick={primary.action}>

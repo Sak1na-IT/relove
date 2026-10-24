@@ -6,8 +6,11 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { HOME_CATEGORIES, HOME_COLLECTIONS, img } from '../data'
+import { HOME_CATEGORIES, CURATED } from '../data'
+import { CollectionCover } from './Collections'
 import { useApp } from '../store'
+
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=2400&q=80'
 
 const HERO_FEATURES = [
   { icon: Tag, label: 'Sat.' },
@@ -27,7 +30,7 @@ function Hero() {
   return (
     <section className="hero4">
       <div className="hero4-media">
-        <Img src={img('1555041469-a586c61ea9bc', 2400)} alt="Yaşıl kreslo və isti işıqlı qonaq otağı" />
+        <Img src={HERO_IMAGE} alt="Yaşıl kreslo və isti işıqlı qonaq otağı" />
       </div>
       <div className="hero4-shade" />
       <div className="container hero4-inner">
@@ -91,7 +94,7 @@ function Rail({ children }) {
 
 export default function Home() {
   const { listings, getItem } = useApp()
-  const count = (cats) => listings.filter((l) => cats.includes(l.category)).length
+  const count = (cats) => listings.filter((l) => cats.includes(l.category) && !l.modes.includes('free')).length
   const swapA = getItem('l1')
   const swapB = getItem('l4')
 
@@ -146,7 +149,7 @@ export default function Home() {
           </Link>
         </div>
         <Rail>
-          {listings.slice(0, 12).map((item) => (
+          {listings.filter((l) => !l.modes.includes('free')).slice(0, 12).map((item) => (
             <div className="rail2-item" key={item.id}>
               <ProductCard item={item} />
             </div>
@@ -190,20 +193,23 @@ export default function Home() {
       <section className="container block block-last">
         <div className="block-head">
           <h2 className="h2">Sizin üçün seçdiyimiz kolleksiyalar</h2>
-          <Link to="/secilmisler" className="link-arrow">
+          <Link to="/kolleksiyalar" className="link-arrow">
             Bütün kolleksiyalar <ArrowRight size={15} />
           </Link>
         </div>
         <div className="col-grid">
-          {HOME_COLLECTIONS.map((c) => (
-            <Link key={c.title} to={c.to} className="col-card">
-              <div className="col-card-media">
-                <Img src={c.image} alt={c.title} />
-              </div>
-              <strong>{c.title}</strong>
-              <small>{listings.filter(c.match).length} məhsul</small>
-            </Link>
-          ))}
+          {CURATED.slice(0, 6).map((c) => {
+            const items = listings.filter(c.match)
+            return (
+              <Link key={c.id} to={`/kolleksiyalar/${c.id}`} className="col-card">
+                <div className="col-card-media">
+                  <CollectionCover items={items} />
+                </div>
+                <strong>{c.title}</strong>
+                <small>{items.length} məhsul</small>
+              </Link>
+            )
+          })}
         </div>
       </section>
     </>

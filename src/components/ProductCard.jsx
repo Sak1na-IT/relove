@@ -4,7 +4,7 @@ import Img from './Img'
 import { formatPrice, likesOf } from '../data'
 import { useApp } from '../store'
 
-const BADGE = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'Pulsuz paylaşım' }
+const BADGE = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'İkinci şans' }
 
 export default function ProductCard({ item }) {
   const { favorites, toggleFavorite } = useApp()

@@ -7,10 +7,11 @@ export const img = (id, w = 900) =>
 export const MODES = {
   sale: { label: 'Satış', short: 'Satış', tone: 'sale' },
   swap: { label: 'Dəyiş-düyüş', short: 'Dəyiş', tone: 'swap' },
-  free: { label: 'Pulsuz', short: 'Hədiyyə', tone: 'free' },
+  free: { label: 'İkinci şans', short: 'İkinci şans', tone: 'free' },
 }
 
 export const CONDITIONS = ['Yeni kimi', 'Çox yaxşı', 'Yaxşı', 'İstifadə olunub']
+export const REPAIR_LEVELS = ['Kiçik təmir', 'Ciddi təmir', 'Hissələr üçün']
 
 export const DISTRICTS = [
   'Nəsimi', 'Yasamal', 'Nərimanov', 'Səbail', 'Xətai', 'Binəqədi', 'Nizami', 'Xəzər',
@@ -46,14 +47,6 @@ export const HOME_CATEGORIES = [
   { id: 'ayaqqabi', label: 'Ayaqqabı', photo: img('1542291026-7eec264c27ff', 600), cats: ['ayaqqabi'] },
 ]
 
-export const HOME_COLLECTIONS = [
-  { title: 'Minimalist ev', image: img('1524758631624-e2822e304c36', 700), to: '/kesf?cat=ev', match: (l) => l.category === 'ev' },
-  { title: 'Vintage tapıntılar', image: img('1526170375885-4d8ecf77b99f', 700), to: '/kesf?q=vintage', match: (l) => /vintage|retro/i.test(l.title) },
-  { title: 'Payız kolleksiyası', image: img('1591047139829-d91aecb6caea', 700), to: '/kesf?cat=geyim', match: (l) => l.category === 'geyim' },
-  { title: 'Eko seçimlər', image: img('1614594975525-e45190c55d0b', 700), to: '/kesf?mode=free', match: (l) => l.modes.includes('free') },
-  { title: '50 AZN-dən aşağı', image: img('1542291026-7eec264c27ff', 700), to: '/kesf?price=0-50', match: (l) => l.price <= 50 },
-  { title: 'Kitab həvəskarları', image: img('1512820790803-83ca734da794', 700), to: '/kesf?cat=kitab', match: (l) => l.category === 'kitab' },
-]
 
 export const catById = (id) => CATEGORIES.find((c) => c.id === id)
 
@@ -111,10 +104,10 @@ export const LISTINGS = [
     wants: ['ev', 'kitab'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
   },
   {
-    id: 'l6', title: '12 kitablıq klassika kolleksiyası', category: 'kitab', price: 0, condition: 'Yaxşı',
-    district: 'Nəsimi', modes: ['free'], seller: 'u2', posted: '1 saat əvvəl', aspect: 'tall',
+    id: 'l6', title: '12 kitablıq klassika kolleksiyası', category: 'kitab', price: 15, condition: 'Yaxşı',
+    district: 'Nəsimi', modes: ['sale'], seller: 'u2', posted: '1 saat əvvəl', aspect: 'tall',
     images: [img('1544947950-fa07a98d237f'), img('1532012197267-da84d127e765')],
-    description: 'Dostoyevski, Tolstoy, Sabahattin Əli və başqaları. Pulsuz — sadəcə yaxşı oxucuya getsin.',
+    description: 'Dostoyevski, Tolstoy, Sabahattin Əli və başqaları. Simvolik qiymətə — sadəcə yaxşı oxucuya getsin.',
     story: 'Bu kitabları universitet illərində almışam. İndi kitabxanamı yeniləyirəm.',
     wants: [], wantsText: [], delivery: ['meet'],
   },
@@ -147,8 +140,8 @@ export const LISTINGS = [
     wants: ['elektronika', 'idman'], wantsText: ['Elektrik skuter', 'Qulaqlıq'], delivery: ['meet'],
   },
   {
-    id: 'l11', title: 'Uşaq taxta oyuncaq dəsti', category: 'usaq', price: 0, condition: 'Çox yaxşı',
-    district: 'Yasamal', modes: ['free'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'square',
+    id: 'l11', title: 'Uşaq taxta oyuncaq dəsti', category: 'usaq', price: 20, condition: 'Çox yaxşı',
+    district: 'Yasamal', modes: ['sale'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'square',
     images: [img('1515488042361-ee00e0ddd4e4'), img('1558060370-d644479cb6f7')],
     description: 'Ekoloji taxtadan, 20+ hissə. Uşaqlar böyüdü — başqa balaca əllərə getsin.',
     wants: [], wantsText: [], delivery: ['meet'],
@@ -168,8 +161,8 @@ export const LISTINGS = [
     wants: ['geyim'], wantsText: ['Aksesuarlar'], delivery: ['meet', 'courier'],
   },
   {
-    id: 'l14', title: 'Monstera bitkisi və saksı', category: 'ev', price: 0, condition: 'Yeni kimi',
-    district: 'Nizami', modes: ['free'], seller: 'u5', posted: 'Bu gün', aspect: 'tall',
+    id: 'l14', title: 'Monstera bitkisi və saksı', category: 'ev', price: 25, condition: 'Yeni kimi',
+    district: 'Nizami', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'tall',
     images: [img('1614594975525-e45190c55d0b'), img('1485955900006-10f4d324d411')],
     description: 'Çox böyüdü, evə sığmır. Qayğı ilə baxacaq birini axtarır.',
     wants: [], wantsText: [], delivery: ['meet'],
@@ -271,3 +264,183 @@ export const REVIEWS = [
 export const likesOf = (id) => ([...id].reduce((a, c) => a + c.charCodeAt(0), 0) * 7) % 140 + 12
 
 export const formatPrice = (p) => (p === 0 ? 'Pulsuz' : `${p.toLocaleString('en-US').replace(/,/g, ' ')} AZN`)
+
+
+/* =========================================================
+   Kateqoriya iyerarxiyası (mega-menyu üçün)
+   ========================================================= */
+export const DEPARTMENTS = [
+  {
+    id: 'qadin', label: 'Qadın', icon: 'User',
+    groups: [
+      { title: 'Geyim', cat: 'geyim', items: ['Palto və gödəkçə', 'Köynək və bluz', 'Ətək və şalvar', 'Trikotaj'] },
+      { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Çəkmə', 'Klassik ayaqqabı'] },
+      { title: 'Çanta və aksesuar', cat: 'canta', items: ['Əl çantası', 'Sırt çantası', 'Şərf', 'Saat'] },
+    ],
+  },
+  {
+    id: 'kisi', label: 'Kişi', icon: 'UserRound',
+    groups: [
+      { title: 'Geyim', cat: 'geyim', items: ['Gödəkçə', 'Köynək', 'Şalvar'] },
+      { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Klassik ayaqqabı'] },
+      { title: 'Aksesuar', cat: 'canta', items: ['Saat', 'Çanta', 'Kəmər'] },
+    ],
+  },
+  {
+    id: 'usaq', label: 'Uşaq', icon: 'Baby',
+    groups: [
+      { title: 'Oyuncaqlar', cat: 'usaq', items: ['Taxta oyuncaq', 'Konstruktor', 'Yumşaq oyuncaq'] },
+      { title: 'Uşaq geyimi', cat: 'usaq', items: ['0–2 yaş', '3–7 yaş', '8+ yaş'] },
+      { title: 'Uşaq kitabları', cat: 'kitab', items: ['Nağıllar', 'Təhsil kitabları'] },
+    ],
+  },
+  {
+    id: 'ev', label: 'Ev və yaşam', icon: 'Sofa',
+    groups: [
+      { title: 'Mebel', cat: 'ev', items: ['Kreslo', 'Stul', 'Stol', 'Rəf'] },
+      { title: 'Dekor', cat: 'ev', items: ['Vaza', 'Güzgü', 'Bitki', 'Tablo'] },
+      { title: 'İşıqlandırma', cat: 'ev', items: ['Masa lampası', 'Döşəmə lampası'] },
+    ],
+  },
+  {
+    id: 'elektronika', label: 'Elektronika', icon: 'Smartphone',
+    groups: [
+      { title: 'Səs', cat: 'elektronika', items: ['Qulaqlıq', 'Kolonka'] },
+      { title: 'Foto və video', cat: 'elektronika', items: ['Fotoaparat', 'Obyektiv'] },
+      { title: 'Kompüter və telefon', cat: 'elektronika', items: ['Noutbuk', 'Planşet', 'Ağıllı saat'] },
+    ],
+  },
+  {
+    id: 'hobbi', label: 'İdman və hobbi', icon: 'Bike',
+    groups: [
+      { title: 'İdman', cat: 'idman', items: ['Velosiped', 'Fitnes'] },
+      { title: 'Musiqi', cat: 'idman', items: ['Gitara', 'Klavişli alətlər'] },
+      { title: 'Kolleksiya', cat: 'kolleksiya', items: ['Retro fotoaparat', 'Vinil', 'Köhnə saat'] },
+    ],
+  },
+  {
+    id: 'kitab', label: 'Kitablar', icon: 'BookOpen',
+    groups: [
+      { title: 'Bədii ədəbiyyat', cat: 'kitab', items: ['Klassika', 'Roman', 'Poeziya'] },
+      { title: 'Albom və incəsənət', cat: 'kitab', items: ['Foto albom', 'İncəsənət'] },
+    ],
+  },
+]
+
+export const deptById = (id) => DEPARTMENTS.find((d) => d.id === id)
+
+// hər elanın bölməsi və alt-kateqoriyası
+const META = {
+  l1: ['elektronika', 'Fotoaparat'], l2: ['kisi', 'Gödəkçə'], l3: ['ev', 'Vaza'], l4: ['elektronika', 'Qulaqlıq'],
+  l5: ['ev', 'Kreslo'], l6: ['kitab', 'Klassika'], l7: ['kisi', 'Krossovka'], l8: ['hobbi', 'Gitara'],
+  l9: ['hobbi', 'Retro fotoaparat'], l10: ['hobbi', 'Velosiped'], l11: ['usaq', 'Taxta oyuncaq'],
+  l12: ['elektronika', 'Noutbuk'], l13: ['qadin', 'Köynək və bluz'], l14: ['ev', 'Bitki'],
+  l15: ['ev', 'Masa lampası'], l16: ['elektronika', 'Ağıllı saat'], l17: ['qadin', 'Əl çantası'],
+  l18: ['qadin', 'Palto və gödəkçə'], m1: ['elektronika', 'Qulaqlıq'], m2: ['kitab', 'Foto albom'], m3: ['ev', 'Güzgü'],
+}
+
+/* =========================================================
+   İkinci şans — qüsurlu, amma atılmağa qıyılmayan əşyalar
+   ========================================================= */
+export const SECOND_CHANCE = [
+  {
+    id: 's1', title: 'Yun şərf — kənarı sökülüb', category: 'canta', price: 0, condition: 'Təmir tələb edir',
+    district: 'Nəsimi', modes: ['free'], seller: 'u2', posted: 'Bu gün', aspect: 'square', repair: 'Kiçik təmir',
+    defect: 'Bir kənarında 5 sm-lik sökülmə var, qalan hissəsi tam salamatdır.',
+    images: [img('1520903920243-00d872a2d1c9')],
+    description: 'Nənəmin toxuduğu şərfdir. Atmağa qıymadım — toxumağı bacaran biri bir axşama düzəldər.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+  {
+    id: 's2', title: 'Taxta stul — ayağı laxlayır', category: 'ev', price: 0, condition: 'Təmir tələb edir',
+    district: 'Yasamal', modes: ['free'], seller: 'u4', posted: 'Dünən', aspect: 'square', repair: 'Kiçik təmir',
+    defect: 'Arxa sol ayağın birləşməsi boşalıb, yapışqan və sıxacla düzəlir.',
+    images: [img('1503602642458-232111445657')],
+    description: 'Möhkəm palıd taxtadır. Bir az yapışqan və səbrlə yenidən illərlə xidmət edər.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+  {
+    id: 's3', title: 'Qulaqlıq — sol tərəf işləmir', category: 'elektronika', price: 5, condition: 'Təmir tələb edir',
+    district: 'Xətai', modes: ['free'], seller: 'u3', posted: '3 saat əvvəl', aspect: 'square', repair: 'Ciddi təmir',
+    defect: 'Sol dinamikdən səs gəlmir, ehtimal ki kabel qırılıb. Yastıqları təzədir.',
+    images: [img('1505740420928-5e560c06d30e')],
+    description: 'Elektronika ilə məşğul olan biri üçün yaxşı layihə və ya ehtiyat hissə.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 's4', title: 'Masa lampası — kabeli köhnəlib', category: 'ev', price: 0, condition: 'Təmir tələb edir',
+    district: 'Səbail', modes: ['free'], seller: 'u4', posted: '2 gün əvvəl', aspect: 'square', repair: 'Kiçik təmir',
+    defect: 'Kabelin izolyasiyası çatlayıb — yeni kabel və fiş lazımdır. Gövdə salamatdır.',
+    images: [img('1507473885765-e6ed057f782c')],
+    description: 'Dizaynı çox gözəldir, sadəcə təhlükəsiz istifadə üçün kabeli dəyişmək lazımdır.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+  {
+    id: 's5', title: 'Krossovka — altı yeyilib', category: 'ayaqqabi', price: 0, condition: 'Təmir tələb edir',
+    district: 'Binəqədi', modes: ['free'], seller: 'u5', posted: 'Bu gün', aspect: 'square', repair: 'Ciddi təmir',
+    defect: 'Daban hissəsi yeyilib, üst hissə yaxşı vəziyyətdədir. Ayaqqabı ustası üçün uyğundur.',
+    images: [img('1542291026-7eec264c27ff')],
+    description: '42 ölçü. Yeni altlıq qoyulsa, hələ çox gəzər.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+  {
+    id: 's6', title: 'Plyonka fotoaparatı — hissələr üçün', category: 'kolleksiya', price: 10, condition: 'Hissələr üçün',
+    district: 'Nərimanov', modes: ['free'], seller: 'u1', posted: '4 gün əvvəl', aspect: 'square', repair: 'Hissələr üçün',
+    defect: 'Çəkmə mexanizmi ilişib. Obyektiv və gövdə ehtiyat hissə kimi istifadə oluna bilər.',
+    images: [img('1526170375885-4d8ecf77b99f')],
+    description: 'Kolleksiyaçı və ya təmirçi üçün — simvolik qiymətə.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 's7', title: 'Ağıllı saat — ekranı çatlayıb', category: 'elektronika', price: 10, condition: 'Təmir tələb edir',
+    district: 'Nizami', modes: ['free'], seller: 'u3', posted: 'Dünən', aspect: 'square', repair: 'Ciddi təmir',
+    defect: 'Ekran şüşəsi çatlayıb, toxunma işləyir. Batareya yaxşı saxlayır.',
+    images: [img('1523275335684-37898b6baf30')],
+    description: 'Ekran şüşəsini dəyişsəniz, tam işlək saat olacaq.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+  {
+    id: 's8', title: 'Dəri gödəkçə — astarı cırılıb', category: 'geyim', price: 0, condition: 'Təmir tələb edir',
+    district: 'Yasamal', modes: ['free'], seller: 'u2', posted: '5 saat əvvəl', aspect: 'square', repair: 'Kiçik təmir',
+    defect: 'İç astarı qolun altında cırılıb, dəri hissəsi salamatdır. Dərzi 1 saata düzəldər.',
+    images: [img('1551028719-00167b16eac5')],
+    description: 'M ölçü. Mənə artıq kiçikdir, amma atmaq olmaz.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+]
+
+const SC_META = {
+  s1: ['qadin', 'Şərf'], s2: ['ev', 'Stul'], s3: ['elektronika', 'Qulaqlıq'], s4: ['ev', 'Masa lampası'],
+  s5: ['kisi', 'Krossovka'], s6: ['hobbi', 'Retro fotoaparat'], s7: ['elektronika', 'Ağıllı saat'], s8: ['kisi', 'Gödəkçə'],
+}
+
+;[...LISTINGS, ...MY_ITEMS, ...SECOND_CHANCE].forEach((l) => {
+  const m = META[l.id] || SC_META[l.id]
+  if (m) {
+    l.dept = m[0]
+    l.sub = m[1]
+  }
+})
+LISTINGS.push(...SECOND_CHANCE)
+
+export const isSecondChance = (l) => l.modes.includes('free')
+
+/* =========================================================
+   Seçilmiş kolleksiyalar (redaksiya seçimi)
+   ========================================================= */
+export const CURATED = [
+  { id: 'minimalist-ev', title: 'Minimalist ev', text: 'Sadə xətlər, təbii materiallar, sakit rənglər.', match: (l) => l.category === 'ev' && !isSecondChance(l) },
+  { id: 'vintage', title: 'Vintage tapıntılar', text: 'Keçmişin ruhunu daşıyan, bu gün də gözəl olan əşyalar.', match: (l) => /vintage|retro|plyonka|mid-century/i.test(l.title) && !isSecondChance(l) },
+  { id: 'payiz', title: 'Payız qarderobu', text: 'Palto, gödəkçə və isti parçalar — yeni mövsümə hazırlıq.', match: (l) => ['geyim', 'canta'].includes(l.category) && !isSecondChance(l) },
+  { id: 'ucuz', title: '50 AZN-dən aşağı', text: 'Kiçik büdcə, böyük sevinc.', match: (l) => l.price > 0 && l.price <= 50 },
+  { id: 'kitab', title: 'Kitab həvəskarları', text: 'Rəflərdən rəflərə keçən hekayələr.', match: (l) => l.category === 'kitab' },
+  { id: 'texnologiya', title: 'Texnologiya sevənlər', text: 'Yaxşı işləyən, yarı qiymətə texnika.', match: (l) => l.category === 'elektronika' && !isSecondChance(l) },
+  { id: 'telebe', title: 'Tələbə evi üçün', text: 'İlk ev üçün lazım olan hər şey, sərfəli qiymətə.', match: (l) => ['ev', 'kitab'].includes(l.category) && l.price <= 100 && !isSecondChance(l) },
+  { id: 'seyahet', title: 'Səyahət yoldaşları', text: 'Fotoaparat, çanta, qulaqlıq — yola çıxmağa hazır.', match: (l) => ['Fotoaparat', 'Qulaqlıq', 'Əl çantası', 'Retro fotoaparat'].includes(l.sub) && !isSecondChance(l) },
+  { id: 'aktiv', title: 'Aktiv həyat', text: 'Velosiped, musiqi və hobbi üçün.', match: (l) => ['idman'].includes(l.category) },
+  { id: 'usaq', title: 'Kiçiklər üçün', text: 'Uşaqlar tez böyüyür — əşyalar isə yaxşı qalır.', match: (l) => l.category === 'usaq' || l.dept === 'usaq' },
+  { id: 'deyis', title: 'Dəyişməyə hazır', text: 'Sahibləri pul əvəzinə başqa əşya qəbul edir.', match: (l) => l.modes.includes('swap') },
+  { id: 'ikinci-sans', title: 'Düzəlt və yaşat', text: 'Bir az əl işi ilə yenidən həyata qayıdan əşyalar.', match: (l) => isSecondChance(l) },
+]
+
+export const curatedById = (id) => CURATED.find((c) => c.id === id)

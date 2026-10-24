@@ -13,6 +13,8 @@ import Profile from './pages/Profile'
 import Favorites from './pages/Favorites'
 import Messages from './pages/Messages'
 import NotFound from './pages/NotFound'
+import SecondChance from './pages/SecondChance'
+import Collections, { CollectionDetail } from './pages/Collections'
 
 export default function App() {
   const location = useLocation()
@@ -35,6 +37,9 @@ export default function App() {
           <Route path="/paylas" element={<Share />} />
           <Route path="/profil" element={<Profile />} />
           <Route path="/secilmisler" element={<Favorites />} />
+          <Route path="/ikinci-sans" element={<SecondChance />} />
+          <Route path="/kolleksiyalar" element={<Collections />} />
+          <Route path="/kolleksiyalar/:id" element={<CollectionDetail />} />
           <Route path="/mesajlar" element={<Messages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

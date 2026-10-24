@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 import Dropdown from '../components/Dropdown'
-import { CATEGORIES, CONDITIONS, DISTRICTS, catById } from '../data'
+import { CATEGORIES, CONDITIONS, DISTRICTS, catById, deptById } from '../data'
 import { useApp } from '../store'
 
 const SORTS = [
@@ -16,7 +16,7 @@ const PRICES = [
   { value: '50-200', label: '50–200 AZN' },
   { value: '200-', label: '200 AZN-dən çox' },
 ]
-const MODE_LABELS = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'Pulsuz paylaşım' }
+const MODE_LABELS = { sale: 'Satış', swap: 'Dəyiş-düyüş' }
 
 export default function Explore() {
   const { listings } = useApp()
@@ -29,6 +29,8 @@ export default function Explore() {
   const district = params.get('district') || ''
   const price = params.get('price') || ''
   const sort = params.get('sort') || 'new'
+  const dept = params.get('dept') || ''
+  const sub = params.get('sub') || ''
 
   const set = (key, value) => {
     const next = new URLSearchParams(params)
@@ -40,6 +42,9 @@ export default function Explore() {
   const results = useMemo(() => {
     const [min, max] = price ? price.split('-').map((n) => (n === '' ? null : Number(n))) : [null, null]
     let r = listings.filter((l) => {
+      if (l.modes.includes('free')) return false
+      if (dept && l.dept !== dept) return false
+      if (sub && l.sub !== sub) return false
       if (q && !`${l.title} ${l.description}`.toLowerCase().includes(q.toLowerCase())) return false
       if (cat && l.category !== cat) return false
       if (mode && !l.modes.includes(mode)) return false
@@ -52,14 +57,32 @@ export default function Explore() {
     if (sort === 'low') r = [...r].sort((a, b) => a.price - b.price)
     if (sort === 'high') r = [...r].sort((a, b) => b.price - a.price)
     return r
-  }, [listings, q, cat, mode, cond, district, price, sort])
+  }, [listings, q, cat, mode, cond, district, price, sort, dept, sub])
 
-  const hasFilters = [q, cat, mode, cond, district, price].some(Boolean)
-  const title = cat ? catById(cat)?.label : mode ? MODE_LABELS[mode] : 'Kəşf et'
+  const hasFilters = [q, cat, mode, cond, district, price, dept, sub].some(Boolean)
+  const deptLabel = dept ? deptById(dept)?.label : ''
+  const title = sub || (cat ? catById(cat)?.label : deptLabel || (mode ? MODE_LABELS[mode] : 'Kəşf et'))
 
   return (
     <div className="container explore">
       <header className="explore-head">
+        {(deptLabel || sub) && (
+          <nav className="crumbs2" aria-label="Yol">
+            <button onClick={() => setParams({}, { replace: true })}>Kəşf et</button>
+            {deptLabel && (
+              <>
+                <span>/</span>
+                <button onClick={() => setParams({ dept }, { replace: true })}>{deptLabel}</button>
+              </>
+            )}
+            {sub && (
+              <>
+                <span>/</span>
+                <b>{sub}</b>
+              </>
+            )}
+          </nav>
+        )}
         <div className="explore-title-row">
           <h1 className="page-title">{title}</h1>
           <span className="explore-count">{results.length} elan</span>

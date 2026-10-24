@@ -25,7 +25,8 @@ export default function Footer() {
               <Link to="/">Ana səhifə</Link>
               <Link to="/kesf">Kəşf et</Link>
               <Link to="/deyis">Dəyiş-düyüş</Link>
-              <Link to="/kesf?mode=free">Pulsuz paylaşım</Link>
+              <Link to="/ikinci-sans">İkinci şans</Link>
+              <Link to="/kolleksiyalar">Kolleksiyalar</Link>
             </div>
             <div>
               <h4>İstifadəçi üçün</h4>

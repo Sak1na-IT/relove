@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ImagePlus, X, Star, Tag, Repeat, Gift, Check, ArrowLeft, ArrowRight, Handshake, Truck, MapPin } from 'lucide-react'
 import Img from '../components/Img'
 import ModeBadge from '../components/ModeBadge'
-import { CATEGORIES, CONDITIONS, DISTRICTS, formatPrice } from '../data'
+import { CATEGORIES, CONDITIONS, DISTRICTS, REPAIR_LEVELS, formatPrice } from '../data'
 import { useApp } from '../store'
 
 const STEPS = ['Şəkillər', 'Məlumat', 'Paylaşım', 'Təhvil', 'Önbaxış']
@@ -11,18 +11,20 @@ const STEPS = ['Şəkillər', 'Məlumat', 'Paylaşım', 'Təhvil', 'Önbaxış']
 const MODE_CARDS = [
   { id: 'sale', icon: Tag, title: 'Satış', text: 'Əşyamı satmaq istəyirəm' },
   { id: 'swap', icon: Repeat, title: 'Dəyiş-düyüş', text: 'Başqa əşya ilə dəyişmək istəyirəm' },
-  { id: 'free', icon: Gift, title: 'Pulsuz paylaşım', text: 'Kiməsə hədiyyə etmək istəyirəm' },
+  { id: 'free', icon: Gift, title: 'İkinci şans', text: 'Qüsurludur, atmaq əvəzinə düzəldə bilən birinə vermək istəyirəm' },
 ]
 
 export default function Share() {
   const navigate = useNavigate()
   const { addListing, notify } = useApp()
   const fileRef = useRef(null)
+  const [search] = useSearchParams()
   const [step, setStep] = useState(0)
   const [photos, setPhotos] = useState([])
   const [form, setForm] = useState({
     title: '', category: '', condition: '', description: '', story: '', price: '',
-    modes: ['sale'], wantsText: '', district: 'Yasamal', delivery: ['meet'],
+    modes: [search.get('mode') === 'free' ? 'free' : 'sale'], wantsText: '', district: 'Yasamal', delivery: ['meet'],
+    defect: '', repair: '',
   })
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }))
@@ -50,7 +52,7 @@ export default function Share() {
   const valid = [
     photos.length > 0,
     form.title.trim() && form.category && form.condition,
-    form.modes.length > 0 && (isFree || Number(form.price) > 0),
+    form.modes.length > 0 && (isFree ? form.defect.trim() && form.repair : Number(form.price) > 0),
     form.district && form.delivery.length > 0,
     true,
   ]
@@ -59,8 +61,10 @@ export default function Share() {
     id: `n${Date.now()}`,
     title: form.title || 'Əşyanın adı',
     category: form.category || 'diger',
-    price: isFree ? 0 : Number(form.price) || 0,
-    condition: form.condition || 'Yaxşı',
+    price: isFree ? Number(form.price) || 0 : Number(form.price) || 0,
+    condition: isFree ? 'Təmir tələb edir' : form.condition || 'Yaxşı',
+    defect: isFree ? form.defect.trim() : undefined,
+    repair: isFree ? form.repair : undefined,
     district: form.district,
     modes: form.modes,
     seller: 'me',
@@ -77,7 +81,7 @@ export default function Share() {
   const publish = () => {
     addListing(preview)
     notify('Elanın dərc edildi! ✦', 'lime')
-    navigate(`/elan/${preview.id}`)
+    navigate(isFree ? '/ikinci-sans' : `/elan/${preview.id}`)
   }
 
   return (
@@ -194,9 +198,31 @@ export default function Share() {
             <p className="hint">Satış və dəyiş-düyüşü eyni anda seçə bilərsən.</p>
 
             <div className="form-grid">
+              {isFree && (
+                <>
+                  <label className="field span-2">
+                    <span>Qüsuru nədir?</span>
+                    <textarea rows={2} value={form.defect} onChange={(e) => update('defect', e.target.value)} placeholder="Məsələn: kənarı 5 sm sökülüb, qalan hissəsi salamatdır" />
+                  </label>
+                  <div className="field span-2">
+                    <span>Təmir səviyyəsi</span>
+                    <div className="chip-wrap">
+                      {REPAIR_LEVELS.map((r) => (
+                        <button key={r} type="button" className={`chip ${form.repair === r ? 'is-on' : ''}`} onClick={() => update('repair', r)}>
+                          {r}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <label className="field">
+                    <span>Simvolik qiymət (AZN, istəyə bağlı)</span>
+                    <input type="number" min="0" value={form.price} onChange={(e) => update('price', e.target.value)} placeholder="Boş qalsa — pulsuz" />
+                  </label>
+                </>
+              )}
               {!isFree && (
                 <label className="field">
-                  <span>Qiymət (₼)</span>
+                  <span>Qiymət (AZN)</span>
                   <input type="number" min="1" value={form.price} onChange={(e) => update('price', e.target.value)} placeholder="Məsələn: 45" />
                 </label>
               )}
@@ -266,7 +292,7 @@ export default function Share() {
               <ul className="check-list">
                 <li><Check size={15} /> {photos.length} şəkil</li>
                 <li><Check size={15} /> {CATEGORIES.find((c) => c.id === preview.category)?.label}</li>
-                <li><Check size={15} /> {preview.modes.map((m) => ({ sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'Pulsuz' })[m]).join(' + ')}</li>
+                <li><Check size={15} /> {preview.modes.map((m) => ({ sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'İkinci şans' })[m]).join(' + ')}</li>
               </ul>
             </div>
           </div>
