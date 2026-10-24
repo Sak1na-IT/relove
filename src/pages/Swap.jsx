@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Repeat, Plus, Clock, MapPin, Heart, Check, Sparkles } from 'lucide-react'
+import { Repeat, Plus, Clock, MapPin, Heart, Check } from 'lucide-react'
 import Img from '../components/Img'
 import SwapModal from '../components/SwapModal'
 import { USERS, formatPrice } from '../data'
@@ -91,7 +91,6 @@ export default function Swap() {
       <section className="container swap3-intro">
         <div className="swap3-intro-text">
           <h1 className="page-title">Dəyiş-düyüş</h1>
-          <p className="page-lead">Əşyanı ver, əvəzində ehtiyacın olanı al — pul xərcləmədən.</p>
         </div>
         <Link to="/paylas?mode=swap" className="btn btn-primary btn-lg">
           <Plus size={18} /> Dəyiş elanı yerləşdir
@@ -111,15 +110,6 @@ export default function Swap() {
 
         {tab === 'all' && (
           <>
-            {matches.length > 0 && (
-              <button className="match-hint" onClick={() => setTab('match')}>
-                <Sparkles size={16} />
-                <span>
-                  Sənin əşyalarına uyğun <b>{matches.length} təklif</b> tapdıq
-                </span>
-                <em>Bax</em>
-              </button>
-            )}
             <CategoryBrowser
               pool={open}
               renderItem={(item) => <SwapCard key={item.id} item={item} onOffer={setTarget} />}
