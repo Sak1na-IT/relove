@@ -36,15 +36,6 @@ const SORTS = [
   { value: 'likes', label: 'Ən çox bəyənilən' },
 ]
 
-const POPULAR_SUBS = [
-  ['qadin', 'Palto və gödəkçə'],
-  ['ev', 'Kreslo'],
-  ['elektronika', 'Qulaqlıq'],
-  ['kisi', 'Krossovka'],
-  ['elektronika', 'Fotoaparat'],
-  ['ev', 'Masa lampası'],
-]
-
 function TopNav({ dept, sub, pool, onPick }) {
   const [hover, setHover] = useState('')
   const timer = useRef(null)
@@ -108,6 +99,7 @@ function TopNav({ dept, sub, pool, onPick }) {
         </div>
       )}
 
+      {active && (
       <div className="topcat-subs">
         {active ? (
           <>
@@ -120,17 +112,9 @@ function TopNav({ dept, sub, pool, onPick }) {
               </button>
             ))}
           </>
-        ) : (
-          <>
-            <span className="topcat-subs-label">Populyar:</span>
-            {POPULAR_SUBS.filter(([d, s]) => subCount(d, s) > 0).map(([d, s]) => (
-              <button key={s} onClick={() => onPick(d, s)}>
-                {s}
-              </button>
-            ))}
-          </>
-        )}
+        ) : null}
       </div>
+      )}
     </div>
   )
 }

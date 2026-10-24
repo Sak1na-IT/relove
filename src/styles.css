@@ -9783,3 +9783,24 @@ body {
     flex-shrink: 0;
   }
 }
+
+.topcat-subs {
+  min-height: 0;
+}
+
+.section-page-head {
+  align-items: center;
+}
+
+.browse4 .topcat {
+  margin-bottom: 0;
+}
+
+.browse4 .browse-toolbar {
+  border-top: 0;
+}
+
+.browse4 .topcat-subs {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}

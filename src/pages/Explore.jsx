@@ -15,7 +15,6 @@ export default function Explore() {
       <header className="section-page-head">
         <div>
           <h1 className="page-title">İkinci əl</h1>
-          <p className="page-lead">Yaxşı vəziyyətdə əşyalar — sərfəli qiymətə, birbaşa sahibindən.</p>
         </div>
         <Link to="/paylas?mode=sale" className="btn btn-primary">
           <Plus size={16} /> Satış elanı yerləşdir
