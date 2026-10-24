@@ -90,6 +90,14 @@ export function AppProvider({ children }) {
     profile, setProfile,
     userCollections,
     addCollection: (c) => setUserCollections((list) => [c, ...list]),
+    toggleInCollection: (collId, itemId) =>
+      setUserCollections((list) =>
+        list.map((c) =>
+          c.id !== collId
+            ? c
+            : { ...c, items: c.items.includes(itemId) ? c.items.filter((x) => x !== itemId) : [...c.items, itemId] },
+        ),
+      ),
     favorites, toggleFavorite,
     offers, sendOffer,
     conversations, sendMessage, startConversation,

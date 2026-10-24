@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Heart, MapPin } from 'lucide-react'
 import Img from './Img'
+import CollectButton from './CollectButton'
 import { formatPrice, likesOf } from '../data'
 import { useApp } from '../store'
 
@@ -24,6 +25,7 @@ export default function ProductCard({ item, onlyModes }) {
         >
           <Heart size={16} strokeWidth={1.8} fill={fav ? 'currentColor' : 'none'} />
         </button>
+        <CollectButton item={item} />
         <div className="card-badges">
           {(onlyModes ? item.modes.filter((m) => onlyModes.includes(m)) : item.modes).map((m) => (
             <span key={m} className={`tag tag-${m}`}>{BADGE[m]}</span>

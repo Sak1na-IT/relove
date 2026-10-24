@@ -11199,3 +11199,268 @@ body {
   border: 2px solid var(--ivory-2);
   border-radius: 99px;
 }
+
+/* v30 — Kolleksiyaya əlavə et */
+.card-collect {
+  position: absolute;
+  top: 52px;
+  right: 10px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--forest);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s, transform 0.25s var(--ease), background 0.2s;
+}
+
+.card:hover .card-collect,
+.swapcard:hover .card-collect,
+.sc-card:hover .card-collect,
+.card-collect:focus-visible,
+.card-collect.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.card-collect:hover {
+  transform: scale(1.08);
+}
+
+.card-collect.is-on {
+  background: var(--forest);
+  color: var(--ivory);
+}
+
+.sc-card {
+  position: relative;
+}
+
+.sc-card > .card-collect {
+  top: 12px;
+  right: 12px;
+}
+
+@media (hover: none) {
+  .card-collect {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.collect-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 18px;
+  padding: 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--forest);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.collect-link:hover {
+  border-bottom-color: var(--brass);
+}
+
+.collect-link.is-on {
+  color: var(--brass);
+}
+
+/* pəncərə */
+.cm {
+  width: min(460px, 100%);
+}
+
+.cm-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 40px;
+  margin-bottom: 20px;
+}
+
+.cm-thumb {
+  width: 56px !important;
+  height: 56px !important;
+  min-height: 0 !important;
+  border-radius: 12px;
+  object-fit: cover;
+  flex: none;
+  overflow: hidden;
+}
+
+.cm-thumb span {
+  display: none;
+}
+
+.cm-item > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cm-item small {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.cm-item strong {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--forest);
+}
+
+.cm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.cm-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px 8px 8px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  text-align: left;
+  transition: border-color 0.2s;
+}
+
+.cm-row:hover {
+  border-color: var(--line-2);
+}
+
+.cm-row.is-on {
+  border-color: var(--forest);
+}
+
+.cm-cover {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex: none;
+  background: var(--ivory-2);
+}
+
+.cm-cover img,
+.cm-cover .img-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cm-cover .img-fallback span,
+.cm-cover .img-fallback svg {
+  display: none;
+}
+
+.cm-row-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cm-row-text strong {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cm-row-text small {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.cm-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--line-2);
+  color: var(--ivory);
+  flex: none;
+}
+
+.cm-row.is-on .cm-check {
+  background: var(--forest);
+  border-color: var(--forest);
+}
+
+.cm-empty {
+  margin: 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--ivory-2);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.cm-new {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.cm-new input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 99px;
+  border: 1px solid var(--line-2);
+  background: var(--white);
+  font-size: 14px;
+  outline: 0;
+}
+
+.cm-new input:focus {
+  border-color: var(--forest);
+}
+
+.cm-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.cm-foot a {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.product-ctas + .collect-link {
+  margin-top: -10px;
+}

@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Wrench, Recycle, HandHeart, Plus, Scissors, Hammer, Cpu } from 'lucide-react'
 import Img from '../components/Img'
+import CollectButton from '../components/CollectButton'
 import CategoryBrowser, { DISTRICT_FILTER } from '../components/CategoryBrowser'
 import { REPAIR_LEVELS, formatPrice, likesOf } from '../data'
 import { useApp } from '../store'
@@ -20,6 +21,7 @@ function RepairCard({ item }) {
           <Icon size={13} /> {item.repair}
         </span>
       </Link>
+      <CollectButton item={item} />
       <div className="sc-card-body">
         <Link to={`/elan/${item.id}`}>
           <h3>{item.title}</h3>

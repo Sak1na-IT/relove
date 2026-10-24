@@ -4,6 +4,7 @@ import {
   ArrowLeft, Heart, MapPin, Star, BadgeCheck, Zap, Repeat, MessageCircle, Gift, Handshake, Truck, Share2, Flag,
 } from 'lucide-react'
 import Img from '../components/Img'
+import CollectButton from '../components/CollectButton'
 import ModeBadge from '../components/ModeBadge'
 import ProductCard from '../components/ProductCard'
 import SwapModal from '../components/SwapModal'
@@ -142,6 +143,8 @@ export default function Product() {
             ) : (
               <div className="note-box">Bu sənin elanındır. Gələn təkliflər “Dəyiş-düyüş → Təkliflərim” bölməsində görünür.</div>
             )}
+
+            <CollectButton item={item} variant="link" />
 
             {!isMine && <ContactCard seller={seller} item={item} />}
 

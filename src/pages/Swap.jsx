@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Repeat, Plus, Clock, MapPin, Heart, Check } from 'lucide-react'
 import Img from '../components/Img'
+import CollectButton from '../components/CollectButton'
 import SwapModal from '../components/SwapModal'
 import { USERS, formatPrice } from '../data'
 import CategoryBrowser from '../components/CategoryBrowser'
@@ -21,6 +22,7 @@ function SwapCard({ item, onOffer }) {
         <button className={`card-heart ${fav ? 'is-on' : ''}`} onClick={() => toggleFavorite(item.id)} aria-label="Seçilmişlər">
           <Heart size={16} strokeWidth={1.8} fill={fav ? 'currentColor' : 'none'} />
         </button>
+        <CollectButton item={item} />
       </div>
       <div className="swapcard-body">
         <Link to={`/elan/${item.id}`} className="swapcard-title">{item.title}</Link>
