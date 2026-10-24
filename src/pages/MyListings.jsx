@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  Tag, Repeat, Sparkles, Phone, MessageCircle, MapPin, Handshake, Truck, Eye, EyeOff, Trash2, Check, Pencil, RotateCcw,
+  Tag, Repeat, Sparkles, Phone, Star, MessageCircle, MapPin, Handshake, Truck, Eye, EyeOff, Trash2, Check, Pencil, RotateCcw,
 } from 'lucide-react'
 import Img from '../components/Img'
-import { formatPrice, likesOf } from '../data'
+import { formatPrice, likesOf, USERS, REVIEWS, DISTRICTS } from '../data'
 import { useApp } from '../store'
 
 const SECTIONS = {
@@ -15,10 +15,68 @@ const SECTIONS = {
 
 const STATUS = { active: 'Aktiv', sold: 'Satıldı', hidden: 'Gizli' }
 
+function ContactEditor({ value, onSave, onCancel }) {
+  const [v, setV] = useState(value)
+  const toggleDelivery = (d) =>
+    setV((x) => {
+      const has = x.delivery.includes(d)
+      const next = has ? x.delivery.filter((y) => y !== d) : [...x.delivery, d]
+      return { ...x, delivery: next.length ? next : x.delivery }
+    })
+  return (
+    <form
+      className="ce"
+      onSubmit={(e) => {
+        e.preventDefault()
+        onSave(v)
+      }}
+    >
+      <label className="ce-field">
+        <span>Telefon</span>
+        <input value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value })} placeholder="+994 50 000 00 00" />
+      </label>
+      <div className="ce-field">
+        <span>Əlaqə üsulu</span>
+        <div className="seg2 seg2-auto">
+          {['Mesaj', 'Zəng', 'WhatsApp'].map((p) => (
+            <button type="button" key={p} className={v.pref === p ? 'is-on' : ''} onClick={() => setV({ ...v, pref: p })}>
+              {p}
+            </button>
+          ))}
+        </div>
+      </div>
+      <label className="ce-field">
+        <span>Ərazi</span>
+        <select value={v.district} onChange={(e) => setV({ ...v, district: e.target.value })}>
+          {DISTRICTS.map((d) => (
+            <option key={d}>{d}</option>
+          ))}
+        </select>
+      </label>
+      <div className="ce-field">
+        <span>Təhvil</span>
+        <div className="ce-checks">
+          <label><input type="checkbox" checked={v.delivery.includes('meet')} onChange={() => toggleDelivery('meet')} /> Şəxsi görüş</label>
+          <label><input type="checkbox" checked={v.delivery.includes('courier')} onChange={() => toggleDelivery('courier')} /> Kuryer</label>
+        </div>
+      </div>
+      <div className="ce-checks ce-checks-col">
+        <label><input type="checkbox" checked={v.showPhone} onChange={(e) => setV({ ...v, showPhone: e.target.checked })} /> Nömrəm elanlarda görünsün</label>
+        <label><input type="checkbox" checked={v.whatsapp} onChange={(e) => setV({ ...v, whatsapp: e.target.checked })} /> WhatsApp ilə yazmaq olar</label>
+      </div>
+      <div className="ce-actions">
+        <button type="submit" className="btn btn-primary btn-sm">Yadda saxla</button>
+        <button type="button" className="btn btn-ghost btn-sm" onClick={onCancel}>Ləğv et</button>
+      </div>
+    </form>
+  )
+}
+
 export default function MyListings() {
-  const { myItems, updateItem, removeItem, profile, notify, offers } = useApp()
+  const { myItems, updateItem, removeItem, profile, setProfile, notify, offers } = useApp()
   const [tab, setTab] = useState('all')
   const [confirm, setConfirm] = useState(null)
+  const [editing, setEditing] = useState(false)
 
   const items = myItems.map((m) => ({ ...m, status: m.status || 'active' }))
   const count = (k) => items.filter((m) => m.modes.includes(k)).length
@@ -128,12 +186,52 @@ export default function MyListings() {
               ))}
             </ul>
           )}
+
+          <section className="mine-reviews" id="reyler">
+            <div className="mine-reviews-head">
+              <h2 className="h3-serif">Haqqımda rəylər</h2>
+              <span className="mine-rating">
+                <Star size={16} fill="currentColor" /> {USERS.me.rating} <small>· {USERS.me.reviews} rəy</small>
+              </span>
+            </div>
+            <ul className="mine-review-list">
+              {REVIEWS.map((r, i) => {
+                const u = USERS[r.from]
+                return (
+                  <li key={i}>
+                    <Img src={u.avatar} alt={u.name} className="mine-review-avatar" />
+                    <div>
+                      <div className="mine-review-top">
+                        <strong>{u.name}</strong>
+                        <span className="stars">{'★'.repeat(r.stars)}<em>{'★'.repeat(5 - r.stars)}</em></span>
+                        <small>{r.when}</small>
+                      </div>
+                      <p>{r.text}</p>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+            <p className="mine-reviews-note">Rəyi yalnız səninlə alış-veriş və ya dəyiş-düyüş tamamlayan istifadəçi yaza bilər.</p>
+          </section>
         </section>
 
         <aside className="mine-side">
           <div className="mine-card">
             <h3>Əlaqə və seçimlərin</h3>
             <p className="mine-card-note">Alıcılar bütün elanlarında bu məlumatları görür.</p>
+            {editing ? (
+              <ContactEditor
+                value={profile}
+                onCancel={() => setEditing(false)}
+                onSave={(v) => {
+                  setProfile(v)
+                  setEditing(false)
+                  notify('Əlaqə məlumatların yeniləndi')
+                }}
+              />
+            ) : (
+            <>
             <dl className="mine-dl">
               <div>
                 <dt><Phone size={14} /> Telefon</dt>
@@ -158,9 +256,11 @@ export default function MyListings() {
                 <dd>{profile.delivery.map((d) => ({ meet: 'Şəxsi görüş', courier: 'Kuryer' })[d]).join(', ')}</dd>
               </div>
             </dl>
-            <Link to="/profil?tab=contact" className="btn btn-ghost btn-sm btn-block">
-              <Eye size={15} /> Məlumatları dəyiş
-            </Link>
+            <button className="btn btn-ghost btn-sm btn-block" onClick={() => setEditing(true)}>
+              <Pencil size={15} /> Məlumatları dəyiş
+            </button>
+            </>
+            )}
           </div>
           <Link to="/deyis?tab=offers" className="mine-card mine-card-link">
             <Repeat size={18} strokeWidth={1.6} />

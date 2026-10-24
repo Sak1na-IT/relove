@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Search, X } from 'lucide-react'
+import { Search, X, LayoutGrid } from 'lucide-react'
+import Img from './Img'
 import Dropdown from './Dropdown'
 import { DEPARTMENTS, DISTRICTS, deptById } from '../data'
 
@@ -35,44 +36,111 @@ const SORTS = [
   { value: 'high', label: 'Bahadan ucuza' },
 ]
 
-function SlimNav({ dept, sub, pool, onPick, unit }) {
+const POPULAR_SUBS = [
+  ['qadin', 'Palto və gödəkçə'],
+  ['ev', 'Kreslo'],
+  ['elektronika', 'Qulaqlıq'],
+  ['kisi', 'Krossovka'],
+  ['elektronika', 'Fotoaparat'],
+  ['ev', 'Masa lampası'],
+]
+
+function TopNav({ dept, sub, pool, onPick }) {
+  const [hover, setHover] = useState('')
+  const timer = useRef(null)
   const count = (id) => pool.filter((l) => l.dept === id).length
   const subCount = (d, s) => pool.filter((l) => l.dept === d && l.sub === s).length
+
+  const enter = (id) => {
+    clearTimeout(timer.current)
+    timer.current = setTimeout(() => setHover(id), 140)
+  }
+  const leave = () => {
+    clearTimeout(timer.current)
+    timer.current = setTimeout(() => setHover(''), 160)
+  }
+
+  const active = dept ? deptById(dept) : null
+  const hovered = hover && hover !== dept ? deptById(hover) : null
+
   return (
-    <nav className="slim" aria-label="Kateqoriyalar">
-      <button className={`slim-row slim-all ${!dept ? 'is-on' : ''}`} onClick={() => onPick('', '')}>
-        <span>Hamısı</span>
-        <em>{pool.length}</em>
-      </button>
-      {DEPARTMENTS.map((d) => {
-        const n = count(d.id)
-        const open = dept === d.id
-        return (
-          <div key={d.id} className={`slim-dept ${open ? 'is-open' : ''}`}>
-            <button className={`slim-row ${open && !sub ? 'is-on' : ''} ${open ? 'is-parent' : ''}`} onClick={() => onPick(open && !sub ? '' : d.id, '')} disabled={n === 0} aria-expanded={open}>
-              <span>{d.label}</span>
-              <em>{n}</em>
+    <div className="topcat" onMouseLeave={leave}>
+      <div className="topcat-bar" role="tablist" aria-label="Kateqoriyalar">
+        <button role="tab" aria-selected={!dept} className={`topcat-tab ${!dept ? 'is-on' : ''}`} onClick={() => onPick('', '')} onMouseEnter={() => enter('')}>
+          <span className="topcat-dot"><LayoutGrid size={14} strokeWidth={1.6} /></span>
+          Hamısı
+        </button>
+        {DEPARTMENTS.map((d) => {
+          const n = count(d.id)
+          return (
+            <button
+              key={d.id}
+              role="tab"
+              aria-selected={dept === d.id}
+              className={`topcat-tab ${dept === d.id ? 'is-on' : ''} ${hover === d.id ? 'is-hover' : ''}`}
+              onClick={() => onPick(d.id, '')}
+              onMouseEnter={() => enter(d.id)}
+              onFocus={() => setHover('')}
+              disabled={n === 0}
+            >
+              <span className="topcat-dot">
+                <Img src={d.photo} alt="" />
+              </span>
+              {d.label}
             </button>
-            {open && (
-              <div className="slim-sub">
-                {d.groups.map((g) =>
-                  g.items.map((it) => {
-                    const c = subCount(d.id, it)
-                    if (!c) return null
-                    return (
-                      <button key={it} className={`slim-subrow ${sub === it ? 'is-on' : ''}`} onClick={() => onPick(d.id, sub === it ? '' : it)}>
-                        <span>{it}</span>
-                        <em>{c}</em>
-                      </button>
-                    )
-                  }),
-                )}
-              </div>
-            )}
-          </div>
-        )
-      })}
-    </nav>
+          )
+        })}
+      </div>
+
+      {hovered && (
+        <div className="topcat-pop" onMouseEnter={() => enter(hovered.id)}>
+          {hovered.groups.map((g) => (
+            <div key={g.title} className="topcat-pop-col">
+              <span>{g.title}</span>
+              {g.items.map((it) => {
+                const c = subCount(hovered.id, it)
+                return (
+                  <button key={it} onClick={() => { onPick(hovered.id, it); setHover('') }} disabled={!c}>
+                    {it}
+                    {c > 0 && <em>{c}</em>}
+                  </button>
+                )
+              })}
+            </div>
+          ))}
+          <button className="topcat-pop-all" onClick={() => { onPick(hovered.id, ''); setHover('') }}>
+            Bütün “{hovered.label}” elanları <em>{count(hovered.id)}</em>
+          </button>
+        </div>
+      )}
+
+      <div className="topcat-subs">
+        {active ? (
+          <>
+            <button className={!sub ? 'is-on' : ''} onClick={() => onPick(dept, '')}>
+              Hamısı <em>{count(dept)}</em>
+            </button>
+            {active.groups.flatMap((g) => g.items).map((it) => {
+              const c = subCount(dept, it)
+              return (
+                <button key={it} className={sub === it ? 'is-on' : ''} onClick={() => onPick(dept, sub === it ? '' : it)} disabled={!c}>
+                  {it} {c > 0 && <em>{c}</em>}
+                </button>
+              )
+            })}
+          </>
+        ) : (
+          <>
+            <span className="topcat-subs-label">Populyar:</span>
+            {POPULAR_SUBS.filter(([d, s]) => subCount(d, s) > 0).map(([d, s]) => (
+              <button key={s} onClick={() => onPick(d, s)}>
+                {s}
+              </button>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -122,12 +190,10 @@ export default function CategoryBrowser({
   const pick = (dd, ss) => setMany({ dept: dd, sub: ss })
 
   return (
-    <div className="browse3">
-      <aside className="browse3-side">
-        <SlimNav dept={dept} sub={sub} pool={pool} onPick={pick} unit={unit} />
-      </aside>
+    <div className="browse4">
+      <TopNav dept={dept} sub={sub} pool={pool} onPick={pick} />
 
-      <div className="browse3-main">
+      <div className="browse4-main">
         <form className="search-big browse-search" onSubmit={(e) => e.preventDefault()} role="search">
           <Search size={18} />
           <input value={q} onChange={(e) => set('q', e.target.value)} placeholder={d ? `${d.label} bölməsində axtar...` : searchPlaceholder} aria-label="Axtarış" />
@@ -137,24 +203,6 @@ export default function CategoryBrowser({
             </button>
           )}
         </form>
-
-        {/* mobil: kateqoriya seçimi */}
-        <div className="browse3-mobile">
-          <select value={dept} onChange={(e) => pick(e.target.value, '')} aria-label="Kateqoriya">
-            <option value="">Bütün kateqoriyalar</option>
-            {DEPARTMENTS.map((x) => (
-              <option key={x.id} value={x.id}>{x.label}</option>
-            ))}
-          </select>
-          {d && (
-            <select value={sub} onChange={(e) => pick(dept, e.target.value)} aria-label="Alt-kateqoriya">
-              <option value="">Hamısı</option>
-              {d.groups.flatMap((g) => g.items).map((it) => (
-                <option key={it} value={it}>{it}</option>
-              ))}
-            </select>
-          )}
-        </div>
 
         <div className="browse3-head">
           <div className="browse3-title">

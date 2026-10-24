@@ -6,7 +6,7 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { CURATED, likesOf } from '../data'
+import { CURATED, USERS, formatPrice, likesOf } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
@@ -89,17 +89,6 @@ function Rail({ children }) {
   )
 }
 
-const TRENDING = [
-  { term: 'Palto', img: 'l18' },
-  { term: 'Kreslo', img: 'l5' },
-  { term: 'Qulaqlıq', img: 'l4' },
-  { term: 'Fotoaparat', img: 'l1' },
-  { term: 'Çanta', img: 'l17' },
-  { term: 'Krossovka', img: 'l7' },
-  { term: 'Velosiped', img: 'l10' },
-  { term: 'Lampa', img: 'l15' },
-]
-
 function SectionHead({ title, text, to, label }) {
   return (
     <div className="block-head">
@@ -121,36 +110,35 @@ export default function Home() {
   const swapA = getItem('l1')
   const swapB = getItem('l4')
   const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...sale].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 4)
+  const featured = listings.find((l) => l.id === 'l5')
+  const popular = [...sale].filter((l) => l.id !== 'l5').sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 4)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
-  const hits = (term) =>
-    listings.filter((l) => `${l.title} ${l.sub || ''}`.toLowerCase().includes(term.toLowerCase().slice(0, 5))).length
 
   return (
     <>
       <Hero />
 
-      {/* ƏN ÇOX AXTARILANLAR */}
+      {/* BU HƏFTƏNİN TAPINTILARI */}
       <section className="container block">
-        <SectionHead title="Ən çox axtarılanlar" text="Bu həftə Relove-da insanların ən çox axtardığı əşyalar." />
-        <div className="trend">
-          {TRENDING.map((t, i) => {
-            const it = getItem(t.img)
-            return (
-              <Link key={t.term} to={`/ikinci-el?q=${encodeURIComponent(t.term)}`} className="trend-item">
-                <span className="trend-rank">{i + 1}</span>
-                <span className="trend-thumb">{it && <Img src={it.images[0]} alt="" />}</span>
-                <span className="trend-text">
-                  <strong>{t.term}</strong>
-                  <small>{hits(t.term)} elan</small>
-                </span>
-              </Link>
-            )
-          })}
-        </div>
-        <div className="trend-popular">
-          <h3 className="trend-subtitle">Ən çox bəyənilənlər</h3>
-          <div className="grid-4">
+        <SectionHead title="Bu həftənin tapıntıları" text="Redaksiyamızın seçdiyi, hekayəsi olan əşyalar." to="/kolleksiyalar" label="Bütün kolleksiyalar" />
+        <div className="finds">
+          {featured && (
+            <Link to={`/elan/${featured.id}`} className="finds-feature">
+              <div className="finds-feature-photo">
+                <Img src={featured.images[0]} alt={featured.title} />
+              </div>
+              <div className="finds-feature-body">
+                <span className="finds-tag">Həftənin seçimi</span>
+                <h3>{featured.title}</h3>
+                {featured.story && <blockquote>“{featured.story}”</blockquote>}
+                <div className="finds-feature-foot">
+                  <strong>{formatPrice(featured.price)}</strong>
+                  <span>{USERS[featured.seller].name} · {featured.district}</span>
+                </div>
+              </div>
+            </Link>
+          )}
+          <div className="finds-grid">
             {popular.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
