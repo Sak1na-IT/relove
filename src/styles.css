@@ -11165,3 +11165,16 @@ body {
     padding-right: 0;
   }
 }
+
+/* v29 — başlıqla kartlar arasında nəfəs */
+.product .section > .h2 {
+  margin: 0 0 32px;
+}
+
+.product .section-tight {
+  padding-top: 72px;
+}
+
+.collections-page .block-head {
+  margin-bottom: 32px;
+}
