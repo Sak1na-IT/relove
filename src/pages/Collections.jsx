@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Plus, X, Check, Search, Lock, Globe } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Plus, X, Check, Search, Lock, Globe } from 'lucide-react'
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import { CURATED, curatedById } from '../data'
@@ -120,6 +120,37 @@ function CreateCollection({ onClose }) {
   )
 }
 
+function CollectionCard({ c, items }) {
+  const prices = items.map((l) => l.price).filter((n) => n > 0)
+  const min = prices.length ? Math.min(...prices) : 0
+  const max = prices.length ? Math.max(...prices) : 0
+  const names = items.slice(0, 3).map((l) => l.title)
+  const more = items.length - names.length
+  return (
+    <article className="swapcard collcard">
+      <div className="swapcard-media">
+        <Link to={`/kolleksiyalar/${c.id}`} className="card-media-link" aria-label={c.title}>
+          {items[0] ? <Img src={items[0].images[0]} alt={c.title} /> : <div className="cover-empty" />}
+        </Link>
+        {c.mine && <span className="collcard-mine">{c.isPublic ? 'Mənim' : 'Mənim · gizli'}</span>}
+      </div>
+      <div className="swapcard-body">
+        <Link to={`/kolleksiyalar/${c.id}`} className="swapcard-title">{c.title}</Link>
+        <div className="swapcard-meta">
+          <span>{items.length} əşya</span>
+          {prices.length > 0 && <span>{min === max ? `${min} AZN` : `${min}–${max} AZN`}</span>}
+        </div>
+        <p className="swapcard-wants">
+          <span>İçində:</span> {names.length ? names.join(', ') + (more > 0 ? ` və daha ${more}` : '') : 'hələ əşya yoxdur'}
+        </p>
+        <Link to={`/kolleksiyalar/${c.id}`} className="btn btn-ghost btn-sm swapcard-btn">
+          Kolleksiyaya bax <ArrowRight size={14} />
+        </Link>
+      </div>
+    </article>
+  )
+}
+
 export default function Collections() {
   const { listings } = useApp()
   const all = useAllCollections()
@@ -136,23 +167,10 @@ export default function Collections() {
         </button>
       </header>
 
-      <div className="curated-grid coll-grid">
-        {all.map((c) => {
-          const items = listings.filter(c.match)
-          return (
-            <Link key={c.id} to={`/kolleksiyalar/${c.id}`} className="curated-card">
-              <CollectionCover items={items} />
-              <div className="curated-body">
-                <strong>
-                  {c.title}
-                  {c.mine && <span className="coll-mine">{c.isPublic ? 'Mənim' : 'Mənim · gizli'}</span>}
-                </strong>
-                {c.text && <p>{c.text}</p>}
-                <small>{items.length} əşya</small>
-              </div>
-            </Link>
-          )
-        })}
+      <div className="browse-grid">
+        {all.map((c) => (
+          <CollectionCard key={c.id} c={c} items={listings.filter(c.match)} />
+        ))}
       </div>
 
       {creating && <CreateCollection onClose={() => setCreating(false)} />}

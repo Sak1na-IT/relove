@@ -10247,3 +10247,29 @@ body {
 .collections-page .coll-grid {
   margin-top: 16px;
 }
+
+/* v21 — Kolleksiya kartı: Dəyiş-düyüş kartı ilə eyni dil */
+.collections-page .browse-grid {
+  margin-top: 8px;
+  padding-bottom: 48px;
+}
+
+.collcard .swapcard-media {
+  position: relative;
+}
+
+.collcard-mine {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.94);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.collcard .swapcard-btn {
+  align-self: flex-start;
+}
