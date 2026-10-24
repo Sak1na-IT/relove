@@ -53,7 +53,8 @@ h3,
 .page-title,
 .product-title,
 .wordmark-text {
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  font-variation-settings: 'SOFT' 30, 'WONK' 0;
+  font-optical-sizing: auto;
 }
 
 body {
@@ -126,7 +127,7 @@ select {
 /* ---------- Typography ---------- */
 .display {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(38px, 4.4vw, 58px);
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -151,7 +152,7 @@ select {
 
 .h2 {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(22px, 2vw, 28px);
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -448,13 +449,17 @@ select {
 }
 
 .badge-swap {
-  background: var(--lime);
-  color: var(--forest-3);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--forest);
+}
+
+.badge-swap svg {
+  color: #7a9a2a;
 }
 
 .badge-free {
   background: var(--forest);
-  color: var(--lime);
+  color: var(--ivory);
 }
 
 /* ---------- Images ---------- */
@@ -694,7 +699,80 @@ select {
 
 /* ---------- Home ---------- */
 .block {
-  padding-top: 56px;
+  padding-top: 80px;
+}
+
+/* Editorial story — asymmetric */
+.story-block {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.story-media {
+  position: relative;
+  padding-bottom: 48px;
+}
+
+.story-media-main {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--ivory-2);
+}
+
+.story-media-small {
+  position: absolute;
+  right: -32px;
+  bottom: 0;
+  width: 34%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 6px solid var(--ivory);
+  box-shadow: var(--shadow);
+  background: var(--ivory-2);
+}
+
+.story-copy .h2 {
+  font-size: clamp(28px, 2.8vw, 40px);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.story-quote {
+  margin: 0 0 24px;
+  padding-left: 18px;
+  border-left: 2px solid var(--lime);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.story-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.story-author strong {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.story-author .img,
+.story-author .img-fallback {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
 }
 
 .block-head {
@@ -760,7 +838,7 @@ select {
 
 .hero-title {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(38px, 4.2vw, 56px);
   line-height: 1.06;
   letter-spacing: -0.02em;
@@ -1057,7 +1135,7 @@ select {
 
 .swap-banner h2 {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(24px, 2.2vw, 32px);
   line-height: 1.15;
   margin: 0;
@@ -1318,7 +1396,7 @@ select {
 /* Explore filters */
 .page-title {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(30px, 3vw, 40px);
   margin: 0;
 }
@@ -1552,7 +1630,7 @@ select {
 .sheet-head h3 {
   margin: 0;
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 28px;
 }
 
@@ -1960,7 +2038,7 @@ select {
 
 .product-title {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: clamp(32px, 3.2vw, 44px);
   line-height: 1.02;
   margin: 0;
@@ -2289,7 +2367,7 @@ select {
 .deck-info strong {
   display: block;
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 30px;
   line-height: 1.05;
 }
@@ -2908,7 +2986,7 @@ select {
 
 .profile-stats strong {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 36px;
   line-height: 1;
 }
@@ -3408,7 +3486,17 @@ select {
 
   /* home */
   .block {
-    padding-top: 40px;
+    padding-top: 48px;
+  }
+
+  .story-block {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .story-media-small {
+    right: 12px;
+    width: 38%;
   }
 
   .block-head {

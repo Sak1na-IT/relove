@@ -5,7 +5,7 @@ import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import CategoryIcon from '../components/CategoryIcon'
 import Leaves from '../components/Leaves'
-import { CATEGORIES, HERO_SLIDES, HOME_COLLECTIONS, img } from '../data'
+import { CATEGORIES, HERO_SLIDES, HOME_COLLECTIONS, USERS, img } from '../data'
 import { useApp } from '../store'
 
 function Hero() {
@@ -65,6 +65,7 @@ export default function Home() {
   const popular = listings.slice(0, 6)
   const fresh = listings.slice(6, 12)
   const freeItems = listings.filter((l) => l.modes.includes('free')).slice(0, 4)
+  const story = listings.find((l) => l.id === 'l5') || listings.find((l) => l.story)
 
   return (
     <>
@@ -142,6 +143,41 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* EDITORIAL STORY */}
+      {story && (
+        <section className="container block">
+          <div className="story-block">
+            <div className="story-media">
+              <Link to={`/elan/${story.id}`} className="story-media-main">
+                <Img src={story.images[1] || story.images[0]} alt={story.title} />
+              </Link>
+              <div className="story-media-small">
+                <Img src={story.images[0]} alt="" />
+              </div>
+            </div>
+            <div className="story-copy">
+              <p className="eyebrow">Relove hekayəsi</p>
+              <h2 className="h2">
+                Hər əşyanın bir keçmişi var.
+                <br />
+                <em>Sənin evində isə gələcəyi.</em>
+              </h2>
+              <blockquote className="story-quote">“{story.story}”</blockquote>
+              <div className="story-author">
+                <Img src={USERS[story.seller].avatar} alt={USERS[story.seller].name} />
+                <div>
+                  <strong>{USERS[story.seller].name}</strong>
+                  {story.title} · {story.district}
+                </div>
+              </div>
+              <Link to={`/elan/${story.id}`} className="btn btn-primary">
+                Əşyaya bax <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* NEW */}
       <section className="container block">
