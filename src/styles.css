@@ -9382,3 +9382,87 @@ body {
     align-items: flex-start;
   }
 }
+
+/* v14 — Bu həftənin tapıntıları: kompakt bir sıra */
+.finds {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+  gap: 20px;
+}
+
+.finds-feature {
+  grid-template-rows: none;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  height: 400px;
+  border-radius: var(--radius-lg);
+}
+
+.finds-feature-photo {
+  min-height: 0;
+  height: 100%;
+}
+
+.finds-feature-body {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 22px;
+}
+
+.finds-feature h3 {
+  font-size: 26px;
+}
+
+.finds-feature blockquote {
+  flex: 1;
+  font-size: 16.5px;
+}
+
+.finds-feature-foot {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.finds-feature-foot strong {
+  font-size: 18px;
+}
+
+.finds-side {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.finds-side .card-media {
+  aspect-ratio: auto;
+  height: 300px;
+}
+
+.hero4-title {
+  font-size: clamp(44px, 4.6vw, 68px);
+}
+
+@media (max-width: 1100px) {
+  .finds {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .finds-feature {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+  }
+
+  .finds-feature-photo {
+    height: 220px;
+  }
+
+  .finds-side .card-media {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.finds-tag {
+  align-self: flex-start;
+}

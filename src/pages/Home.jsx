@@ -36,13 +36,13 @@ function Hero() {
       <div className="container hero4-inner">
         <div className="hero4-copy">
           <h1 className="hero4-title">
-            Yaxşı əşyaların
+            Əşyalara
             <br />
-            hekayəsi bitmir.
+            ikinci həyat ver.
           </h1>
           <p className="hero4-text">
-            İstifadə etmədiyin əşyalara yeni sahib tap. Sevdiyin parçaları kəşf et, dəyiş və əşyaların həyatını davam
-            etdir.
+            Evində istifadə etmədiyin əşyanı sat, dəyiş və ya düzəldə bilən birinə ver. Başqasının əşyası isə sənin
+            yeni sevimlin ola bilər.
           </p>
           <div className="hero4-ctas">
             <Link to="/ikinci-el" className="btn btn-primary btn-lg">
@@ -111,7 +111,7 @@ export default function Home() {
   const swapB = getItem('l4')
   const sale = listings.filter((l) => l.modes.includes('sale'))
   const featured = listings.find((l) => l.id === 'l5')
-  const popular = [...sale].filter((l) => l.id !== 'l5').sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 4)
+  const popular = [...sale].filter((l) => l.id !== 'l5').sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 2)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
@@ -138,7 +138,7 @@ export default function Home() {
               </div>
             </Link>
           )}
-          <div className="finds-grid">
+          <div className="finds-side">
             {popular.map((item) => (
               <ProductCard key={item.id} item={item} />
             ))}
