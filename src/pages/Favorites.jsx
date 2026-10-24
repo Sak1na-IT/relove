@@ -14,7 +14,6 @@ export default function Favorites() {
           <h1 className="page-title">Bəyəndiklərim</h1>
           <span className="explore-count">{items.length} əşya</span>
         </div>
-        <p className="page-lead">Ürək işarəsi ilə saxladığın əşyalar burada qalır.</p>
       </header>
 
       {items.length > 0 ? (
