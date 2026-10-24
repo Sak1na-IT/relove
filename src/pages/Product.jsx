@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft, Heart, MapPin, Star, BadgeCheck, Zap, Repeat, MessageCircle, Gift, Handshake, Truck, Share2, Flag,
@@ -18,6 +18,21 @@ export default function Product() {
   const { getItem, listings, favorites, toggleFavorite, startConversation, notify } = useApp()
   const item = getItem(id)
   const [active, setActive] = useState(0)
+  const infoRef = useRef(null)
+
+  // Sağ sütun siçan təkəri ilə sürüşmür: təkər həmişə səhifəni sürüşdürür.
+  // Sütunun içi yalnız öz zolağı dartılanda tərpənir.
+  useEffect(() => {
+    const el = infoRef.current
+    if (!el) return
+    const onWheel = (e) => {
+      if (window.matchMedia('(max-width: 900px)').matches) return
+      e.preventDefault()
+      window.scrollBy({ top: e.deltaY, left: 0 })
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [id])
   const [swapOpen, setSwapOpen] = useState(false)
 
   if (!item) return <NotFound />
@@ -82,7 +97,7 @@ export default function Product() {
 
         </div>
 
-        <div className="product-info">
+        <div className="product-info" ref={infoRef}>
           <div className="product-sticky">
             <p className="crumbs">
               <Link to="/ikinci-el">Kəşf et</Link> / <Link to={`/ikinci-el?cat=${item.category}`}>{catById(item.category)?.short}</Link>

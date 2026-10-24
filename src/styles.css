@@ -11178,3 +11178,24 @@ body {
 .collections-page .block-head {
   margin-bottom: 32px;
 }
+
+/* sağ sütunun zolağı aydın görünsün */
+.product-info {
+  scrollbar-width: auto;
+  scrollbar-color: #c9bfae #ece6da;
+}
+
+.product-info::-webkit-scrollbar {
+  width: 10px;
+}
+
+.product-info::-webkit-scrollbar-track {
+  background: var(--ivory-2);
+  border-radius: 99px;
+}
+
+.product-info::-webkit-scrollbar-thumb {
+  background: #c9bfae;
+  border: 2px solid var(--ivory-2);
+  border-radius: 99px;
+}
