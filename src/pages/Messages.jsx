@@ -35,15 +35,13 @@ export default function Messages() {
   const it = active ? getItem(active.listing) : null
 
   return (
-    <div className="container section-page msg2-page">
-      <header className="section-page-head">
-        <div>
-          <h1 className="page-title">Mesajlar</h1>
-        </div>
-      </header>
-
+    <div className="msg2-page">
       <div className="msg2">
         <aside className={`msg2-list ${mobileOpen ? 'is-hidden-sm' : ''}`}>
+          <div className="msg2-list-head">
+            <h1>Mesajlar</h1>
+            <span>{conversations.length} söhbət</span>
+          </div>
           <div className="msg2-search">
             <Search size={15} />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Ad və ya əşya axtar" aria-label="Söhbət axtar" />

@@ -10686,3 +10686,83 @@ body {
 .msg2-avatar span {
   display: none;
 }
+
+/* v23 — Mesajlar bütün ekranı tutur */
+.msg2-page {
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 20px 32px 24px;
+}
+
+.msg2-page .msg2 {
+  height: calc(100vh - var(--nav-h) - 44px);
+  min-height: 560px;
+  grid-template-columns: 380px minmax(0, 1fr);
+}
+
+.msg2-list-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 24px 4px;
+}
+
+.msg2-list-head h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--forest);
+}
+
+.msg2-list-head span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.msg2-page .msg2-search {
+  margin: 16px 16px 10px;
+}
+
+.msg2-page .msg2-head {
+  padding: 18px 28px;
+}
+
+.msg2-page .msg2-body {
+  padding: 28px 40px;
+}
+
+.msg2-page .msg2-bubble {
+  max-width: min(560px, 70%);
+}
+
+.msg2-page .msg2-input {
+  padding: 16px 28px 6px;
+}
+
+.msg2-page .msg2-input input {
+  height: 50px;
+}
+
+.msg2-page .msg2-send {
+  width: 50px;
+  height: 50px;
+}
+
+@media (max-width: 900px) {
+  .msg2-page {
+    padding: 12px 16px 16px;
+  }
+
+  .msg2-page .msg2 {
+    grid-template-columns: 1fr;
+    height: calc(100vh - var(--nav-h) - 28px);
+  }
+
+  .msg2-page .msg2-body {
+    padding: 20px 16px;
+  }
+}
