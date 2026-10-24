@@ -10243,3 +10243,7 @@ body {
     gap: 32px 16px;
   }
 }
+
+.collections-page .coll-grid {
+  margin-top: 16px;
+}

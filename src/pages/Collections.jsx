@@ -126,20 +126,17 @@ export default function Collections() {
   const [creating, setCreating] = useState(false)
 
   return (
-    <div className="container collections-page">
-      <header className="coll-head">
-        <h1 className="coll-title">Kolleksiyalar</h1>
-        <span className="coll-count">{all.length} kolleksiya</span>
+    <div className="container section-page collections-page">
+      <header className="section-page-head">
+        <div>
+          <h1 className="page-title">Kolleksiyalar</h1>
+        </div>
+        <button className="btn btn-primary" onClick={() => setCreating(true)}>
+          <Plus size={16} /> Kolleksiya yarat
+        </button>
       </header>
 
       <div className="curated-grid coll-grid">
-        <button className="curated-card coll-new" onClick={() => setCreating(true)}>
-          <span className="coll-new-box">
-            <span className="coll-new-plus"><Plus size={22} strokeWidth={1.25} /></span>
-            <strong>Öz kolleksiyanı yarat</strong>
-            <small>Bəyəndiyin əşyaları bir mövzu altında topla</small>
-          </span>
-        </button>
         {all.map((c) => {
           const items = listings.filter(c.match)
           return (
