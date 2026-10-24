@@ -376,6 +376,14 @@ test('ictimai profil: reytinq, rəylər, aktiv elanlar; parol heş-i görünmür
   assert.equal((await api('/users/yox')).status, 404)
 })
 
+test('bir neçə istifadəçinin qısa profili', async () => {
+  const r = await api('/users?ids=u_u1,u_u2,yox')
+  assert.equal(r.status, 200)
+  assert.deepEqual(r.data.map((u) => u.id).sort(), ['u_u1', 'u_u2'])
+  assert.equal(r.data[0].email, undefined)
+  assert.deepEqual((await api('/users')).data, [])
+})
+
 test('rəy yalnız tamamlanmış dəyiş-düyüşdən sonra', async () => {
   const sakina = await login()
   const reshad = await login('reshad@relove.demo')

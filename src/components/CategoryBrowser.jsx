@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import Dropdown from './Dropdown'
-import { DEPARTMENTS, DISTRICTS, deptById, likesOf } from '../data'
+import { DEPARTMENTS, DISTRICTS, deptById } from '../data'
 
 // Ortaq filter tərifləri
 export const PRICE_FILTER = {
@@ -155,7 +155,7 @@ export default function CategoryBrowser({
     })
     if (sort === 'low') r = [...r].sort((a, b) => a.price - b.price)
     if (sort === 'high') r = [...r].sort((a, b) => b.price - a.price)
-    if (sort === 'likes') r = [...r].sort((a, b) => likesOf(b.id) - likesOf(a.id))
+    if (sort === 'likes') r = [...r].sort((a, b) => (b.likes || 0) - (a.likes || 0))
     return r
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pool, params])

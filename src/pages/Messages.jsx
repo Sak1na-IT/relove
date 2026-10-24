@@ -1,22 +1,42 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Send, ArrowLeft, ShieldCheck, Search, ArrowUpRight } from 'lucide-react'
 import Img from '../components/Img'
-import { USERS, formatPrice } from '../data'
+import Avatar from '../components/Avatar'
+import { formatPrice } from '../data'
 import { useApp } from '../store'
 
+const MONTHS = ['yan', 'fev', 'mar', 'apr', 'may', 'iyn', 'iyl', 'avq', 'sen', 'okt', 'noy', 'dek']
+const isToday = (d) => d.toDateString() === new Date().toDateString()
+// Bu gün → "14:05", əvvəlki günlər → "23 okt"
+function clock(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return isToday(d) ? d.toLocaleTimeString('az-AZ', { hour: '2-digit', minute: '2-digit' }) : `${d.getDate()} ${MONTHS[d.getMonth()]}`
+}
+
 export default function Messages() {
-  const { conversations, sendMessage, getItem } = useApp()
-  const [activeId, setActiveId] = useState(conversations[0]?.id)
+  const { conversations, messages, openConversation, sendMessage, users } = useApp()
+  const [params] = useSearchParams()
+  const [activeId, setActiveId] = useState(params.get('c') || conversations[0]?.id)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [text, setText] = useState('')
   const [q, setQ] = useState('')
   const endRef = useRef(null)
   const active = conversations.find((c) => c.id === activeId)
+  const thread = (active && messages[active.id]) || []
+
+  // Söhbət seçiləndə mesajlarını serverdən yüklə (oxunmuş sayılır)
+  useEffect(() => {
+    if (activeId) openConversation(activeId)
+  }, [activeId, openConversation])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
-  }, [active?.messages.length, activeId])
+  }, [thread.length, activeId])
+
+  const userOf = (c) => users[c.with] || c.withUser || { name: '—' }
+  const itemOf = (c) => c.listingItem
 
   const submit = (e) => {
     e.preventDefault()
@@ -27,12 +47,12 @@ export default function Messages() {
 
   const shown = conversations.filter((c) => {
     if (!q) return true
-    const hay = `${USERS[c.with].name} ${getItem(c.listing)?.title || ''}`.toLowerCase()
+    const hay = `${userOf(c).name} ${itemOf(c)?.title || ''}`.toLowerCase()
     return hay.includes(q.toLowerCase())
   })
 
-  const u = active ? USERS[active.with] : null
-  const it = active ? getItem(active.listing) : null
+  const u = active ? userOf(active) : null
+  const it = active ? itemOf(active) : null
 
   return (
     <div className="msg2-page">
@@ -48,9 +68,9 @@ export default function Messages() {
           </div>
           <ul>
             {shown.map((c) => {
-              const cu = USERS[c.with]
-              const ci = getItem(c.listing)
-              const last = c.messages[c.messages.length - 1]
+              const cu = userOf(c)
+              const ci = itemOf(c)
+              const last = c.lastMessage
               return (
                 <li key={c.id}>
                   <button
@@ -60,11 +80,11 @@ export default function Messages() {
                       setMobileOpen(true)
                     }}
                   >
-                    <Img src={cu.avatar} alt={cu.name} className="msg2-avatar" />
+                    <Avatar user={cu} className="msg2-avatar" />
                     <span className="msg2-row-text">
                       <span className="msg2-row-top">
                         <strong>{cu.name}</strong>
-                        <time>{last?.time}</time>
+                        <time>{clock(last?.createdAt)}</time>
                       </span>
                       <em>{ci?.title}</em>
                       <span className="msg2-row-last">
@@ -86,7 +106,7 @@ export default function Messages() {
               <button className="icon-btn show-sm" onClick={() => setMobileOpen(false)} aria-label="Geri">
                 <ArrowLeft size={18} />
               </button>
-              <Img src={u.avatar} alt={u.name} className="msg2-avatar" />
+              <Avatar user={u} className="msg2-avatar" />
               <div className="msg2-who">
                 <strong>{u.name}</strong>
                 <small>{u.district}</small>
@@ -104,13 +124,23 @@ export default function Messages() {
             </header>
 
             <div className="msg2-body">
-              <div className="msg2-day"><span>Bu gün</span></div>
-              {active.messages.map((m, i) => (
-                <div key={i} className={`msg2-bubble ${m.from === 'me' ? 'is-me' : ''}`}>
-                  <p>{m.text}</p>
-                  <time>{m.time}</time>
-                </div>
-              ))}
+              {thread.map((m, i) => {
+                const day = new Date(m.createdAt).toDateString()
+                const newDay = i === 0 || day !== new Date(thread[i - 1].createdAt).toDateString()
+                return (
+                  <div key={m.id || i} className="msg2-group">
+                    {newDay && (
+                      <div className="msg2-day">
+                        <span>{isToday(new Date(m.createdAt)) ? 'Bu gün' : new Date(m.createdAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long' })}</span>
+                      </div>
+                    )}
+                    <div className={`msg2-bubble ${m.from === 'me' ? 'is-me' : ''}`}>
+                      <p>{m.text}</p>
+                      <time>{clock(m.createdAt)}</time>
+                    </div>
+                  </div>
+                )
+              })}
               <div ref={endRef} />
             </div>
 

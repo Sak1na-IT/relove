@@ -47,14 +47,14 @@ function CreateCollection({ onClose }) {
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]))
   const valid = title.trim() && picked.length > 0
 
-  const save = (e) => {
+  const save = async (e) => {
     e.preventDefault()
     if (!valid) return
-    const id = `m-${Date.now()}`
-    addCollection({ id, title: title.trim(), text: text.trim(), items: picked, isPublic })
+    const created = await addCollection({ title: title.trim(), text: text.trim(), items: picked, isPublic })
+    if (!created) return
     notify('Kolleksiya yaradıldı')
     onClose()
-    navigate(`/kolleksiyalar/${id}`)
+    navigate(`/kolleksiyalar/${created.id}`)
   }
 
   return (
@@ -151,7 +151,7 @@ function CollectionCard({ c, items, cover }) {
 }
 
 export default function Collections() {
-  const { listings } = useApp()
+  const { listings, requireAuth } = useApp()
   const all = useAllCollections()
   const [creating, setCreating] = useState(false)
 
@@ -161,7 +161,7 @@ export default function Collections() {
         <div>
           <h1 className="page-title">Kolleksiyalar</h1>
         </div>
-        <button className="btn btn-primary" onClick={() => setCreating(true)}>
+        <button className="btn btn-primary" onClick={() => requireAuth() && setCreating(true)}>
           <Plus size={16} /> Kolleksiya yarat
         </button>
       </header>

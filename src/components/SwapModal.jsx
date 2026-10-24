@@ -8,7 +8,7 @@ import { useApp } from '../store'
 
 export default function SwapModal({ target, onClose }) {
   const { myItems, sendOffer } = useApp()
-  const options = myItems.filter((m) => m.modes.includes('swap'))
+  const options = myItems.filter((m) => m.modes.includes('swap') && m.status === 'active')
   const [picked, setPicked] = useState(options[0]?.id)
   const [cash, setCash] = useState(0)
   const [note, setNote] = useState('')
@@ -28,9 +28,12 @@ export default function SwapModal({ target, onClose }) {
   const label =
     Math.abs(balance) < 0.12 ? 'Bərabər dəyərli təklif' : balance < 0 ? 'Sənin təklifin bir az aşağıdır' : 'Sənin təklifin daha dəyərlidir'
 
-  const submit = () => {
-    sendOffer({ targetId: target.id, myItemId: mine.id, cash: Number(cash || 0), note })
-    setSent(true)
+  const [busy, setBusy] = useState(false)
+  const submit = async () => {
+    setBusy(true)
+    const ok = await sendOffer({ targetId: target.id, myItemId: mine.id, cash: Math.round(Number(cash || 0)), note })
+    setBusy(false)
+    if (ok) setSent(true)
   }
 
   return (
@@ -125,7 +128,7 @@ export default function SwapModal({ target, onClose }) {
               <textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Salam! Əşyamla dəyişməyə maraqlı olarsınız?" />
             </label>
 
-            <button className="btn btn-primary btn-block btn-lg" onClick={submit} disabled={!mine}>
+            <button className="btn btn-primary btn-block btn-lg" onClick={submit} disabled={!mine || busy}>
               Təklifi göndər
             </button>
           </>

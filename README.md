@@ -4,12 +4,19 @@
 
 ## İşə salmaq
 
+Sayt məlumatları backend-dən götürür, ona görə iki terminal lazımdır:
+
 ```bash
+# 1-ci terminal — backend (http://localhost:4000/api)
+npm run server
+
+# 2-ci terminal — sayt (http://localhost:5173)
 npm install
 npm run dev
 ```
 
-Brauzerdə `http://localhost:5173` açılır.
+Demo giriş: `sakina@relove.demo` / `parol123` (giriş səhifəsində "Demo hesabla yoxla" düyməsi var).
+Backend başqa ünvandadırsa, kökdə `.env` faylı yarat və `VITE_API_URL` yaz (nümunə: `.env.example`).
 
 
 ## Backend (server/)
@@ -34,8 +41,9 @@ npm run server:test   # API testləri
 
 ```
 src/
-  data.js          → nümunə elanlar, istifadəçilər, kateqoriyalar
-  store.jsx        → seçilmişlər, təkliflər, mesajlar (global state)
+  api.js           → backend ilə əlaqə (token, sorğular)
+  data.js          → kateqoriyalar, rayonlar; demo məlumat (server bunu bazaya yazır)
+  store.jsx        → serverdən gələn məlumat və əməliyyatlar (global state)
   components/      → Navbar, mobil menyu, məhsul kartı, dəyiş modalı…
   pages/           → Ana səhifə, Kəşf et, Məhsul, Dəyiş, Paylaş, Profil, Seçilmişlər, Mesajlar
 ```

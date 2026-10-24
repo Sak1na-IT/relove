@@ -16,6 +16,14 @@ const reviewsFor = (db, userId) =>
   db.prepare('SELECT * FROM reviews WHERE target_id = ? ORDER BY created_at DESC').all(userId).map(serializeReview)
 
 export default function userRoutes(router) {
+  // Bir neçə istifadəçinin qısa profili: /api/users?ids=u_a,u_b
+  router.get('/api/users', ({ db, query }) => {
+    const ids = [...new Set((query.get('ids') || '').split(',').map((s) => s.trim()).filter(Boolean))].slice(0, 100)
+    if (!ids.length) return []
+    const rows = db.prepare(`SELECT * FROM users WHERE id IN (${ids.map(() => '?').join(',')})`).all(...ids)
+    return rows.map((u) => serializePublicUser(u, userStats(db, u.id)))
+  })
+
   router.get('/api/users/:id', ({ db, params }) => {
     const u = requireUserRow(db, params.id)
     const listings = db

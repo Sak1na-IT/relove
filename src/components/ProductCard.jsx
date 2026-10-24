@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Heart, MapPin } from 'lucide-react'
 import Img from './Img'
 import CollectButton from './CollectButton'
-import { formatPrice, likesOf } from '../data'
+import { formatPrice } from '../data'
 import { useApp } from '../store'
 
 const BADGE = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'İkinci şans' }
@@ -10,7 +10,7 @@ const BADGE = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'İkinci şans'
 export default function ProductCard({ item, onlyModes }) {
   const { favorites, toggleFavorite } = useApp()
   const fav = favorites.includes(item.id)
-  const likes = likesOf(item.id) + (fav ? 1 : 0)
+  const likes = item.likes || 0
 
   return (
     <article className="card">

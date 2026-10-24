@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ImagePlus, X, Star, Tag, Repeat, Gift, Check, ArrowLeft, ArrowRight, Handshake, Truck, MapPin } from 'lucide-react'
 import Img from '../components/Img'
@@ -17,7 +17,6 @@ const MODE_CARDS = [
 export default function Share() {
   const navigate = useNavigate()
   const { addListing, notify, profile } = useApp()
-  const fileRef = useRef(null)
   const [search] = useSearchParams()
   const lockedMode = ['sale', 'swap', 'free'].includes(search.get('mode')) ? search.get('mode') : ''
   const [step, setStep] = useState(0)
@@ -34,9 +33,24 @@ export default function Share() {
 
   const toggleMode = (id) => setForm((f) => ({ ...f, modes: [id] }))
 
-  const onFiles = (files) => {
-    const list = Array.from(files || []).filter((f) => f.type.startsWith('image/')).slice(0, 8 - photos.length)
-    setPhotos((p) => [...p, ...list.map((f) => URL.createObjectURL(f))])
+  // Şəkillər hələlik link kimi əlavə olunur (https://...)
+  const [link, setLink] = useState('')
+  const [linkError, setLinkError] = useState('')
+  const addLink = (e) => {
+    e?.preventDefault()
+    const url = link.trim()
+    try {
+      const u = new URL(url)
+      if (!['http:', 'https:'].includes(u.protocol)) throw new Error()
+    } catch {
+      setLinkError('Link https:// ilə başlamalıdır')
+      return
+    }
+    if (photos.includes(url)) return setLinkError('Bu şəkil artıq əlavə olunub')
+    if (photos.length >= 8) return setLinkError('Ən çoxu 8 şəkil')
+    setPhotos((p) => [...p, url])
+    setLink('')
+    setLinkError('')
   }
 
   const makeCover = (i) => setPhotos((p) => [p[i], ...p.filter((_, j) => j !== i)])
@@ -54,7 +68,7 @@ export default function Share() {
   ]
 
   const preview = {
-    id: `n${Date.now()}`,
+    id: 'preview',
     title: form.title || 'Əşyanın adı',
     category: form.category || 'diger',
     price: isFree ? Number(form.price) || 0 : Number(form.price) || 0,
@@ -63,7 +77,7 @@ export default function Share() {
     repair: isFree ? form.repair : undefined,
     district: form.district,
     modes: form.modes,
-    seller: 'me',
+    seller: 'preview',
     posted: 'İndicə',
     aspect: 'tall',
     images: photos,
@@ -74,10 +88,19 @@ export default function Share() {
     delivery: form.delivery,
   }
 
-  const publish = () => {
-    addListing(preview)
-    notify('Elanın dərc edildi — Paylaşdıqlarım bölməsində idarə edə bilərsən')
-    navigate('/paylasdiqlarim')
+  const [publishing, setPublishing] = useState(false)
+  const publish = async () => {
+    setPublishing(true)
+    try {
+      const { id, seller, posted, ...body } = preview
+      await addListing({ ...body, price: Math.round(body.price), aspect: 'tall' })
+      notify('Elanın dərc edildi — Paylaşdıqlarım bölməsində idarə edə bilərsən')
+      navigate('/paylasdiqlarim')
+    } catch (err) {
+      notify(err.message)
+    } finally {
+      setPublishing(false)
+    }
   }
 
   return (
@@ -105,20 +128,24 @@ export default function Share() {
       <div className="share-body">
         {step === 0 && (
           <div className="fade-in">
-            <div
-              className="dropzone"
-              onClick={() => fileRef.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                e.preventDefault()
-                onFiles(e.dataTransfer.files)
-              }}
-            >
-              <ImagePlus size={34} strokeWidth={1.4} />
-              <strong>Şəkil əlavə et</strong>
-              <span>Telefonundan seç və ya bura sürüşdür · maksimum 8 şəkil</span>
-              <input ref={fileRef} type="file" accept="image/*" multiple capture="environment" hidden onChange={(e) => onFiles(e.target.files)} />
-            </div>
+            <form className="link-add" onSubmit={addLink}>
+              <ImagePlus size={22} strokeWidth={1.5} />
+              <input
+                value={link}
+                onChange={(e) => {
+                  setLink(e.target.value)
+                  setLinkError('')
+                }}
+                placeholder="Şəklin linkini yapışdır — https://..."
+                aria-label="Şəkil linki"
+                inputMode="url"
+              />
+              <button className="btn btn-primary btn-sm" type="submit" disabled={!link.trim()}>
+                Əlavə et
+              </button>
+            </form>
+            {linkError && <p className="link-add-error">{linkError}</p>}
+            <p className="hint">Şəkil yükləmə tezliklə əlavə olunacaq. Hələlik internetdəki şəklin linkini yapışdır: şəklə sağ klik → “Şəkil ünvanını kopyala”. Ən çoxu 8 şəkil.</p>
             {photos.length > 0 && (
               <div className="photo-grid">
                 {photos.map((src, i) => (
@@ -138,7 +165,6 @@ export default function Share() {
                 ))}
               </div>
             )}
-            <p className="hint">İpucu: gün işığında, sadə fonda çəkilmiş şəkillər daha tez diqqət çəkir.</p>
           </div>
         )}
 
@@ -305,7 +331,7 @@ export default function Share() {
             Davam et <ArrowRight size={16} />
           </button>
         ) : (
-          <button className="btn btn-lime btn-lg" onClick={publish}>
+          <button className="btn btn-lime btn-lg" onClick={publish} disabled={publishing}>
             Elanı dərc et <Check size={18} />
           </button>
         )}

@@ -4,7 +4,7 @@ import { Wrench, Recycle, HandHeart, Plus, Scissors, Hammer, Cpu } from 'lucide-
 import Img from '../components/Img'
 import CollectButton from '../components/CollectButton'
 import CategoryBrowser, { DISTRICT_FILTER } from '../components/CategoryBrowser'
-import { REPAIR_LEVELS, formatPrice, likesOf } from '../data'
+import { REPAIR_LEVELS, formatPrice } from '../data'
 import { useApp } from '../store'
 
 const LEVEL_ICON = { 'Kiçik təmir': Scissors, 'Ciddi təmir': Hammer, 'Hissələr üçün': Cpu }
@@ -37,7 +37,7 @@ function RepairCard({ item }) {
             onClick={() => toggleFavorite(item.id)}
             aria-label={fav ? 'Seçilmişlərdən çıxar' : 'Seçilmişlərə əlavə et'}
           >
-            {fav ? 'Saxlanıldı' : 'Saxla'} · {likesOf(item.id) + (fav ? 1 : 0)}
+            {fav ? 'Saxlanıldı' : 'Saxla'} · {item.likes || 0}
           </button>
         </div>
       </div>
@@ -66,7 +66,7 @@ const COST_FILTER = {
 
 export default function SecondChance() {
   const { allItems } = useApp()
-  const all = useMemo(() => allItems.filter((l) => l.modes.includes('free')), [allItems])
+  const all = useMemo(() => allItems.filter((l) => l.modes.includes('free') && l.status === 'active'), [allItems])
 
   return (
     <div className="sc-page">

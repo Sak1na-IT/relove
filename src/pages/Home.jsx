@@ -6,7 +6,7 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { CURATED, likesOf } from '../data'
+import { CURATED } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
@@ -110,7 +110,7 @@ export default function Home() {
   const swapA = getItem('l1')
   const swapB = getItem('l4')
   const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...listings].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 6)
+  const popular = [...listings].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
@@ -131,7 +131,7 @@ export default function Home() {
               <span className="likes-photo">
                 <Img src={item.images[0]} alt={item.title} />
                 <span className="likes-count">
-                  <Heart size={12} fill="currentColor" /> {likesOf(item.id)}
+                  <Heart size={12} fill="currentColor" /> {item.likes || 0}
                 </span>
               </span>
               <span className="likes-body">

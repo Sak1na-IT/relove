@@ -11,10 +11,11 @@ export default function ContactCard({ seller, item }) {
   const masked = seller.phone ? seller.phone.replace(/(\d{2} \d{3}) (\d{2}) (\d{2})$/, '$1 •• ••') : ''
   const digits = seller.phone ? seller.phone.replace(/\D/g, '') : ''
 
-  const message = () => {
-    startConversation(seller.id, item.id, `Salam! "${item.title}" elanı ilə bağlı yazıram.`)
+  const message = async () => {
+    const convId = await startConversation(seller.id, item.id, `Salam! "${item.title}" elanı ilə bağlı yazıram.`)
+    if (!convId) return
     notify('Söhbət açıldı')
-    navigate('/mesajlar')
+    navigate(`/mesajlar?c=${convId}`)
   }
 
   return (

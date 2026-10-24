@@ -4,19 +4,20 @@ import {
   ArrowLeft, Heart, MapPin, Star, BadgeCheck, Zap, Repeat, MessageCircle, Gift, Handshake, Truck, Share2, Flag,
 } from 'lucide-react'
 import Img from '../components/Img'
+import Avatar from '../components/Avatar'
 import CollectButton from '../components/CollectButton'
 import ModeBadge from '../components/ModeBadge'
 import ProductCard from '../components/ProductCard'
 import SwapModal from '../components/SwapModal'
 import ContactCard from '../components/ContactCard'
-import { USERS, catById, formatPrice } from '../data'
+import { catById, formatPrice } from '../data'
 import { useApp } from '../store'
 import NotFound from './NotFound'
 
 export default function Product() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { getItem, listings, favorites, toggleFavorite, startConversation, notify } = useApp()
+  const { getItem, listings, favorites, toggleFavorite, startConversation, notify, users, me, ensureUsers } = useApp()
   const item = getItem(id)
   const [active, setActive] = useState(0)
   const infoRef = useRef(null)
@@ -36,18 +37,24 @@ export default function Product() {
   }, [id])
   const [swapOpen, setSwapOpen] = useState(false)
 
+  useEffect(() => {
+    if (item?.seller) ensureUsers([item.seller])
+  }, [item?.seller, ensureUsers])
+
   if (!item) return <NotFound />
 
-  const seller = USERS[item.seller]
-  const isMine = item.seller === 'me'
+  // Satıcının profili hələ gəlməyibsə, qısa əvəzedici
+  const seller = users[item.seller] || { id: item.seller, name: 'Satıcı', district: item.district, rating: null, reviews: 0 }
+  const isMine = item.seller === me?.id
   const fav = favorites.includes(item.id)
   const more = listings.filter((l) => l.seller === item.seller && l.id !== item.id).slice(0, 4)
   const similar = listings.filter((l) => l.category === item.category && l.id !== item.id).slice(0, 4)
 
-  const contact = (text) => {
-    startConversation(item.seller, item.id, text)
+  const contact = async (text) => {
+    const convId = await startConversation(item.seller, item.id, text)
+    if (!convId) return
     notify('Mesaj göndərildi')
-    navigate('/mesajlar')
+    navigate(`/mesajlar?c=${convId}`)
   }
 
   const primary = item.modes.includes('free')
@@ -172,17 +179,13 @@ export default function Product() {
 
               <div className="pd-seller">
                 <Link to={isMine ? '/profil' : '#'} className="pd-seller-main" onClick={(e) => !isMine && e.preventDefault()}>
-                  {seller.avatar ? (
-                    <Img src={seller.avatar} alt={seller.name} className="seller-avatar" />
-                  ) : (
-                    <span className="seller-avatar avatar-initials">{seller.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
-                  )}
+                  <Avatar user={seller} className="seller-avatar" />
                   <span className="pd-seller-text">
                     <strong>
                       {seller.name} {seller.verified && <BadgeCheck size={15} className="verified" />}
                     </strong>
                     <small>
-                      <Star size={12} fill="currentColor" /> {seller.rating} · {seller.reviews} rəy · {seller.district}
+                      <Star size={12} fill="currentColor" /> {seller.rating ?? 'Yeni'} · {seller.reviews} rəy · {seller.district}
                       {seller.fastReply && <em><Zap size={12} /> Sürətli cavab verir</em>}
                     </small>
                   </span>

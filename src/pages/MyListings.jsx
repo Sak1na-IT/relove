@@ -4,7 +4,8 @@ import {
   Tag, Repeat, Sparkles, Phone, Star, MessageCircle, MapPin, Handshake, Truck, Eye, EyeOff, Trash2, Check, Pencil, RotateCcw,
 } from 'lucide-react'
 import Img from '../components/Img'
-import { formatPrice, likesOf, USERS, REVIEWS, DISTRICTS } from '../data'
+import Avatar from '../components/Avatar'
+import { formatPrice, DISTRICTS } from '../data'
 import { useApp } from '../store'
 
 const SECTIONS = {
@@ -73,7 +74,7 @@ function ContactEditor({ value, onSave, onCancel }) {
 }
 
 export default function MyListings() {
-  const { myItems, updateItem, removeItem, profile, setProfile, notify, offers } = useApp()
+  const { myItems, updateItem, removeItem, profile, setProfile, notify, incomingOffers, outgoingOffers, me, myReviews, users } = useApp()
   const [tab, setTab] = useState('all')
   const [confirm, setConfirm] = useState(null)
   const [editing, setEditing] = useState(false)
@@ -96,8 +97,8 @@ export default function MyListings() {
         </div>
         <div className="mine-stats">
           <div><strong>{active}</strong><span>aktiv elan</span></div>
-          <div><strong>{offers.length + 1}</strong><span>dəyiş təklifi</span></div>
-          <div><strong>{items.reduce((n, m) => n + likesOf(m.id), 0)}</strong><span>bəyənmə</span></div>
+          <div><strong>{incomingOffers.length + outgoingOffers.length}</strong><span>dəyiş təklifi</span></div>
+          <div><strong>{items.reduce((n, m) => n + (m.likes || 0), 0)}</strong><span>bəyənmə</span></div>
         </div>
       </header>
 
@@ -150,13 +151,13 @@ export default function MyListings() {
                     <p className="mine-meta">
                       <span className="with-icon"><MapPin size={12} /> {m.district}</span>
                       <span>{m.posted}</span>
-                      <span>♡ {likesOf(m.id)}</span>
+                      <span>♡ {m.likes || 0}</span>
                     </p>
                   </div>
                   <div className="mine-actions">
                     <Link to={`/elan/${m.id}`} className="mine-act" title="Elana bax"><Pencil size={15} /> Bax</Link>
                     {m.status === 'active' && (
-                      <button className="mine-act" onClick={() => { updateItem(m.id, { status: 'sold' }); notify('Elan “satıldı” kimi qeyd edildi') }}>
+                      <button className="mine-act" onClick={async () => { if (await updateItem(m.id, { status: 'sold' })) notify('Elan “satıldı” kimi qeyd edildi') }}>
                         <Check size={15} /> {m.modes.includes('swap') && !m.modes.includes('sale') ? 'Dəyişildi' : 'Satıldı'}
                       </button>
                     )}
@@ -165,14 +166,14 @@ export default function MyListings() {
                         <RotateCcw size={15} /> Aktivləşdir
                       </button>
                     ) : (
-                      <button className="mine-act" onClick={() => { updateItem(m.id, { status: 'hidden' }); notify('Elan gizlədildi') }}>
+                      <button className="mine-act" onClick={async () => { if (await updateItem(m.id, { status: 'hidden' })) notify('Elan gizlədildi') }}>
                         <EyeOff size={15} /> Gizlət
                       </button>
                     )}
                     {confirm === m.id ? (
                       <span className="mine-confirm">
                         Silinsin?
-                        <button onClick={() => { removeItem(m.id); setConfirm(null); notify('Elan silindi') }}>Bəli</button>
+                        <button onClick={async () => { setConfirm(null); if (await removeItem(m.id)) notify('Elan silindi') }}>Bəli</button>
                         <button onClick={() => setConfirm(null)}>Xeyr</button>
                       </span>
                     ) : (
@@ -190,15 +191,16 @@ export default function MyListings() {
             <div className="mine-reviews-head">
               <h2 className="h3-serif">Haqqımda rəylər</h2>
               <span className="mine-rating">
-                <Star size={16} fill="currentColor" /> {USERS.me.rating} <small>· {USERS.me.reviews} rəy</small>
+                <Star size={16} fill="currentColor" /> {me?.rating ?? '—'} <small>· {me?.reviews ?? 0} rəy</small>
               </span>
             </div>
             <ul className="mine-review-list">
-              {REVIEWS.map((r, i) => {
-                const u = USERS[r.from]
+              {myReviews.length === 0 && <li className="mine-review-empty">Hələ rəy yoxdur.</li>}
+              {myReviews.map((r) => {
+                const u = users[r.from] || { name: 'İstifadəçi' }
                 return (
-                  <li key={i}>
-                    <Img src={u.avatar} alt={u.name} className="mine-review-avatar" />
+                  <li key={r.id}>
+                    <Avatar user={u} className="mine-review-avatar" />
                     <div>
                       <div className="mine-review-top">
                         <strong>{u.name}</strong>

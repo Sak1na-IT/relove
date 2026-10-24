@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Heart, MessageCircle, User, LayoutList } from 'lucide-react'
+import { Heart, MessageCircle, User, LayoutList, LogIn } from 'lucide-react'
 import Logo from './Logo'
 import { useApp } from '../store'
 
@@ -15,7 +15,7 @@ const LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
-  const { conversations, favorites } = useApp()
+  const { conversations, favorites, me } = useApp()
   const unread = conversations.reduce((n, c) => n + c.unread, 0)
 
   const isActive = (to) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
@@ -51,12 +51,20 @@ export default function Navbar() {
             <MessageCircle size={20} strokeWidth={1.6} />
             {unread > 0 && <span className="dot-count">{unread}</span>}
           </Link>
-          <Link to="/profil" className="icon-btn" aria-label="Profilim">
-            <User size={20} strokeWidth={1.6} />
-          </Link>
-          <Link to="/paylasdiqlarim" className={`btn btn-sm hide-md ${location.pathname === '/paylasdiqlarim' ? 'btn-primary' : 'btn-ghost'}`}>
-            <LayoutList size={16} strokeWidth={1.8} /> Paylaşdıqlarım
-          </Link>
+          {me ? (
+            <>
+              <Link to="/profil" className="icon-btn" aria-label="Profilim">
+                <User size={20} strokeWidth={1.6} />
+              </Link>
+              <Link to="/paylasdiqlarim" className={`btn btn-sm hide-md ${location.pathname === '/paylasdiqlarim' ? 'btn-primary' : 'btn-ghost'}`}>
+                <LayoutList size={16} strokeWidth={1.8} /> Paylaşdıqlarım
+              </Link>
+            </>
+          ) : (
+            <Link to="/giris" className="btn btn-sm btn-primary">
+              <LogIn size={16} strokeWidth={1.8} /> Daxil ol
+            </Link>
+          )}
         </div>
       </div>
     </header>

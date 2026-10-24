@@ -1,14 +1,14 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Repeat, Plus, Clock, MapPin, Heart, Check } from 'lucide-react'
+import { Repeat, Plus, Clock, MapPin, Heart, Check, X } from 'lucide-react'
 import Img from '../components/Img'
 import CollectButton from '../components/CollectButton'
 import SwapModal from '../components/SwapModal'
-import { USERS, formatPrice } from '../data'
+import { formatPrice } from '../data'
 import CategoryBrowser from '../components/CategoryBrowser'
 import { useApp } from '../store'
 
-const firstName = (id) => USERS[id].name.split(' ')[0]
+const firstName = (user) => (user?.name || 'Satıcı').split(' ')[0]
 
 function SwapCard({ item, onOffer }) {
   const { favorites, toggleFavorite } = useApp()
@@ -41,16 +41,14 @@ function SwapCard({ item, onOffer }) {
   )
 }
 
-const INCOMING = [{ id: 'in1', from: 'u1', theirId: 'l9', myId: 'm1', created: 'Bu gün, 14:20' }]
 
 export default function Swap() {
   const navigate = useNavigate()
-  const { listings, myItems, offers, getItem, startConversation, notify } = useApp()
+  const { listings, myItems, incomingOffers: incoming, outgoingOffers: offers, respondOffer, users, startConversation, notify, requireAuth } = useApp()
   const [target, setTarget] = useState(null)
   const [tab, setTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'all')
-  const [incoming, setIncoming] = useState(INCOMING.map((o) => ({ ...o, status: 'new' })))
 
-  const mySwap = myItems.filter((m) => m.modes.includes('swap'))
+  const mySwap = myItems.filter((m) => m.modes.includes('swap') && m.status === 'active')
   const open = listings.filter((l) => l.modes.includes('swap'))
 
   const matches = useMemo(() => {
@@ -67,7 +65,7 @@ export default function Swap() {
     return pairs.sort((a, b) => b.score - a.score).filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
   }, [mySwap, open])
 
-  const newIncoming = incoming.filter((o) => o.status === 'new').length
+  const newIncoming = incoming.filter((o) => o.status === 'pending').length
 
   const TABS = [
     { id: 'all', label: 'Dəyiş elanları', count: open.length },
@@ -81,11 +79,16 @@ export default function Swap() {
     document.getElementById('swap-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const accept = (o) => {
-    setIncoming((list) => list.map((x) => (x.id === o.id ? { ...x, status: 'accepted' } : x)))
-    notify('Təklif qəbul edildi — indi mesajlaşa bilərsiniz')
+  const accept = async (o) => {
+    if (await respondOffer(o.id, 'accepted')) notify('Təklif qəbul edildi — indi mesajlaşa bilərsiniz')
   }
-  const decline = (o) => setIncoming((list) => list.map((x) => (x.id === o.id ? { ...x, status: 'declined' } : x)))
+  const decline = async (o) => {
+    if (await respondOffer(o.id, 'rejected')) notify('Təklif rədd edildi')
+  }
+  const cancel = async (o) => {
+    if (await respondOffer(o.id, 'cancelled')) notify('Təklif ləğv edildi')
+  }
+  const openOffer = (item) => requireAuth() && setTarget(item)
 
   return (
     <div className="swap3">
@@ -114,7 +117,7 @@ export default function Swap() {
           <>
             <CategoryBrowser
               pool={open}
-              renderItem={(item) => <SwapCard key={item.id} item={item} onOffer={setTarget} />}
+              renderItem={(item) => <SwapCard key={item.id} item={item} onOffer={openOffer} />}
               gridClass="swap2-grid"
               searchPlaceholder="Dəyiş elanlarında axtar — məs. qulaqlıq, palto..."
               allTitle="Bütün dəyiş elanları"
@@ -144,7 +147,7 @@ export default function Swap() {
                   <div className="match2-foot">
                     <span className="match2-score"><span style={{ width: `${score}%` }} /></span>
                     <span className="match2-score-text">{score}% uyğun</span>
-                    <button className="btn btn-primary btn-sm" onClick={() => setTarget(theirs)}>Təklif göndər</button>
+                    <button className="btn btn-primary btn-sm" onClick={() => openOffer(theirs)}>Təklif göndər</button>
                   </div>
                 </article>
               ))}
@@ -178,10 +181,12 @@ export default function Swap() {
             <div className="myswap">
               <h3 className="offers-title">Mənə gələn təkliflər</h3>
               <div className="myswap-list">
+                {incoming.length === 0 && <p className="myswap-empty">Hələ sənə təklif gəlməyib.</p>}
                 {incoming.map((o) => {
-                  const theirs = getItem(o.theirId)
-                  const mine = getItem(o.myId)
-                  const who = USERS[o.from]
+                  const theirs = o.offered
+                  const mine = o.target
+                  const who = users[o.from] || { name: 'İstifadəçi' }
+                  if (!theirs || !mine) return null
                   return (
                     <div key={o.id} className="offer-card">
                       <div className="myswap-thumb myswap-thumb-pair">
@@ -190,9 +195,12 @@ export default function Swap() {
                       </div>
                       <div className="myswap-text">
                         <strong>{who.name} təklif edir: {theirs.title}</strong>
-                        <span>Sənin “{mine.title}” əşyanın əvəzinə · {o.created}</span>
+                        <span>
+                          Sənin “{mine.title}” əşyanın əvəzinə{o.cash > 0 ? ` · üstünə ${formatPrice(o.cash)}` : ''} · {o.created}
+                        </span>
+                        {o.note && <span className="offer-note">“{o.note}”</span>}
                       </div>
-                      {o.status === 'new' && (
+                      {o.status === 'pending' && (
                         <div className="offer-actions">
                           <button className="btn btn-primary btn-sm" onClick={() => accept(o)}>
                             <Check size={14} /> Qəbul et
@@ -205,9 +213,9 @@ export default function Swap() {
                           <span className="status status-ok"><Check size={13} /> Qəbul edildi</span>
                           <button
                             className="btn btn-primary btn-sm"
-                            onClick={() => {
-                              startConversation(o.from, o.theirId, 'Salam! Təklifinizi qəbul etdim. Nə vaxt görüşək?')
-                              navigate('/mesajlar')
+                            onClick={async () => {
+                              const convId = await startConversation(o.from, theirs.id, 'Salam! Təklifinizi qəbul etdim. Nə vaxt görüşək?')
+                              if (convId) navigate(`/mesajlar?c=${convId}`)
                             }}
                           >
                             Mesaj yaz
@@ -215,7 +223,8 @@ export default function Swap() {
                           {who.phone && <a className="btn btn-ghost btn-sm" href={`tel:+${who.phone.replace(/\D/g, '')}`}>{who.phone}</a>}
                         </div>
                       )}
-                      {o.status === 'declined' && <span className="status">Rədd edildi</span>}
+                      {o.status === 'rejected' && <span className="status">Rədd edildi</span>}
+                      {o.status === 'cancelled' && <span className="status">Ləğv edildi</span>}
                     </div>
                   )
                 })}
@@ -231,8 +240,9 @@ export default function Swap() {
                   </p>
                 ) : (
                   offers.map((o) => {
-                    const t = getItem(o.targetId)
-                    const m = getItem(o.myItemId)
+                    const t = o.target
+                    const m = o.offered
+                    if (!t || !m) return null
                     return (
                       <div key={o.id} className="offer-card">
                         <div className="myswap-thumb myswap-thumb-pair">
@@ -241,9 +251,19 @@ export default function Swap() {
                         </div>
                         <div className="myswap-text">
                           <strong>{m.title} → {t.title}</strong>
-                          <span>{firstName(t.seller)} · {o.cash > 0 ? `üstünə ${formatPrice(o.cash)} · ` : ''}{o.created}</span>
+                          <span>{firstName(users[t.seller])} · {o.cash > 0 ? `üstünə ${formatPrice(o.cash)} · ` : ''}{o.created}</span>
                         </div>
-                        <span className="status"><Clock size={13} /> Cavab gözlənilir</span>
+                        {o.status === 'pending' && (
+                          <div className="offer-actions">
+                            <span className="status"><Clock size={13} /> Cavab gözlənilir</span>
+                            <button className="btn btn-ghost btn-sm" onClick={() => cancel(o)}>
+                              <X size={14} /> Ləğv et
+                            </button>
+                          </div>
+                        )}
+                        {o.status === 'accepted' && <span className="status status-ok"><Check size={13} /> Qəbul edildi</span>}
+                        {o.status === 'rejected' && <span className="status">Rədd edildi</span>}
+                        {o.status === 'cancelled' && <span className="status">Ləğv edildi</span>}
                       </div>
                     )
                   })

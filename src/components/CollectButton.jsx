@@ -8,7 +8,7 @@ import { useApp } from '../store'
 // Əşyanı istifadəçinin öz kolleksiyalarına əlavə etmək üçün düymə + pəncərə
 export default function CollectButton({ item, variant = 'icon' }) {
   const [open, setOpen] = useState(false)
-  const { userCollections } = useApp()
+  const { userCollections, requireAuth } = useApp()
   const inAny = userCollections.some((c) => c.items.includes(item.id))
 
   return (
@@ -16,14 +16,14 @@ export default function CollectButton({ item, variant = 'icon' }) {
       {variant === 'icon' ? (
         <button
           className={`card-collect ${inAny ? 'is-on' : ''}`}
-          onClick={() => setOpen(true)}
+          onClick={() => requireAuth() && setOpen(true)}
           aria-label="Kolleksiyaya əlavə et"
           title="Kolleksiyaya əlavə et"
         >
           {inAny ? <Check size={15} strokeWidth={2.2} /> : <FolderPlus size={15} strokeWidth={1.8} />}
         </button>
       ) : (
-        <button className={`collect-link ${inAny ? 'is-on' : ''}`} onClick={() => setOpen(true)}>
+        <button className={`collect-link ${inAny ? 'is-on' : ''}`} onClick={() => requireAuth() && setOpen(true)}>
           {inAny ? <Check size={16} /> : <FolderPlus size={16} strokeWidth={1.8} />}
           {inAny ? 'Kolleksiyandadır' : 'Kolleksiyaya əlavə et'}
         </button>
@@ -45,8 +45,8 @@ function CollectModal({ item, onClose }) {
   const create = (e) => {
     e.preventDefault()
     if (!name.trim()) return
-    addCollection({ id: `m-${Date.now()}`, title: name.trim(), text: '', items: [item.id], isPublic: true })
-    notify(`“${name.trim()}” yaradıldı və əşya əlavə olundu`)
+    const title = name.trim()
+    addCollection({ title, text: '', items: [item.id], isPublic: true }).then((c) => c && notify(`“${title}” yaradıldı və əşya əlavə olundu`))
     setName('')
   }
 
