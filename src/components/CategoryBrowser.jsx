@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Search, X, LayoutGrid } from 'lucide-react'
-import Img from './Img'
+import { Search, X } from 'lucide-react'
 import Dropdown from './Dropdown'
 import { DEPARTMENTS, DISTRICTS, deptById, likesOf } from '../data'
 
@@ -68,8 +67,7 @@ function TopNav({ dept, sub, pool, onPick }) {
     <div className="topcat" onMouseLeave={leave}>
       <div className="topcat-bar" role="tablist" aria-label="Kateqoriyalar">
         <button role="tab" aria-selected={!dept} className={`topcat-tab ${!dept ? 'is-on' : ''}`} onClick={() => onPick('', '')} onMouseEnter={() => enter('')}>
-          <span className="topcat-dot"><LayoutGrid size={14} strokeWidth={1.6} /></span>
-          Hamısı
+          Hamısı<sup>{pool.length}</sup>
         </button>
         {DEPARTMENTS.map((d) => {
           const n = count(d.id)
@@ -84,10 +82,8 @@ function TopNav({ dept, sub, pool, onPick }) {
               onFocus={() => setHover('')}
               disabled={n === 0}
             >
-              <span className="topcat-dot">
-                <Img src={d.photo} alt="" />
-              </span>
               {d.label}
+              <sup>{n}</sup>
             </button>
           )
         })}
@@ -95,18 +91,15 @@ function TopNav({ dept, sub, pool, onPick }) {
 
       {hovered && (
         <div className="topcat-pop" onMouseEnter={() => enter(hovered.id)}>
-          {hovered.groups.map((g) => (
+          {hovered.groups.filter((g) => g.items.some((it) => subCount(hovered.id, it) > 0)).map((g) => (
             <div key={g.title} className="topcat-pop-col">
               <span>{g.title}</span>
-              {g.items.map((it) => {
-                const c = subCount(hovered.id, it)
-                return (
-                  <button key={it} onClick={() => { onPick(hovered.id, it); setHover('') }} disabled={!c}>
-                    {it}
-                    {c > 0 && <em>{c}</em>}
-                  </button>
-                )
-              })}
+              {g.items.filter((it) => subCount(hovered.id, it) > 0).map((it) => (
+                <button key={it} onClick={() => { onPick(hovered.id, it); setHover('') }}>
+                  {it}
+                  <em>{subCount(hovered.id, it)}</em>
+                </button>
+              ))}
             </div>
           ))}
           <button className="topcat-pop-all" onClick={() => { onPick(hovered.id, ''); setHover('') }}>
@@ -121,14 +114,11 @@ function TopNav({ dept, sub, pool, onPick }) {
             <button className={!sub ? 'is-on' : ''} onClick={() => onPick(dept, '')}>
               Hamısı <em>{count(dept)}</em>
             </button>
-            {active.groups.flatMap((g) => g.items).map((it) => {
-              const c = subCount(dept, it)
-              return (
-                <button key={it} className={sub === it ? 'is-on' : ''} onClick={() => onPick(dept, sub === it ? '' : it)} disabled={!c}>
-                  {it} {c > 0 && <em>{c}</em>}
-                </button>
-              )
-            })}
+            {active.groups.flatMap((g) => g.items).filter((it) => subCount(dept, it) > 0).map((it) => (
+              <button key={it} className={sub === it ? 'is-on' : ''} onClick={() => onPick(dept, sub === it ? '' : it)}>
+                {it} <em>{subCount(dept, it)}</em>
+              </button>
+            ))}
           </>
         ) : (
           <>
@@ -187,16 +177,13 @@ export default function CategoryBrowser({
   }, [pool, params])
 
   const d = dept ? deptById(dept) : null
-  const title = q ? `“${q}” üzrə nəticələr` : sub || d?.label || allTitle
   const activeFilters = filters.filter((f) => get(f.key))
   const pick = (dd, ss) => setMany({ dept: dd, sub: ss })
 
   return (
     <div className="browse4">
-      <TopNav dept={dept} sub={sub} pool={pool} onPick={pick} />
-
-      <div className="browse4-main">
-        <form className="search-big browse-search" onSubmit={(e) => e.preventDefault()} role="search">
+      <div className="browse4-search">
+          <form className="search-big browse-search" onSubmit={(e) => e.preventDefault()} role="search">
           <Search size={18} />
           <input value={q} onChange={(e) => set('q', e.target.value)} placeholder={d ? `${d.label} bölməsində axtar...` : searchPlaceholder} aria-label="Axtarış" />
           {q && (
@@ -205,23 +192,16 @@ export default function CategoryBrowser({
             </button>
           )}
         </form>
+      </div>
+      <TopNav dept={dept} sub={sub} pool={pool} onPick={pick} />
 
-        <div className="browse3-head">
-          <div className="browse3-title">
-            {d && (
-              <span className="browse3-crumb">
-                <button onClick={() => pick('', '')}>Hamısı</button> / {sub ? <button onClick={() => pick(dept, '')}>{d.label}</button> : d.label}
-              </span>
-            )}
-            <h2>{title}</h2>
-          </div>
-          <span className="explore-count">
-            {results.length} {unit}
-          </span>
-        </div>
+      <div className="browse4-main">
 
         <div className="browse-toolbar">
           <div className="browse-filters">
+            <span className="browse-count">
+              <b>{results.length}</b> {unit}
+            </span>
             {filters.map((f) => (
               <Dropdown key={f.key} label={f.label} allLabel={f.allLabel} value={get(f.key)} onChange={(v) => set(f.key, v)} options={f.options} />
             ))}

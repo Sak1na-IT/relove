@@ -9631,3 +9631,155 @@ body {
     flex: 0 0 150px;
   }
 }
+
+/* =========================================================
+   v17 — premium kateqoriya naviqasiyası (şəkilsiz, serif)
+   ========================================================= */
+.browse4-search .browse-search {
+  margin-bottom: 26px;
+}
+
+.topcat {
+  margin-bottom: 8px;
+}
+
+.topcat-bar {
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.topcat-tab {
+  gap: 0;
+  padding: 16px 22px 15px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+}
+
+.topcat-tab:first-child {
+  padding-left: 2px;
+}
+
+.topcat-tab sup {
+  margin-left: 4px;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+
+.topcat-tab::after {
+  left: 22px;
+  right: 22px;
+  height: 1.5px;
+  background: var(--brass);
+}
+
+.topcat-tab:first-child::after {
+  left: 2px;
+}
+
+.topcat-tab.is-on {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.topcat-tab.is-on sup {
+  color: var(--brass);
+}
+
+.topcat-dot {
+  display: none;
+}
+
+/* hover panel */
+.topcat-pop {
+  top: 58px;
+  gap: 18px 56px;
+  padding: 26px 30px 24px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: 0;
+}
+
+.topcat-pop-col > span {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+/* sub row */
+.topcat-subs {
+  gap: 2px 26px;
+  min-height: 50px;
+  padding-top: 14px;
+}
+
+.topcat-subs button {
+  position: relative;
+  padding: 4px 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.topcat-subs button:hover:not(:disabled) {
+  background: transparent;
+  color: var(--forest);
+}
+
+.topcat-subs button.is-on {
+  background: transparent;
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.topcat-subs button.is-on::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1.5px;
+  background: var(--forest);
+}
+
+.topcat-subs button.is-on em {
+  color: var(--brass);
+}
+
+.topcat-subs-label {
+  font-size: 13px;
+  margin-right: -10px;
+}
+
+/* toolbar with count */
+.browse-count {
+  margin-right: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.browse-count b {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .topcat-tab {
+    padding: 13px 14px 12px;
+    font-size: 17px;
+  }
+
+  .topcat-tab::after {
+    left: 14px;
+    right: 14px;
+  }
+
+  .browse-count {
+    flex-shrink: 0;
+  }
+}
