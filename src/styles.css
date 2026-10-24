@@ -10088,3 +10088,158 @@ body {
     flex-direction: row;
   }
 }
+
+/* v20 — Kolleksiyalar: sakit, lüks redaksiya görünüşü */
+.collections-page .coll-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0;
+  padding: 72px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.coll-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--forest);
+}
+
+.coll-count {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.coll-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 48px 28px;
+  margin-top: 44px;
+  padding-bottom: 40px;
+}
+
+.coll-grid .cover {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  gap: 3px;
+}
+
+.coll-grid .curated-card {
+  gap: 18px;
+}
+
+.coll-grid .curated-card .img {
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.coll-grid .curated-card:hover .img {
+  transform: scale(1.03);
+}
+
+.coll-grid .curated-body strong {
+  font-weight: 500;
+  font-size: 23px;
+  letter-spacing: 0.005em;
+}
+
+.coll-grid .curated-body p {
+  margin: 6px 0 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.coll-grid .curated-body small {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* yarat kartı */
+.coll-grid .coll-new-box {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 0;
+  background: var(--ivory-2);
+  position: relative;
+  gap: 14px;
+  padding: 32px;
+}
+
+.coll-grid .coll-new-box::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 3px;
+  pointer-events: none;
+  transition: inset 0.4s ease, border-color 0.4s ease;
+}
+
+.coll-grid .coll-new:hover .coll-new-box {
+  background: var(--ivory-2);
+}
+
+.coll-grid .coll-new:hover .coll-new-box::before {
+  inset: 18px;
+  border-color: var(--brass);
+}
+
+.coll-new-plus {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--brass);
+  color: var(--brass);
+  transition: background 0.3s, color 0.3s;
+}
+
+.coll-new:hover .coll-new-plus {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--ivory);
+}
+
+.coll-grid .coll-new-box strong {
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.coll-grid .coll-new-box small {
+  max-width: 200px;
+  line-height: 1.5;
+}
+
+.coll-grid .coll-mine {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  .coll-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .collections-page .coll-head {
+    padding-top: 40px;
+  }
+
+  .coll-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 16px;
+  }
+}

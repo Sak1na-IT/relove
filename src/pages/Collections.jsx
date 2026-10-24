@@ -127,20 +127,15 @@ export default function Collections() {
 
   return (
     <div className="container collections-page">
-      <header className="section-page-head coll-head">
-        <div className="explore-title-row">
-          <h1 className="page-title">Kolleksiyalar</h1>
-          <span className="explore-count">{all.length} kolleksiya</span>
-        </div>
-        <button className="btn btn-primary" onClick={() => setCreating(true)}>
-          <Plus size={16} /> Kolleksiya yarat
-        </button>
+      <header className="coll-head">
+        <h1 className="coll-title">Kolleksiyalar</h1>
+        <span className="coll-count">{all.length} kolleksiya</span>
       </header>
 
-      <div className="curated-grid">
+      <div className="curated-grid coll-grid">
         <button className="curated-card coll-new" onClick={() => setCreating(true)}>
           <span className="coll-new-box">
-            <Plus size={26} strokeWidth={1.5} />
+            <span className="coll-new-plus"><Plus size={22} strokeWidth={1.25} /></span>
             <strong>Öz kolleksiyanı yarat</strong>
             <small>Bəyəndiyin əşyaları bir mövzu altında topla</small>
           </span>
@@ -156,7 +151,7 @@ export default function Collections() {
                   {c.mine && <span className="coll-mine">{c.isPublic ? 'Mənim' : 'Mənim · gizli'}</span>}
                 </strong>
                 {c.text && <p>{c.text}</p>}
-                <small>{items.length} məhsul</small>
+                <small>{items.length} əşya</small>
               </div>
             </Link>
           )
