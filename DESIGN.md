@@ -7,12 +7,12 @@ Relove həm lüks, həm də adi istifadəçi üçün rahat və anlaşıqlı gör
 | Dizayn elementi | Stil adı | Layihədə necə tətbiq olunur |
 | --- | --- | --- |
 | Ümumi dizayn | Premium Editorial Marketplace | Jurnal kimi başlıqlar, böyük fotolar, geniş boşluqlar |
-| Brend üslubu | Modern Quiet Luxury | Az rəng, səs-küysüz detallar; lime yalnız kiçik vurğu |
+| Brend üslubu | Modern Quiet Luxury | Az rəng, səs-küysüz detallar; nar rəngi yalnız kiçik vurğu |
 | Başlıq stili | Elegant Editorial Serif | **Noto Serif Display** 500 |
 | Əsas mətn | Clean Modern Sans-serif | **Onest**, 400–700 |
 | Rəng sistemi | Xəzər (Caspian & Stone) | aşağıdakı cədvələ bax |
 | Məhsul kartları | Editorial Product Cards | kvadrat foto, ad + qiymət, sakit nişanlar, ürək ikonu |
-| Düymələr | Soft Rounded Minimal | tam yuvarlaq (pill), `btn-primary` yaşıl, `btn-ghost` haşiyəli |
+| Düymələr | Soft Rounded Minimal | 12px künc, `btn-primary` Xəzər mavisi, `btn-ghost` haşiyəli |
 | İkonlar | Minimal Outline Icons | `lucide-react`, `strokeWidth` 1.4–1.7 |
 | Şəkillər | Warm Lifestyle Photography | isti işıq, təbii interyer, real əşyalar |
 | Animasiya | Subtle Micro-interactions | yüngül hover, şəkil zoom 1.05, yumşaq keçidlər, `prefers-reduced-motion` dəstəyi |
