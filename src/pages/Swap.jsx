@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Repeat, Plus, Clock, MapPin, Heart, Search, X, Check, Sparkles } from 'lucide-react'
+import { Repeat, Plus, Clock, MapPin, Heart, Check, Sparkles } from 'lucide-react'
 import Img from '../components/Img'
 import SwapModal from '../components/SwapModal'
-import { DEPARTMENTS, USERS, formatPrice } from '../data'
+import { USERS, formatPrice } from '../data'
+import CategoryBrowser from '../components/CategoryBrowser'
 import { useApp } from '../store'
 
 const firstName = (id) => USERS[id].name.split(' ')[0]
@@ -45,9 +46,6 @@ export default function Swap() {
   const { listings, myItems, offers, getItem, startConversation, notify } = useApp()
   const [target, setTarget] = useState(null)
   const [tab, setTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'all')
-  const [dept, setDept] = useState('')
-  const [sub, setSub] = useState('')
-  const [q, setQ] = useState('')
   const [incoming, setIncoming] = useState(INCOMING.map((o) => ({ ...o, status: 'new' })))
 
   const mySwap = myItems.filter((m) => m.modes.includes('swap'))
@@ -67,9 +65,6 @@ export default function Swap() {
     return pairs.sort((a, b) => b.score - a.score).filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
   }, [mySwap, open])
 
-  const grid = open.filter(
-    (l) => (!dept || l.dept === dept) && (!sub || l.sub === sub) && (!q || `${l.title} ${l.wantsText.join(' ')}`.toLowerCase().includes(q.toLowerCase())),
-  )
   const newIncoming = incoming.filter((o) => o.status === 'new').length
 
   const TABS = [
@@ -125,63 +120,13 @@ export default function Swap() {
                 <em>Bax</em>
               </button>
             )}
-            <form className="search-big swap3-search" onSubmit={(e) => e.preventDefault()} role="search">
-              <Search size={18} />
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Dəyiş elanlarında axtar — məs. qulaqlıq, palto..." aria-label="Axtarış" />
-              {q && (
-                <button type="button" className="icon-btn icon-btn-sm" onClick={() => setQ('')} aria-label="Təmizlə">
-                  <X size={16} />
-                </button>
-              )}
-            </form>
-            <div className="dept-pills">
-              <button className={!dept ? 'is-on' : ''} onClick={() => { setDept(''); setSub('') }}>
-                Hamısı <em>{open.length}</em>
-              </button>
-              {DEPARTMENTS.map((d) => {
-                const n = open.filter((l) => l.dept === d.id).length
-                return (
-                  <button key={d.id} className={dept === d.id ? 'is-on' : ''} onClick={() => { setDept(dept === d.id ? '' : d.id); setSub('') }} disabled={n === 0}>
-                    {d.label} <em>{n}</em>
-                  </button>
-                )
-              })}
-            </div>
-            {dept && (
-              <div className="sub-row" aria-label="Alt-kateqoriyalar">
-                {DEPARTMENTS.find((d) => d.id === dept).groups.map((g) => (
-                  <div key={g.title} className="sub-group">
-                    <span className="sub-group-title">{g.title}</span>
-                    {g.items.map((it) => {
-                      const n = open.filter((l) => l.dept === dept && l.sub === it).length
-                      return (
-                        <button
-                          key={it}
-                          className={`sub-link ${sub === it ? 'is-on' : ''}`}
-                          onClick={() => setSub(sub === it ? '' : it)}
-                          disabled={n === 0}
-                        >
-                          {it}
-                          {n > 0 && <em>{n}</em>}
-                        </button>
-                      )
-                    })}
-                  </div>
-                ))}
-              </div>
-            )}
-            {grid.length > 0 ? (
-              <div className="swap2-grid">
-                {grid.map((item) => (
-                  <SwapCard key={item.id} item={item} onOffer={setTarget} />
-                ))}
-              </div>
-            ) : (
-              <div className="empty explore2-empty">
-                <h3>Bu seçimə uyğun dəyiş elanı yoxdur</h3>
-                <p>Başqa bölməyə bax və ya öz əşyanı dəyişə qoy.</p>
-              </div>
-            )}
+            <CategoryBrowser
+              pool={open}
+              renderItem={(item) => <SwapCard key={item.id} item={item} onOffer={setTarget} />}
+              gridClass="swap2-grid"
+              searchPlaceholder="Dəyiş elanlarında axtar — məs. qulaqlıq, palto..."
+              allTitle="Bütün dəyiş elanları"
+            />
           </>
         )}
 

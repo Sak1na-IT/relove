@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Wrench, Recycle, HandHeart, Plus, Scissors, Hammer, Cpu, Search, X } from 'lucide-react'
+import { Wrench, Recycle, HandHeart, Plus, Scissors, Hammer, Cpu } from 'lucide-react'
 import Img from '../components/Img'
-import Dropdown from '../components/Dropdown'
-import { REPAIR_LEVELS, CATEGORIES, formatPrice, likesOf } from '../data'
+import CategoryBrowser, { DISTRICT_FILTER } from '../components/CategoryBrowser'
+import { REPAIR_LEVELS, formatPrice, likesOf } from '../data'
 import { useApp } from '../store'
 
 const LEVEL_ICON = { 'Kiçik təmir': Scissors, 'Ciddi təmir': Hammer, 'Hissələr üçün': Cpu }
@@ -43,26 +43,28 @@ function RepairCard({ item }) {
   )
 }
 
+const LEVEL_FILTER = {
+  key: 'level',
+  label: 'Təmir səviyyəsi',
+  allLabel: 'Hamısı',
+  options: REPAIR_LEVELS.map((r) => ({ value: r, label: r })),
+  test: (l, v) => l.repair === v,
+}
+
+const COST_FILTER = {
+  key: 'cost',
+  label: 'Qiymət',
+  allLabel: 'Hamısı',
+  options: [
+    { value: 'free', label: 'Pulsuz' },
+    { value: 'symbolic', label: 'Simvolik qiymət' },
+  ],
+  test: (l, v) => (v === 'free' ? l.price === 0 : l.price > 0),
+}
+
 export default function SecondChance() {
   const { allItems } = useApp()
-  const [level, setLevel] = useState('')
-  const [price, setPrice] = useState('')
-  const [cat, setCat] = useState('')
-  const [q, setQ] = useState('')
-
-  const all = allItems.filter((l) => l.modes.includes('free'))
-  const items = useMemo(
-    () =>
-      all.filter(
-        (l) =>
-          (!q || `${l.title} ${l.defect}`.toLowerCase().includes(q.toLowerCase())) &&
-          (!level || l.repair === level) &&
-          (!cat || l.category === cat) &&
-          (!price || (price === 'free' ? l.price === 0 : l.price > 0)),
-      ),
-    [all, level, cat, price, q],
-  )
-  const cats = CATEGORIES.filter((c) => all.some((l) => l.category === c.id))
+  const all = useMemo(() => allItems.filter((l) => l.modes.includes('free')), [allItems])
 
   return (
     <div className="sc-page">
@@ -108,36 +110,15 @@ export default function SecondChance() {
       </section>
 
       <div className="container" id="sc-list">
-        <form className="search-big swap3-search" onSubmit={(e) => e.preventDefault()} role="search">
-          <Search size={18} />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="İkinci şans əşyalarında axtar — məs. stul, şərf..." aria-label="Axtarış" />
-          {q && (
-            <button type="button" className="icon-btn icon-btn-sm" onClick={() => setQ('')} aria-label="Təmizlə">
-              <X size={16} />
-            </button>
-          )}
-        </form>
-        <div className="filter-bar">
-          <div className="filter-group">
-            <Dropdown label="Təmir səviyyəsi" allLabel="Hamısı" value={level} onChange={setLevel} options={REPAIR_LEVELS.map((r) => ({ value: r, label: r }))} />
-            <Dropdown label="Qiymət" allLabel="Hamısı" value={price} onChange={setPrice} options={[{ value: 'free', label: 'Pulsuz' }, { value: 'symbolic', label: 'Simvolik qiymət' }]} />
-            <Dropdown label="Kateqoriya" allLabel="Bütün kateqoriyalar" value={cat} onChange={setCat} options={cats.map((c) => ({ value: c.id, label: c.label }))} />
-          </div>
-          <span className="explore-count">{items.length} əşya</span>
-        </div>
-
-        {items.length > 0 ? (
-          <div className="sc-grid">
-            {items.map((item) => (
-              <RepairCard key={item.id} item={item} />
-            ))}
-          </div>
-        ) : (
-          <div className="empty">
-            <h3>Bu filterlərə uyğun əşya yoxdur</h3>
-            <p>Filterləri dəyiş və ya öz qüsurlu əşyanı paylaş.</p>
-          </div>
-        )}
+        <CategoryBrowser
+          pool={all}
+          renderItem={(item) => <RepairCard key={item.id} item={item} />}
+          gridClass="sc-grid"
+          unit="əşya"
+          allTitle="Bütün əşyalar"
+          searchPlaceholder="İkinci şans əşyalarında axtar — məs. stul, şərf..."
+          filters={[LEVEL_FILTER, COST_FILTER, DISTRICT_FILTER]}
+        />
 
         <div className="results-end">
           <div>

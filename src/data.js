@@ -271,7 +271,7 @@ export const formatPrice = (p) => (p === 0 ? 'Pulsuz' : `${p.toLocaleString('en-
    ========================================================= */
 export const DEPARTMENTS = [
   {
-    id: 'qadin', label: 'Qadın', icon: 'User',
+    id: 'qadin', photo: img('1490481651871-ab68de25d43d', 600), label: 'Qadın', icon: 'User',
     groups: [
       { title: 'Geyim', cat: 'geyim', items: ['Palto və gödəkçə', 'Köynək və bluz', 'Ətək və şalvar', 'Trikotaj'] },
       { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Çəkmə', 'Klassik ayaqqabı'] },
@@ -279,7 +279,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'kisi', label: 'Kişi', icon: 'UserRound',
+    id: 'kisi', photo: img('1551028719-00167b16eac5', 600), label: 'Kişi', icon: 'UserRound',
     groups: [
       { title: 'Geyim', cat: 'geyim', items: ['Gödəkçə', 'Köynək', 'Şalvar'] },
       { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Klassik ayaqqabı'] },
@@ -287,7 +287,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'usaq', label: 'Uşaq', icon: 'Baby',
+    id: 'usaq', photo: img('1515488042361-ee00e0ddd4e4', 600), label: 'Uşaq', icon: 'Baby',
     groups: [
       { title: 'Oyuncaqlar', cat: 'usaq', items: ['Taxta oyuncaq', 'Konstruktor', 'Yumşaq oyuncaq'] },
       { title: 'Uşaq geyimi', cat: 'usaq', items: ['0–2 yaş', '3–7 yaş', '8+ yaş'] },
@@ -295,7 +295,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'ev', label: 'Ev və yaşam', icon: 'Sofa',
+    id: 'ev', photo: img('1586023492125-27b2c045efd7', 600), label: 'Ev və yaşam', icon: 'Sofa',
     groups: [
       { title: 'Mebel', cat: 'ev', items: ['Kreslo', 'Stul', 'Stol', 'Rəf'] },
       { title: 'Dekor', cat: 'ev', items: ['Vaza', 'Güzgü', 'Bitki', 'Tablo'] },
@@ -303,7 +303,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'elektronika', label: 'Elektronika', icon: 'Smartphone',
+    id: 'elektronika', photo: img('1505740420928-5e560c06d30e', 600), label: 'Elektronika', icon: 'Smartphone',
     groups: [
       { title: 'Səs', cat: 'elektronika', items: ['Qulaqlıq', 'Kolonka'] },
       { title: 'Foto və video', cat: 'elektronika', items: ['Fotoaparat', 'Obyektiv'] },
@@ -311,7 +311,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'hobbi', label: 'İdman və hobbi', icon: 'Bike',
+    id: 'hobbi', photo: img('1485965120184-e220f721d03e', 600), label: 'İdman və hobbi', icon: 'Bike',
     groups: [
       { title: 'İdman', cat: 'idman', items: ['Velosiped', 'Fitnes'] },
       { title: 'Musiqi', cat: 'idman', items: ['Gitara', 'Klavişli alətlər'] },
@@ -319,7 +319,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'kitab', label: 'Kitablar', icon: 'BookOpen',
+    id: 'kitab', photo: img('1544947950-fa07a98d237f', 600), label: 'Kitablar', icon: 'BookOpen',
     groups: [
       { title: 'Bədii ədəbiyyat', cat: 'kitab', items: ['Klassika', 'Roman', 'Poeziya'] },
       { title: 'Albom və incəsənət', cat: 'kitab', items: ['Foto albom', 'İncəsənət'] },
