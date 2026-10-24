@@ -52,15 +52,15 @@ export const catById = (id) => CATEGORIES.find((c) => c.id === id)
 
 export const USERS = {
   me: {
-    id: 'me', name: 'Nərmin Əliyeva', handle: 'nermin', avatar: img('1494790108377-be9c29b29330', 300),
+    id: 'me', phone: '+994 50 412 33 18', whatsapp: true, contactPref: 'Mesaj', name: 'Nərmin Əliyeva', handle: 'nermin', avatar: img('1494790108377-be9c29b29330', 300),
     district: 'Yasamal', joined: 'Mart 2026', rating: 4.9, reviews: 23, verified: true, fastReply: true,
     bio: 'Minimalist yaşamağa çalışıram — sevdiyim əşyaların yeni sahiblərini tapıram.',
   },
-  u1: { id: 'u1', name: 'Rəşad Məmmədov', handle: 'reshad', avatar: img('1500648767791-00dcc994a43e', 300), district: 'Nərimanov', joined: 'Yanvar 2026', rating: 4.8, reviews: 41, verified: true, fastReply: true },
-  u2: { id: 'u2', name: 'Leyla Həsənli', handle: 'leyla', avatar: img('1438761681033-6461ffad8d80', 300), district: 'Nəsimi', joined: 'Fevral 2026', rating: 5.0, reviews: 17, verified: true, fastReply: false },
-  u3: { id: 'u3', name: 'Elvin Quliyev', handle: 'elvin', avatar: img('1507003211169-0a1dd7228f2d', 300), district: 'Xətai', joined: 'Aprel 2026', rating: 4.7, reviews: 9, verified: false, fastReply: true },
-  u4: { id: 'u4', name: 'Aytən Kərimova', handle: 'ayten', avatar: img('1544005313-94ddf0286df2', 300), district: 'Səbail', joined: 'May 2026', rating: 4.9, reviews: 32, verified: true, fastReply: true },
-  u5: { id: 'u5', name: 'Murad Rzayev', handle: 'murad', avatar: img('1506794778202-cad84cf45f1d', 300), district: 'Binəqədi', joined: 'İyun 2026', rating: 4.6, reviews: 12, verified: true, fastReply: false },
+  u1: { id: 'u1', phone: '+994 55 218 47 90', whatsapp: true, name: 'Rəşad Məmmədov', handle: 'reshad', avatar: img('1500648767791-00dcc994a43e', 300), district: 'Nərimanov', joined: 'Yanvar 2026', rating: 4.8, reviews: 41, verified: true, fastReply: true },
+  u2: { id: 'u2', phone: '+994 50 677 12 05', whatsapp: true, name: 'Leyla Həsənli', handle: 'leyla', avatar: img('1438761681033-6461ffad8d80', 300), district: 'Nəsimi', joined: 'Fevral 2026', rating: 5.0, reviews: 17, verified: true, fastReply: false },
+  u3: { id: 'u3', phone: '+994 70 341 88 26', whatsapp: true, name: 'Elvin Quliyev', handle: 'elvin', avatar: img('1507003211169-0a1dd7228f2d', 300), district: 'Xətai', joined: 'Aprel 2026', rating: 4.7, reviews: 9, verified: false, fastReply: true },
+  u4: { id: 'u4', phone: '+994 51 905 63 40', whatsapp: true, name: 'Aytən Kərimova', handle: 'ayten', avatar: img('1544005313-94ddf0286df2', 300), district: 'Səbail', joined: 'May 2026', rating: 4.9, reviews: 32, verified: true, fastReply: true },
+  u5: { id: 'u5', phone: '+994 77 120 54 81', whatsapp: false, name: 'Murad Rzayev', handle: 'murad', avatar: img('1506794778202-cad84cf45f1d', 300), district: 'Binəqədi', joined: 'İyun 2026', rating: 4.6, reviews: 12, verified: true, fastReply: false },
 }
 
 export const LISTINGS = [
@@ -83,10 +83,10 @@ export const LISTINGS = [
   },
   {
     id: 'l3', title: 'Keramika vaza dəsti', category: 'ev', price: 45, condition: 'Yeni kimi',
-    district: 'Səbail', modes: ['sale'], seller: 'u4', posted: 'Dünən', aspect: 'square',
+    district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
     images: [img('1578500494198-246f612d3b3d'), img('1612196808214-b8e1d6145a8c')],
     description: 'Əl işi, üç ölçüdə. Heç bir çat və ya qırıq yoxdur.',
-    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+    wants: ['ev', 'kitab'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
   },
   {
     id: 'l4', title: 'Sony WH-1000XM4 qulaqlıq', category: 'elektronika', price: 260, condition: 'Çox yaxşı',
@@ -105,18 +105,18 @@ export const LISTINGS = [
   },
   {
     id: 'l6', title: '12 kitablıq klassika kolleksiyası', category: 'kitab', price: 15, condition: 'Yaxşı',
-    district: 'Nəsimi', modes: ['sale'], seller: 'u2', posted: '1 saat əvvəl', aspect: 'tall',
+    district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u2', posted: '1 saat əvvəl', aspect: 'tall',
     images: [img('1544947950-fa07a98d237f'), img('1532012197267-da84d127e765')],
     description: 'Dostoyevski, Tolstoy, Sabahattin Əli və başqaları. Simvolik qiymətə — sadəcə yaxşı oxucuya getsin.',
     story: 'Bu kitabları universitet illərində almışam. İndi kitabxanamı yeniləyirəm.',
-    wants: [], wantsText: [], delivery: ['meet'],
+    wants: ['kitab', 'usaq'], wantsText: ['Başqa kitablar', 'Uşaq kitabları'], delivery: ['meet'],
   },
   {
     id: 'l7', title: 'Nike Air Max 90', category: 'ayaqqabi', price: 95, condition: 'Çox yaxşı',
-    district: 'Binəqədi', modes: ['sale'], seller: 'u5', posted: 'Bu gün', aspect: 'square',
+    district: 'Binəqədi', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'square',
     images: [img('1542291026-7eec264c27ff'), img('1600185365483-26d7a4cc7519')],
     description: '42 ölçü, cəmi bir neçə dəfə geyinilib.',
-    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+    wants: ['ayaqqabi', 'idman'], wantsText: ['Başqa ölçü krossovka', 'Fitnes əşyaları'], delivery: ['meet', 'courier'],
   },
   {
     id: 'l8', title: 'Akustik gitara Yamaha', category: 'idman', price: 180, condition: 'Yaxşı',
@@ -141,10 +141,10 @@ export const LISTINGS = [
   },
   {
     id: 'l11', title: 'Uşaq taxta oyuncaq dəsti', category: 'usaq', price: 20, condition: 'Çox yaxşı',
-    district: 'Yasamal', modes: ['sale'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'square',
+    district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'square',
     images: [img('1515488042361-ee00e0ddd4e4'), img('1558060370-d644479cb6f7')],
     description: 'Ekoloji taxtadan, 20+ hissə. Uşaqlar böyüdü — başqa balaca əllərə getsin.',
-    wants: [], wantsText: [], delivery: ['meet'],
+    wants: ['usaq', 'kitab'], wantsText: ['Uşaq kitabları', 'Konstruktor'], delivery: ['meet'],
   },
   {
     id: 'l12', title: 'MacBook Air M1', category: 'elektronika', price: 1150, condition: 'Çox yaxşı',
@@ -194,10 +194,10 @@ LISTINGS.splice(1, 0,
   },
   {
     id: 'l18', title: 'Yun palto — bej', category: 'geyim', price: 85, condition: 'Yaxşı',
-    district: 'Nəsimi', modes: ['sale'], seller: 'u2', posted: 'Bu gün', aspect: 'tall',
+    district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u2', posted: 'Bu gün', aspect: 'tall',
     images: [img('1539533018447-63fcce2678e3'), img('1591047139829-d91aecb6caea')],
     description: 'M ölçü, isti və yüngül. Payız üçün ideal.',
-    wants: [], wantsText: [], delivery: ['meet'],
+    wants: ['geyim', 'canta'], wantsText: ['Çanta', 'Şərf', 'Çəkmə'], delivery: ['meet'],
   },
 )
 

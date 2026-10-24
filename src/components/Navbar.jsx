@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Search, Heart, MessageCircle, User, Plus } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import { Heart, MessageCircle, User, Plus } from 'lucide-react'
 import Logo from './Logo'
 import { useApp } from '../store'
 
 const LINKS = [
   { to: '/', label: 'Ana səhifə' },
   { to: '/kesf', label: 'Kəşf et' },
+  { to: '/ikinci-el', label: 'İkinci əl' },
   { to: '/deyis', label: 'Dəyiş-düyüş' },
   { to: '/ikinci-sans', label: 'İkinci şans' },
   { to: '/kolleksiyalar', label: 'Kolleksiyalar' },
@@ -14,8 +15,6 @@ const LINKS = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [q, setQ] = useState('')
-  const navigate = useNavigate()
   const location = useLocation()
   const { conversations, favorites } = useApp()
   const unread = conversations.reduce((n, c) => n + c.unread, 0)
@@ -29,10 +28,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const submit = (e) => {
-    e.preventDefault()
-    navigate(`/kesf${q.trim() ? `?q=${encodeURIComponent(q.trim())}` : ''}`)
-  }
 
   return (
     <header className={`nav ${scrolled ? 'is-scrolled' : ''}`}>
@@ -47,15 +42,8 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <form className="nav-search" onSubmit={submit} role="search">
-          <Search size={16} />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nə axtarırsan?" aria-label="Axtarış" />
-        </form>
 
         <div className="nav-actions">
-          <Link to="/kesf" className="icon-btn show-sm" aria-label="Axtarış">
-            <Search size={20} strokeWidth={1.6} />
-          </Link>
           <Link to="/secilmisler" className="icon-btn" aria-label="Seçilmişlər">
             <Heart size={20} strokeWidth={1.6} />
             {favorites.length > 0 && <span className="dot-count">{favorites.length}</span>}

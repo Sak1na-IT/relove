@@ -1,22 +1,24 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BadgeCheck, MapPin, Star, Calendar, Zap, Plus, Lock, Globe } from 'lucide-react'
+import { BadgeCheck, MapPin, Star, Calendar, Zap, Plus } from 'lucide-react'
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
-import { USERS, COLLECTIONS, REVIEWS } from '../data'
+import { USERS, REVIEWS } from '../data'
 import { useApp } from '../store'
 
 export default function Profile() {
   const me = USERS.me
   const { myItems, getItem, offers } = useApp()
   const [tab, setTab] = useState('items')
+  const { notify } = useApp()
+  const [contact, setContact] = useState({ phone: me.phone, whatsapp: me.whatsapp, showPhone: true, pref: me.contactPref })
   const swapItems = myItems.filter((m) => m.modes.includes('swap'))
 
   const TABS = [
     { id: 'items', label: 'Elanlarım', count: myItems.length },
-    { id: 'swap', label: 'Dəyişməyə açıq', count: swapItems.length },
-    { id: 'collections', label: 'Kolleksiyalar', count: COLLECTIONS.length },
+    { id: 'swap', label: 'Dəyiş elanlarım', count: swapItems.length },
     { id: 'reviews', label: 'Rəylər', count: me.reviews },
+    { id: 'contact', label: 'Əlaqə məlumatları' },
   ]
 
   return (
@@ -49,7 +51,7 @@ export default function Profile() {
         <div className="tabs tabs-line" role="tablist">
           {TABS.map((t) => (
             <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'is-on' : ''} onClick={() => setTab(t.id)}>
-              {t.label} <span className="tab-count">{t.count}</span>
+              {t.label} {t.count !== undefined && <span className="tab-count">{t.count}</span>}
             </button>
           ))}
         </div>
@@ -64,25 +66,53 @@ export default function Profile() {
           </div>
         )}
 
-        {tab === 'collections' && (
-          <div className="collections section-tight">
-            {COLLECTIONS.map((c) => (
-              <article key={c.id} className="collection">
-                <div className="collection-mosaic">
-                  {c.items.slice(0, 3).map((id) => {
-                    const it = getItem(id)
-                    return it ? <Img key={id} src={it.images[0]} alt={it.title} /> : null
-                  })}
-                </div>
-                <div className="collection-info">
-                  <strong>{c.name}</strong>
-                  <span className="with-icon">
-                    {c.public ? <Globe size={13} /> : <Lock size={13} />} {c.public ? 'İctimai' : 'Şəxsi'} · {c.items.length} əşya
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
+        {tab === 'contact' && (
+          <form
+            className="contact-form section-tight"
+            onSubmit={(e) => {
+              e.preventDefault()
+              notify('Əlaqə məlumatların yadda saxlanıldı')
+            }}
+          >
+            <div className="contact-form-intro">
+              <h2 className="h2">Əlaqə məlumatları</h2>
+              <p>
+                Bu məlumatlar bütün elanlarında — satış, dəyiş-düyüş və İkinci şans — eyni şəkildə göstərilir. Alıcılar
+                səninlə buradan əlaqə saxlayır.
+              </p>
+            </div>
+            <label className="field">
+              <span>Telefon nömrəsi</span>
+              <input value={contact.phone} onChange={(e) => setContact({ ...contact, phone: e.target.value })} placeholder="+994 50 000 00 00" />
+            </label>
+            <div className="field">
+              <span>Üstünlük verdiyin əlaqə</span>
+              <div className="seg2 seg2-auto">
+                {['Mesaj', 'Zəng', 'WhatsApp'].map((p) => (
+                  <button type="button" key={p} className={contact.pref === p ? 'is-on' : ''} onClick={() => setContact({ ...contact, pref: p })}>
+                    {p}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <label className="toggle-row">
+              <input type="checkbox" checked={contact.showPhone} onChange={(e) => setContact({ ...contact, showPhone: e.target.checked })} />
+              <span className="toggle" />
+              <span>
+                <strong>Nömrəm elanlarda görünsün</strong>
+                <small>Bağlı olsa, alıcılar yalnız Relove mesajları ilə yaza bilər.</small>
+              </span>
+            </label>
+            <label className="toggle-row">
+              <input type="checkbox" checked={contact.whatsapp} onChange={(e) => setContact({ ...contact, whatsapp: e.target.checked })} />
+              <span className="toggle" />
+              <span>
+                <strong>WhatsApp ilə yazmaq olar</strong>
+                <small>Elanında WhatsApp düyməsi görünəcək.</small>
+              </span>
+            </label>
+            <button className="btn btn-primary" type="submit">Yadda saxla</button>
+          </form>
         )}
 
         {tab === 'reviews' && (

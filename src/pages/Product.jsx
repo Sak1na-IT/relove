@@ -7,6 +7,7 @@ import Img from '../components/Img'
 import ModeBadge from '../components/ModeBadge'
 import ProductCard from '../components/ProductCard'
 import SwapModal from '../components/SwapModal'
+import ContactCard from '../components/ContactCard'
 import { USERS, catById, formatPrice } from '../data'
 import { useApp } from '../store'
 import NotFound from './NotFound'
@@ -121,8 +122,10 @@ export default function Product() {
                 )}
               </div>
             ) : (
-              <div className="note-box">Bu sənin elanındır. Təkliflər gələndə “Dəyiş” bölməsində görəcəksən.</div>
+              <div className="note-box">Bu sənin elanındır. Gələn təkliflər “Dəyiş-düyüş → Təkliflərim” bölməsində görünür.</div>
             )}
+
+            {!isMine && <ContactCard seller={seller} item={item} />}
 
             {item.modes.includes('swap') && item.wantsText.length > 0 && (
               <div className="wants">

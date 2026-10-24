@@ -21,7 +21,7 @@ const PRICES = [
   { value: '200-500', label: '200 – 500 AZN' },
   { value: '500-', label: '500 AZN-dən çox' },
 ]
-const MODE_LABELS = { sale: 'Satış', swap: 'Dəyiş-düyüş' }
+const MODE_LABELS = { sale: 'İkinci əl (satış)', swap: 'Dəyiş-düyüş', free: 'İkinci şans (pulsuz)' }
 
 function Sidebar({ p, setMany, counts, onDone }) {
   const [open, setOpen] = useState(p.dept)
@@ -103,7 +103,7 @@ function Sidebar({ p, setMany, counts, onDone }) {
   )
 }
 
-export default function Explore() {
+export default function Explore({ preset }) {
   const { listings } = useApp()
   const [params, setParams] = useSearchParams()
   const [sheet, setSheet] = useState(false)
@@ -111,7 +111,7 @@ export default function Explore() {
   const p = {
     q: params.get('q') || '',
     cat: params.get('cat') || '',
-    mode: params.get('mode') || '',
+    mode: preset?.mode || params.get('mode') || '',
     district: params.get('district') || '',
     price: params.get('price') || '',
     sort: params.get('sort') || 'new',
@@ -126,7 +126,7 @@ export default function Explore() {
   }
   const set = (k, v) => setMany({ [k]: v })
 
-  const pool = useMemo(() => listings.filter((l) => !l.modes.includes('free')), [listings])
+  const pool = useMemo(() => (preset?.mode ? listings.filter((l) => l.modes.includes(preset.mode)) : listings), [listings, preset])
 
   const counts = useMemo(() => {
     const c = { all: pool.length, dept: {}, sub: {} }
@@ -156,10 +156,10 @@ export default function Explore() {
   }, [pool, p.q, p.dept, p.sub, p.cat, p.mode, p.district, p.price, p.sort])
 
   const deptLabel = p.dept ? deptById(p.dept)?.label : ''
-  const title = p.sub || deptLabel || 'Bütün elanlar'
+  const title = p.sub || deptLabel || preset?.title || 'Bütün elanlar'
 
   const active = [
-    p.mode && { k: 'mode', label: MODE_LABELS[p.mode] },
+    !preset && p.mode && { k: 'mode', label: MODE_LABELS[p.mode] },
     p.price && { k: 'price', label: PRICES.find((x) => x.value === p.price)?.label },
     p.district && { k: 'district', label: p.district },
     p.q && { k: 'q', label: `“${p.q}”` },
@@ -174,7 +174,7 @@ export default function Explore() {
       <div className="explore2-main">
         <header className="explore2-head">
           <nav className="crumbs2" aria-label="Yol">
-            <button onClick={() => setMany({ dept: '', sub: '', cat: '' })}>Kəşf et</button>
+            <button onClick={() => setMany({ dept: '', sub: '', cat: '' })}>{preset?.title || 'Kəşf et'}</button>
             {deptLabel && (
               <>
                 <span>/</span>
@@ -192,6 +192,7 @@ export default function Explore() {
             <h1 className="page-title">{title}</h1>
             <span className="explore-count">{results.length} elan</span>
           </div>
+          {preset?.lead && !p.dept && <p className="page-lead">{preset.lead}</p>}
 
           <form className="search-big explore2-search" onSubmit={(e) => e.preventDefault()} role="search">
             <Search size={18} />
@@ -207,7 +208,7 @@ export default function Explore() {
             <button className="btn btn-ghost btn-sm explore2-filter-btn" onClick={() => setSheet(true)}>
               <SlidersHorizontal size={15} /> Kateqoriyalar
             </button>
-            <Dropdown label="Satış növü" allLabel="Hamısı" value={p.mode} onChange={(v) => set('mode', v)} options={Object.entries(MODE_LABELS).map(([value, label]) => ({ value, label }))} />
+            {!preset && <Dropdown label="Satış növü" allLabel="Hamısı" value={p.mode} onChange={(v) => set('mode', v)} options={Object.entries(MODE_LABELS).map(([value, label]) => ({ value, label }))} />}
             <Dropdown label="Qiymət" allLabel="İstənilən qiymət" value={p.price} onChange={(v) => set('price', v)} options={PRICES} />
             <Dropdown label="Ərazi" allLabel="Bütün Bakı" value={p.district} onChange={(v) => set('district', v)} options={DISTRICTS.map((d) => ({ value: d, label: d }))} />
             <div className="filter-sort-wrap">

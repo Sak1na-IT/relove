@@ -32,6 +32,10 @@ export default function App() {
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/kesf" element={<Explore />} />
+          <Route
+            path="/ikinci-el"
+            element={<Explore key="ikinci-el" preset={{ mode: 'sale', title: 'İkinci əl', lead: 'Yaxşı vəziyyətdə, ikinci əl əşyalar — sərfəli qiymətə, birbaşa sahibindən.' }} />}
+          />
           <Route path="/elan/:id" element={<Product />} />
           <Route path="/deyis" element={<Swap />} />
           <Route path="/paylas" element={<Share />} />

@@ -23,7 +23,7 @@ export default function Share() {
   const [photos, setPhotos] = useState([])
   const [form, setForm] = useState({
     title: '', category: '', condition: '', description: '', story: '', price: '',
-    modes: [search.get('mode') === 'free' ? 'free' : 'sale'], wantsText: '', district: 'Yasamal', delivery: ['meet'],
+    modes: [['free', 'swap'].includes(search.get('mode')) ? search.get('mode') : 'sale'], wantsText: '', district: 'Yasamal', delivery: ['meet'],
     defect: '', repair: '',
   })
 
