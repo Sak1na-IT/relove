@@ -4802,3 +4802,135 @@ select {
     gap: 32px;
   }
 }
+
+/* =========================================================
+   v4.1 — daha qalın, daha premium tipoqrafiya
+   ========================================================= */
+:root {
+  --ink: #161b17;
+  --ink-2: #3a413b;
+  --muted: #69716a;
+}
+
+body {
+  font-weight: 450;
+  letter-spacing: 0.005em;
+}
+
+/* başlıqlar */
+.hero4-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.h2,
+.page-title,
+.display,
+.product-title,
+.swap4 h2,
+.values strong {
+  font-weight: 700;
+}
+
+.h2 {
+  font-size: clamp(30px, 2.8vw, 42px);
+  letter-spacing: -0.015em;
+}
+
+.block-head {
+  align-items: flex-end;
+}
+
+.block-head .h2::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-top: 10px;
+  border-radius: 2px;
+  background: var(--brass);
+}
+
+.wordmark {
+  font-weight: 700;
+}
+
+/* mətn */
+.hero4-text,
+.swap4 p,
+.values p {
+  font-weight: 500;
+}
+
+.hero4-features {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.nav-link {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.btn {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.link-arrow,
+.hero4-more {
+  font-weight: 700;
+}
+
+/* kartlar */
+.cat-card strong,
+.col-card strong {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.cat-card small,
+.col-card small,
+.card-meta {
+  font-weight: 500;
+}
+
+.card-title {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.card-price {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.tag {
+  font-weight: 700;
+}
+
+.footer-cols h4,
+.footer-news h4 {
+  font-weight: 700;
+}
+
+.footer-cols a,
+.footer-cols span {
+  font-weight: 500;
+}
+
+/* premium detallar */
+.cat-card-media,
+.col-card-media,
+.card-media {
+  box-shadow: inset 0 0 0 1px rgba(29, 34, 30, 0.06);
+}
+
+.values {
+  border: 1px solid var(--lime-2);
+}
+
+.swap4 {
+  box-shadow: var(--shadow-lg);
+}
