@@ -9506,3 +9506,23 @@ body {
     left: -4px;
   }
 }
+
+.trend-text {
+  min-width: 0;
+}
+
+.trend-text strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trend-text small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trend-heart {
+  color: var(--pom);
+}

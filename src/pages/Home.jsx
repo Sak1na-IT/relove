@@ -110,7 +110,7 @@ export default function Home() {
   const swapA = getItem('l1')
   const swapB = getItem('l4')
   const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...listings].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 4)
+  const popular = [...listings].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 8)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
@@ -125,12 +125,20 @@ export default function Home() {
           to="/ikinci-el?sort=likes"
           label="Hamısına bax"
         />
-        <div className="liked">
+        <div className="trend">
           {popular.map((item, i) => (
-            <div key={item.id} className="liked-item">
-              <span className="liked-rank">{i + 1}</span>
-              <ProductCard item={item} />
-            </div>
+            <Link key={item.id} to={`/elan/${item.id}`} className="trend-item">
+              <span className="trend-rank">{i + 1}</span>
+              <span className="trend-thumb">
+                <Img src={item.images[0]} alt="" />
+              </span>
+              <span className="trend-text">
+                <strong>{item.title}</strong>
+                <small>
+                  {item.price ? `${item.price} AZN` : 'Pulsuz'} · <Heart size={11} fill="currentColor" className="trend-heart" /> {likesOf(item.id)}
+                </small>
+              </span>
+            </Link>
           ))}
         </div>
       </section>
