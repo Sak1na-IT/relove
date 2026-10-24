@@ -11044,3 +11044,86 @@ body {
     font-size: 22px;
   }
 }
+
+/* v27 — Elan səhifəsi: qalereya yapışqan, bütün məlumat sağ sütunda, yığcam */
+.product-left {
+  position: sticky;
+  top: calc(var(--nav-h) + 20px);
+}
+
+.product-sticky {
+  position: static;
+}
+
+.pd-card {
+  margin-top: 16px;
+  padding: 24px 24px 0;
+  border-radius: var(--radius-lg);
+}
+
+.pd-label {
+  margin-bottom: 8px;
+  font-size: 10.5px;
+}
+
+.pd-desc-text {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.pd-story {
+  margin-top: 16px;
+  padding: 2px 0 2px 14px;
+}
+
+.pd-story blockquote {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pd-story figcaption {
+  margin-top: 4px;
+  font-size: 11.5px;
+}
+
+.pd-row {
+  gap: 10px 14px;
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.pd-wants span {
+  padding: 5px 12px;
+  font-size: 13px;
+}
+
+.pd-seller {
+  margin: 20px -24px 0;
+  padding: 14px 24px;
+}
+
+.pd-seller .seller-avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.pd-seller-text strong {
+  font-size: 14px;
+}
+
+.pd-seller-text small {
+  font-size: 12.5px;
+}
+
+.pd-seller-text em {
+  margin-left: 6px;
+}
+
+@media (max-width: 900px) {
+  .product-left {
+    position: static;
+  }
+}

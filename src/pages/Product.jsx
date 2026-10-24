@@ -80,50 +80,6 @@ export default function Product() {
           )}
         </div>
 
-          <section className="pd-card" aria-label="Elan haqqında">
-            <div className="pd-sec">
-              <span className="pd-label">Elan haqqında</span>
-              <p className="pd-desc-text">{item.description}</p>
-            </div>
-
-            {item.story && (
-              <figure className="pd-story">
-                <blockquote>{item.story}</blockquote>
-                <figcaption>Əşyanın hekayəsi</figcaption>
-              </figure>
-            )}
-
-            {item.modes.includes('swap') && item.wantsText.length > 0 && (
-              <div className="pd-sec pd-row">
-                <span className="pd-label">Əvəzində istəyir</span>
-                <div className="pd-wants">
-                  {item.wantsText.map((w) => <span key={w}>{w}</span>)}
-                </div>
-              </div>
-            )}
-
-            <div className="pd-seller">
-              <Link to={isMine ? '/profil' : '#'} className="pd-seller-main" onClick={(e) => !isMine && e.preventDefault()}>
-                {seller.avatar ? (
-                  <Img src={seller.avatar} alt={seller.name} className="seller-avatar" />
-                ) : (
-                  <span className="seller-avatar avatar-initials">{seller.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
-                )}
-                <span className="pd-seller-text">
-                  <strong>
-                    {seller.name} {seller.verified && <BadgeCheck size={15} className="verified" />}
-                  </strong>
-                  <small>
-                    <Star size={12} fill="currentColor" /> {seller.rating} · {seller.reviews} rəy · {seller.district}
-                    {seller.fastReply && <em><Zap size={12} /> Sürətli cavab verir</em>}
-                  </small>
-                </span>
-              </Link>
-              <button className="pd-report" onClick={() => notify('Şikayətin qəbul edildi. Komandamız yoxlayacaq.')}>
-                <Flag size={13} /> Şikayət et
-              </button>
-            </div>
-          </section>
         </div>
 
         <div className="product-info">
@@ -173,6 +129,51 @@ export default function Product() {
             )}
 
             {!isMine && <ContactCard seller={seller} item={item} />}
+
+            <section className="pd-card" aria-label="Elan haqqında">
+              <div className="pd-sec">
+                <span className="pd-label">Elan haqqında</span>
+                <p className="pd-desc-text">{item.description}</p>
+              </div>
+
+              {item.story && (
+                <figure className="pd-story">
+                  <blockquote>{item.story}</blockquote>
+                  <figcaption>Əşyanın hekayəsi</figcaption>
+                </figure>
+              )}
+
+              {item.modes.includes('swap') && item.wantsText.length > 0 && (
+                <div className="pd-sec pd-row">
+                  <span className="pd-label">Əvəzində istəyir</span>
+                  <div className="pd-wants">
+                    {item.wantsText.map((w) => <span key={w}>{w}</span>)}
+                  </div>
+                </div>
+              )}
+
+              <div className="pd-seller">
+                <Link to={isMine ? '/profil' : '#'} className="pd-seller-main" onClick={(e) => !isMine && e.preventDefault()}>
+                  {seller.avatar ? (
+                    <Img src={seller.avatar} alt={seller.name} className="seller-avatar" />
+                  ) : (
+                    <span className="seller-avatar avatar-initials">{seller.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
+                  )}
+                  <span className="pd-seller-text">
+                    <strong>
+                      {seller.name} {seller.verified && <BadgeCheck size={15} className="verified" />}
+                    </strong>
+                    <small>
+                      <Star size={12} fill="currentColor" /> {seller.rating} · {seller.reviews} rəy · {seller.district}
+                      {seller.fastReply && <em><Zap size={12} /> Sürətli cavab verir</em>}
+                    </small>
+                  </span>
+                </Link>
+                <button className="pd-report" onClick={() => notify('Şikayətin qəbul edildi. Komandamız yoxlayacaq.')}>
+                  <Flag size={13} /> Şikayət et
+                </button>
+              </div>
+            </section>
 
           </div>
         </div>
