@@ -124,8 +124,6 @@ function CollectionCard({ c, items }) {
   const prices = items.map((l) => l.price).filter((n) => n > 0)
   const min = prices.length ? Math.min(...prices) : 0
   const max = prices.length ? Math.max(...prices) : 0
-  const names = items.slice(0, 3).map((l) => l.title)
-  const more = items.length - names.length
   return (
     <article className="swapcard collcard">
       <div className="swapcard-media">
@@ -140,9 +138,6 @@ function CollectionCard({ c, items }) {
           <span>{items.length} əşya</span>
           {prices.length > 0 && <span>{min === max ? `${min} AZN` : `${min}–${max} AZN`}</span>}
         </div>
-        <p className="swapcard-wants">
-          <span>İçində:</span> {names.length ? names.join(', ') + (more > 0 ? ` və daha ${more}` : '') : 'hələ əşya yoxdur'}
-        </p>
         <Link to={`/kolleksiyalar/${c.id}`} className="btn btn-ghost btn-sm swapcard-btn">
           Kolleksiyaya bax <ArrowRight size={14} />
         </Link>
