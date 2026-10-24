@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Repeat, Plus, Clock, MapPin, Heart, Search, X, Camera, Handshake, Check, Sparkles } from 'lucide-react'
+import { Repeat, Plus, Clock, MapPin, Heart, Search, X, Check, Sparkles } from 'lucide-react'
 import Img from '../components/Img'
 import SwapModal from '../components/SwapModal'
 import { DEPARTMENTS, USERS, formatPrice } from '../data'
@@ -46,6 +46,7 @@ export default function Swap() {
   const [target, setTarget] = useState(null)
   const [tab, setTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'all')
   const [dept, setDept] = useState('')
+  const [sub, setSub] = useState('')
   const [q, setQ] = useState('')
   const [incoming, setIncoming] = useState(INCOMING.map((o) => ({ ...o, status: 'new' })))
 
@@ -67,7 +68,7 @@ export default function Swap() {
   }, [mySwap, open])
 
   const grid = open.filter(
-    (l) => (!dept || l.dept === dept) && (!q || `${l.title} ${l.wantsText.join(' ')}`.toLowerCase().includes(q.toLowerCase())),
+    (l) => (!dept || l.dept === dept) && (!sub || l.sub === sub) && (!q || `${l.title} ${l.wantsText.join(' ')}`.toLowerCase().includes(q.toLowerCase())),
   )
   const newIncoming = incoming.filter((o) => o.status === 'new').length
 
@@ -102,33 +103,6 @@ export default function Swap() {
         </Link>
       </section>
 
-      {/* how-to as actions */}
-      <section className="container">
-        <ol className="howto">
-          <li>
-            <span className="howto-num">1</span>
-            <Camera size={22} strokeWidth={1.5} className="howto-icon" />
-            <strong>Əşyanı əlavə et</strong>
-            <p>Şəklini çək, kateqoriyasını seç və əvəzində nə istədiyini yaz.</p>
-            <Link to="/paylas?mode=swap" className="howto-link">Əşya əlavə et</Link>
-          </li>
-          <li>
-            <span className="howto-num">2</span>
-            <Repeat size={22} strokeWidth={1.5} className="howto-icon" />
-            <strong>Bəyəndiyinə təklif göndər</strong>
-            <p>Elanlardan birini seç və öz əşyanı təklif et. Lazım olsa, üstünə pul əlavə edə bilərsən.</p>
-            <button className="howto-link" onClick={() => go('all')}>Elanlara bax</button>
-          </li>
-          <li>
-            <span className="howto-num">3</span>
-            <Handshake size={22} strokeWidth={1.5} className="howto-icon" />
-            <strong>Razılaşın və görüşün</strong>
-            <p>Təklif qəbul olunanda mesaj, zəng və ya WhatsApp ilə əlaqə saxlayın.</p>
-            <button className="howto-link" onClick={() => go('offers')}>Təkliflərimə bax</button>
-          </li>
-        </ol>
-      </section>
-
       {/* tabs */}
       <section className="container block-sm" id="swap-tabs">
         <div className="tabs2 tabs2-big" role="tablist">
@@ -161,18 +135,41 @@ export default function Swap() {
               )}
             </form>
             <div className="dept-pills">
-              <button className={!dept ? 'is-on' : ''} onClick={() => setDept('')}>
+              <button className={!dept ? 'is-on' : ''} onClick={() => { setDept(''); setSub('') }}>
                 Hamısı <em>{open.length}</em>
               </button>
               {DEPARTMENTS.map((d) => {
                 const n = open.filter((l) => l.dept === d.id).length
                 return (
-                  <button key={d.id} className={dept === d.id ? 'is-on' : ''} onClick={() => setDept(d.id)} disabled={n === 0}>
+                  <button key={d.id} className={dept === d.id ? 'is-on' : ''} onClick={() => { setDept(dept === d.id ? '' : d.id); setSub('') }} disabled={n === 0}>
                     {d.label} <em>{n}</em>
                   </button>
                 )
               })}
             </div>
+            {dept && (
+              <div className="sub-row" aria-label="Alt-kateqoriyalar">
+                {DEPARTMENTS.find((d) => d.id === dept).groups.map((g) => (
+                  <div key={g.title} className="sub-group">
+                    <span className="sub-group-title">{g.title}</span>
+                    {g.items.map((it) => {
+                      const n = open.filter((l) => l.dept === dept && l.sub === it).length
+                      return (
+                        <button
+                          key={it}
+                          className={`sub-link ${sub === it ? 'is-on' : ''}`}
+                          onClick={() => setSub(sub === it ? '' : it)}
+                          disabled={n === 0}
+                        >
+                          {it}
+                          {n > 0 && <em>{n}</em>}
+                        </button>
+                      )
+                    })}
+                  </div>
+                ))}
+              </div>
+            )}
             {grid.length > 0 ? (
               <div className="swap2-grid">
                 {grid.map((item) => (
