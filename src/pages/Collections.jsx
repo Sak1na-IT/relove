@@ -120,7 +120,7 @@ function CreateCollection({ onClose }) {
   )
 }
 
-function CollectionCard({ c, items }) {
+function CollectionCard({ c, items, cover }) {
   const prices = items.map((l) => l.price).filter((n) => n > 0)
   const min = prices.length ? Math.min(...prices) : 0
   const max = prices.length ? Math.max(...prices) : 0
@@ -128,7 +128,7 @@ function CollectionCard({ c, items }) {
     <article className="swapcard collcard">
       <div className="swapcard-media">
         <Link to={`/kolleksiyalar/${c.id}`} className="card-media-link" aria-label={c.title}>
-          {items[0] ? <Img src={items[0].images[0]} alt={c.title} /> : <div className="cover-empty" />}
+          {cover ? <Img src={cover.images[0]} alt={c.title} /> : <div className="cover-empty" />}
         </Link>
         {c.mine && <span className="collcard-mine">{c.isPublic ? 'Mənim' : 'Mənim · gizli'}</span>}
       </div>
@@ -163,9 +163,16 @@ export default function Collections() {
       </header>
 
       <div className="browse-grid">
-        {all.map((c) => (
-          <CollectionCard key={c.id} c={c} items={listings.filter(c.match)} />
-        ))}
+        {(() => {
+          // hər kolleksiya fərqli üz şəkli ilə görünsün
+          const used = new Set()
+          return all.map((c) => {
+            const items = listings.filter(c.match)
+            const cover = items.find((l) => !used.has(l.images[0])) || items[0]
+            if (cover) used.add(cover.images[0])
+            return <CollectionCard key={c.id} c={c} items={items} cover={cover} />
+          })
+        })()}
       </div>
 
       {creating && <CreateCollection onClose={() => setCreating(false)} />}

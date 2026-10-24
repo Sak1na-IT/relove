@@ -10273,3 +10273,11 @@ body {
 .collcard .swapcard-btn {
   align-self: flex-start;
 }
+
+.collcard .swapcard-meta {
+  margin-top: 6px;
+}
+
+.collcard .swapcard-btn {
+  margin-top: 18px;
+}
