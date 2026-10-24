@@ -52,7 +52,7 @@ export const catById = (id) => CATEGORIES.find((c) => c.id === id)
 
 export const USERS = {
   me: {
-    id: 'me', phone: '+994 50 412 33 18', whatsapp: true, contactPref: 'Mesaj', name: 'Sakina Pashayeva', handle: 'sakina', avatar: img('1494790108377-be9c29b29330', 300),
+    id: 'me', phone: '+994 50 412 33 18', whatsapp: true, contactPref: 'Mesaj', name: 'Sakina Pashayeva', handle: 'sakina', avatar: null,
     district: 'Yasamal', joined: 'Mart 2026', rating: 4.9, reviews: 23, verified: true, fastReply: true,
     bio: 'Minimalist yaşamağa çalışıram — sevdiyim əşyaların yeni sahiblərini tapıram.',
   },

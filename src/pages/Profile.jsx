@@ -5,6 +5,8 @@ import Img from '../components/Img'
 import { USERS } from '../data'
 import { useApp } from '../store'
 
+const initials = (n) => n.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase()
+
 const NOTIFY = [
   { id: 'msg', title: 'Yeni mesajlar', text: 'Kimsə elanına yazanda bildiriş al.' },
   { id: 'offer', title: 'Dəyiş təklifləri', text: 'Gələn və cavablanan təkliflər haqqında.' },
@@ -23,7 +25,7 @@ export default function Profile() {
     <div className="container account">
       <header className="account-head">
         <div className="account-avatar">
-          <Img src={me.avatar} alt={me.name} />
+          {me.avatar ? <Img src={me.avatar} alt={me.name} /> : <span className="avatar-initials">{initials(info.name)}</span>}
           <button className="account-avatar-btn" aria-label="Şəkli dəyiş" onClick={() => notify('Şəkil yükləmə backend mərhələsində əlavə olunacaq')}>
             <Camera size={15} />
           </button>

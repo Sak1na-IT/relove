@@ -49,7 +49,7 @@ export default function Product() {
       </button>
 
       <div className="product-grid">
-        <div className="gallery">
+        <div className={`gallery ${item.images.length > 1 ? '' : 'is-single'}`}>
           <div className="gallery-main">
             <Img key={item.images[active]} src={item.images[active]} alt={item.title} />
             <div className="gallery-actions">
@@ -147,7 +147,11 @@ export default function Product() {
             )}
 
             <Link to={isMine ? '/profil' : '#'} className="seller" onClick={(e) => !isMine && e.preventDefault()}>
-              <Img src={seller.avatar} alt={seller.name} className="seller-avatar" />
+              {seller.avatar ? (
+                <Img src={seller.avatar} alt={seller.name} className="seller-avatar" />
+              ) : (
+                <span className="seller-avatar avatar-initials">{seller.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
+              )}
               <div className="seller-info">
                 <strong>
                   {seller.name} {seller.verified && <BadgeCheck size={16} className="verified" />}

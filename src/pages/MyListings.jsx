@@ -93,7 +93,6 @@ export default function MyListings() {
       <header className="mine-head">
         <div>
           <h1 className="page-title">Paylaşdıqlarım</h1>
-          <p className="page-lead">Bütün elanlarını — satış, dəyiş-düyüş və İkinci şans — bir yerdən idarə et.</p>
         </div>
         <div className="mine-stats">
           <div><strong>{active}</strong><span>aktiv elan</span></div>
