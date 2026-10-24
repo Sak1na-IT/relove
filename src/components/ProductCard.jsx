@@ -6,7 +6,7 @@ import { useApp } from '../store'
 
 const BADGE = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'İkinci şans' }
 
-export default function ProductCard({ item }) {
+export default function ProductCard({ item, onlyModes }) {
   const { favorites, toggleFavorite } = useApp()
   const fav = favorites.includes(item.id)
   const likes = likesOf(item.id) + (fav ? 1 : 0)
@@ -25,7 +25,7 @@ export default function ProductCard({ item }) {
           <Heart size={16} strokeWidth={1.8} fill={fav ? 'currentColor' : 'none'} />
         </button>
         <div className="card-badges">
-          {item.modes.map((m) => (
+          {(onlyModes ? item.modes.filter((m) => onlyModes.includes(m)) : item.modes).map((m) => (
             <span key={m} className={`tag tag-${m}`}>{BADGE[m]}</span>
           ))}
         </div>

@@ -152,7 +152,7 @@ export default function Home() {
         <Rail>
           {sale.slice(0, 12).map((item) => (
             <div className="rail2-item" key={item.id}>
-              <ProductCard item={item} />
+              <ProductCard item={item} onlyModes={['sale']} />
             </div>
           ))}
         </Rail>
