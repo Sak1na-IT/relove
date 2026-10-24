@@ -11127,3 +11127,59 @@ body {
     position: static;
   }
 }
+
+/* v28 — qalereya oxları */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  margin-top: -23px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--forest);
+  box-shadow: 0 6px 18px -8px rgba(22, 27, 23, 0.35);
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s, background 0.2s;
+}
+
+.gallery-arrow-prev {
+  left: 16px;
+}
+
+.gallery-arrow-next {
+  right: 16px;
+}
+
+.gallery-main:hover .gallery-arrow,
+.gallery-arrow:focus-visible {
+  opacity: 1;
+}
+
+.gallery-arrow:hover {
+  background: var(--white);
+  transform: scale(1.06);
+}
+
+.gallery-count {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(22, 27, 23, 0.55);
+  color: var(--ivory);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+@media (hover: none) {
+  .gallery-arrow {
+    opacity: 1;
+  }
+}
