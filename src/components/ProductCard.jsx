@@ -1,40 +1,43 @@
 import { Link } from 'react-router-dom'
-import { Heart } from 'lucide-react'
+import { Heart, MapPin } from 'lucide-react'
 import Img from './Img'
-import ModeBadge from './ModeBadge'
-import { formatPrice } from '../data'
+import { formatPrice, likesOf } from '../data'
 import { useApp } from '../store'
+
+const BADGE = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'Pulsuz paylaşım' }
 
 export default function ProductCard({ item }) {
   const { favorites, toggleFavorite } = useApp()
   const fav = favorites.includes(item.id)
-  const extraModes = item.modes.filter((m) => m !== 'sale')
+  const likes = likesOf(item.id) + (fav ? 1 : 0)
 
   return (
     <article className="card">
-      <Link to={`/elan/${item.id}`} className="card-media">
-        <Img src={item.images[0]} alt={item.title} />
-        {extraModes.length > 0 && (
-          <div className="card-badges">
-            {extraModes.map((m) => (
-              <ModeBadge key={m} mode={m} />
-            ))}
-          </div>
-        )}
-      </Link>
-      <div className="card-body">
-        <Link to={`/elan/${item.id}`} className="card-text">
-          <h3 className="card-title">{item.title}</h3>
-          <span className={`card-price ${item.price === 0 ? 'is-free' : ''}`}>{formatPrice(item.price)}</span>
+      <div className="card-media">
+        <Link to={`/elan/${item.id}`} className="card-media-link" aria-label={item.title}>
+          <Img src={item.images[0]} alt={item.title} />
         </Link>
         <button
-          className={`card-fav ${fav ? 'is-on' : ''}`}
+          className={`card-heart ${fav ? 'is-on' : ''}`}
           onClick={() => toggleFavorite(item.id)}
           aria-label={fav ? 'Seçilmişlərdən çıxar' : 'Seçilmişlərə əlavə et'}
         >
-          <Heart size={17} strokeWidth={1.7} fill={fav ? 'currentColor' : 'none'} />
+          <Heart size={16} strokeWidth={1.8} fill={fav ? 'currentColor' : 'none'} />
         </button>
+        <div className="card-badges">
+          {item.modes.map((m) => (
+            <span key={m} className={`tag tag-${m}`}>{BADGE[m]}</span>
+          ))}
+        </div>
       </div>
+      <Link to={`/elan/${item.id}`} className="card-body">
+        <h3 className="card-title">{item.title}</h3>
+        <span className={`card-price ${item.price === 0 ? 'is-free' : ''}`}>{formatPrice(item.price)}</span>
+        <span className="card-meta">
+          <span className="with-icon"><MapPin size={12} /> {item.district}</span>
+          <span className="with-icon"><Heart size={12} /> {likes}</span>
+        </span>
+      </Link>
     </article>
   )
 }

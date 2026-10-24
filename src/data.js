@@ -35,12 +35,24 @@ export const HERO_SLIDES = [
   { image: img('1513506003901-1e6a229e2d15', 1800), title: ['Evinə', 'xarakter qat.'], text: 'Hər əşyanın bir keçmişi, sənin evində gələcəyi var.' },
 ]
 
+export const HOME_CATEGORIES = [
+  { id: 'geyim', label: 'Geyim və aksesuarlar', photo: img('1434389677669-e08b4cac3105', 600), cats: ['geyim', 'canta'] },
+  { id: 'ev', label: 'Ev və dekor', photo: img('1507473885765-e6ed057f782c', 600), cats: ['ev'] },
+  { id: 'elektronika', label: 'Elektronika', photo: img('1505740420928-5e560c06d30e', 600), cats: ['elektronika'] },
+  { id: 'kitab', label: 'Kitablar və hobbilər', photo: img('1544947950-fa07a98d237f', 600), cats: ['kitab'] },
+  { id: 'usaq', label: 'Uşaq əşyaları', photo: img('1515488042361-ee00e0ddd4e4', 600), cats: ['usaq'] },
+  { id: 'idman', label: 'İdman və outdoor', photo: img('1485965120184-e220f721d03e', 600), cats: ['idman'] },
+  { id: 'kolleksiya', label: 'Kolleksiya əşyaları', photo: img('1526170375885-4d8ecf77b99f', 600), cats: ['kolleksiya'] },
+  { id: 'ayaqqabi', label: 'Ayaqqabı', photo: img('1542291026-7eec264c27ff', 600), cats: ['ayaqqabi'] },
+]
+
 export const HOME_COLLECTIONS = [
-  { title: 'Minimalizm', image: img('1524758631624-e2822e304c36', 700), to: '/kesf?cat=ev' },
-  { title: 'Vintage', image: img('1551028719-00167b16eac5', 700), to: '/kesf?q=vintage' },
-  { title: 'Rahatlıq', image: img('1586023492125-27b2c045efd7', 700), to: '/kesf?cat=ev' },
-  { title: 'Payız kolleksiyası', image: img('1591047139829-d91aecb6caea', 700), to: '/kesf?cat=geyim' },
-  { title: 'Eko seçimlər', image: img('1614594975525-e45190c55d0b', 700), to: '/kesf?mode=free' },
+  { title: 'Minimalist ev', image: img('1524758631624-e2822e304c36', 700), to: '/kesf?cat=ev', match: (l) => l.category === 'ev' },
+  { title: 'Vintage tapıntılar', image: img('1526170375885-4d8ecf77b99f', 700), to: '/kesf?q=vintage', match: (l) => /vintage|retro/i.test(l.title) },
+  { title: 'Payız kolleksiyası', image: img('1591047139829-d91aecb6caea', 700), to: '/kesf?cat=geyim', match: (l) => l.category === 'geyim' },
+  { title: 'Eko seçimlər', image: img('1614594975525-e45190c55d0b', 700), to: '/kesf?mode=free', match: (l) => l.modes.includes('free') },
+  { title: '50 AZN-dən aşağı', image: img('1542291026-7eec264c27ff', 700), to: '/kesf?price=0-50', match: (l) => l.price <= 50 },
+  { title: 'Kitab həvəskarları', image: img('1512820790803-83ca734da794', 700), to: '/kesf?cat=kitab', match: (l) => l.category === 'kitab' },
 ]
 
 export const catById = (id) => CATEGORIES.find((c) => c.id === id)
@@ -254,5 +266,8 @@ export const REVIEWS = [
   { from: 'u4', stars: 5, text: 'Dəyiş-düyüş çox rahat keçdi, təşəkkürlər!', when: 'Avqust 2026' },
   { from: 'u5', stars: 4, text: 'Hər şey qaydasında, görüşə vaxtında gəldi.', when: 'İyul 2026' },
 ]
+
+// Demo üçün sabit bəyənmə sayı (backend qoşulanda real olacaq)
+export const likesOf = (id) => ([...id].reduce((a, c) => a + c.charCodeAt(0), 0) * 7) % 140 + 12
 
 export const formatPrice = (p) => (p === 0 ? 'Pulsuz' : `${p.toLocaleString('en-US').replace(/,/g, ' ')} AZN`)

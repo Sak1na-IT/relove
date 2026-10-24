@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Search, Heart, Bell, Plus } from 'lucide-react'
+import { Search, Heart, MessageCircle, User, Plus } from 'lucide-react'
 import Logo from './Logo'
-import Img from './Img'
-import { USERS } from '../data'
 import { useApp } from '../store'
 
 const LINKS = [
+  { to: '/', label: 'Ana səhifə' },
   { to: '/kesf', label: 'Kəşf et' },
-  { to: '/kesf?mode=sale', label: 'Satış' },
   { to: '/deyis', label: 'Dəyiş-düyüş' },
-  { to: '/paylas', label: 'Paylaş' },
+  { to: '/kesf?mode=free', label: 'Pulsuz paylaşım' },
+  { to: '/secilmisler', label: 'Kolleksiyalar' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [q, setQ] = useState('')
   const navigate = useNavigate()
   const location = useLocation()
-  const [q, setQ] = useState('')
   const { conversations, favorites } = useApp()
   const unread = conversations.reduce((n, c) => n + c.unread, 0)
 
@@ -44,11 +43,6 @@ export default function Navbar() {
       <div className="container nav-inner">
         <Logo />
 
-        <form className="nav-search" onSubmit={submit} role="search">
-          <Search size={17} />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Axtarış et..." aria-label="Axtarış" />
-        </form>
-
         <nav className="nav-links" aria-label="Əsas menyu">
           {LINKS.map((l) => (
             <Link key={l.label} to={l.to} className={`nav-link ${isActive(l.to) ? 'active' : ''}`}>
@@ -57,23 +51,28 @@ export default function Navbar() {
           ))}
         </nav>
 
+        <form className="nav-search" onSubmit={submit} role="search">
+          <Search size={16} />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nə axtarırsan?" aria-label="Axtarış" />
+        </form>
+
         <div className="nav-actions">
           <Link to="/kesf" className="icon-btn show-sm" aria-label="Axtarış">
-            <Search size={20} strokeWidth={1.7} />
+            <Search size={20} strokeWidth={1.6} />
           </Link>
           <Link to="/secilmisler" className="icon-btn" aria-label="Seçilmişlər">
-            <Heart size={20} strokeWidth={1.7} />
+            <Heart size={20} strokeWidth={1.6} />
             {favorites.length > 0 && <span className="dot-count">{favorites.length}</span>}
           </Link>
-          <Link to="/mesajlar" className="icon-btn" aria-label="Bildirişlər və mesajlar">
-            <Bell size={20} strokeWidth={1.7} />
+          <Link to="/mesajlar" className="icon-btn" aria-label="Mesajlar">
+            <MessageCircle size={20} strokeWidth={1.6} />
             {unread > 0 && <span className="dot-count">{unread}</span>}
           </Link>
-          <Link to="/profil" className="avatar-btn hide-sm" aria-label="Profilim">
-            <Img src={USERS.me.avatar} alt="Profil" />
+          <Link to="/profil" className="icon-btn hide-sm" aria-label="Profilim">
+            <User size={20} strokeWidth={1.6} />
           </Link>
           <Link to="/paylas" className="btn btn-primary btn-sm hide-md">
-            <Plus size={16} strokeWidth={2.2} /> Elan yerləşdir
+            <Plus size={16} strokeWidth={2} /> Əşya paylaş
           </Link>
         </div>
       </div>
