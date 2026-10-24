@@ -1,0 +1,16 @@
+{
+  "name": "relove-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Relove backend: paketsiz Node.js (http + sqlite + crypto)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning src/index.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch src/index.js",
+    "seed": "node --disable-warning=ExperimentalWarning src/seed.js --reset",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  }
+}

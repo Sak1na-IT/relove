@@ -11,6 +11,18 @@ npm run dev
 
 Brauzerdə `http://localhost:5173` açılır.
 
+
+## Backend (server/)
+
+`server/` qovluğunda paketsiz Node.js API var: giriş, elanlar, bəyənmələr, dəyiş təklifləri, mesajlar, kolleksiyalar və rəylər. SQLite bazası ilk açılışda özü yaranır və demo məlumatla dolur. Şəkillər hələlik link kimi saxlanılır.
+
+```bash
+npm run server        # http://localhost:4000/api
+npm run server:test   # API testləri
+```
+
+Ətraflı: [server/README.md](server/README.md). Demo giriş: `sakina@relove.demo` / `parol123`.
+
 ## Texnologiyalar
 
 - React 18 + Vite
