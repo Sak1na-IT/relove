@@ -110,7 +110,7 @@ export default function Home() {
   const swapA = getItem('l1')
   const swapB = getItem('l4')
   const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...listings].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 8)
+  const popular = [...listings].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 6)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
@@ -125,18 +125,21 @@ export default function Home() {
           to="/ikinci-el?sort=likes"
           label="Hamısına bax"
         />
-        <div className="trend">
+        <div className="likes-row">
           {popular.map((item, i) => (
-            <Link key={item.id} to={`/elan/${item.id}`} className="trend-item">
-              <span className="trend-rank">{i + 1}</span>
-              <span className="trend-thumb">
-                <Img src={item.images[0]} alt="" />
+            <Link key={item.id} to={`/elan/${item.id}`} className="likes-card">
+              <span className="likes-photo">
+                <Img src={item.images[0]} alt={item.title} />
+                <span className="likes-count">
+                  <Heart size={12} fill="currentColor" /> {likesOf(item.id)}
+                </span>
               </span>
-              <span className="trend-text">
-                <strong>{item.title}</strong>
-                <small>
-                  {item.price ? `${item.price} AZN` : 'Pulsuz'} · <Heart size={11} fill="currentColor" className="trend-heart" /> {likesOf(item.id)}
-                </small>
+              <span className="likes-body">
+                <span className="likes-rank">{String(i + 1).padStart(2, '0')}</span>
+                <span className="likes-text">
+                  <strong>{item.title}</strong>
+                  <small>{item.price ? `${item.price} AZN` : 'Pulsuz'} · {item.district}</small>
+                </span>
               </span>
             </Link>
           ))}

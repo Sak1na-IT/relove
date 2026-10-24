@@ -9526,3 +9526,108 @@ body {
 .trend-heart {
   color: var(--pom);
 }
+
+/* v16 — Ən çox bəyənilənlər: kvadrat, kompakt kartlar */
+.likes-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px 16px;
+}
+
+.likes-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.likes-photo {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--ivory-2);
+}
+
+.likes-card:hover .img {
+  transform: scale(1.05);
+}
+
+.likes-count {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.94);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.likes-count svg {
+  color: var(--pom);
+}
+
+.likes-body {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.likes-rank {
+  flex-shrink: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--brass);
+}
+
+.likes-text {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.likes-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.likes-text small {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+@media (max-width: 1100px) {
+  .likes-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .likes-row {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .likes-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .likes-card {
+    flex: 0 0 150px;
+  }
+}
