@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Search, Heart, MessageCircle, User, Plus, ChevronDown } from 'lucide-react'
-import MegaMenu from './MegaMenu'
+import { Search, Heart, MessageCircle, User, Plus } from 'lucide-react'
 import Logo from './Logo'
 import { useApp } from '../store'
 
@@ -23,29 +22,6 @@ export default function Navbar() {
 
   const isActive = (to) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
 
-  // mega-menyu: üzərinə gələndə açılır, çıxanda kiçik gecikmə ilə bağlanır
-  const [mega, setMega] = useState(false)
-  const timer = useRef(null)
-  const openMega = () => {
-    clearTimeout(timer.current)
-    timer.current = setTimeout(() => setMega(true), 120)
-  }
-  const closeMega = () => {
-    clearTimeout(timer.current)
-    timer.current = setTimeout(() => setMega(false), 180)
-  }
-
-  useEffect(() => {
-    setMega(false)
-  }, [location.pathname, location.search])
-
-  useEffect(() => {
-    if (!mega) return
-    const onKey = (e) => e.key === 'Escape' && setMega(false)
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [mega])
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
@@ -64,24 +40,11 @@ export default function Navbar() {
         <Logo />
 
         <nav className="nav-links" aria-label="Əsas menyu">
-          {LINKS.map((l) =>
-            l.to === '/kesf' ? (
-              <div key={l.label} className="nav-mega-trigger" onMouseEnter={openMega} onMouseLeave={closeMega}>
-                <Link
-                  to={l.to}
-                  className={`nav-link ${isActive(l.to) || mega ? 'active' : ''}`}
-                  aria-expanded={mega}
-                  onFocus={openMega}
-                >
-                  {l.label} <ChevronDown size={14} className={`nav-chev ${mega ? 'is-open' : ''}`} />
-                </Link>
-              </div>
-            ) : (
-              <Link key={l.label} to={l.to} className={`nav-link ${isActive(l.to) ? 'active' : ''}`}>
-                {l.label}
-              </Link>
-            ),
-          )}
+          {LINKS.map((l) => (
+            <Link key={l.label} to={l.to} className={`nav-link ${isActive(l.to) ? 'active' : ''}`}>
+              {l.label}
+            </Link>
+          ))}
         </nav>
 
         <form className="nav-search" onSubmit={submit} role="search">
@@ -109,12 +72,6 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
-      {mega && (
-        <div className="mega-wrap" onMouseEnter={openMega} onMouseLeave={closeMega}>
-          <MegaMenu onNavigate={() => setMega(false)} />
-        </div>
-      )}
-      {mega && <div className="mega-backdrop" onMouseEnter={closeMega} onClick={() => setMega(false)} />}
     </header>
   )
 }

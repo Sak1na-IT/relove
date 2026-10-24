@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
   Search, X, ChevronDown, LayoutGrid, User, UserRound, Baby, Sofa, Smartphone, Bike, BookOpen,
-  SlidersHorizontal, Sparkles, Check,
+  SlidersHorizontal, Sparkles,
 } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 import Dropdown from '../components/Dropdown'
-import { CONDITIONS, DISTRICTS, DEPARTMENTS, deptById } from '../data'
+import { DISTRICTS, DEPARTMENTS, deptById } from '../data'
 import { useApp } from '../store'
 
 const ICONS = { User, UserRound, Baby, Sofa, Smartphone, Bike, BookOpen }
@@ -23,12 +23,12 @@ const PRICES = [
 ]
 const MODE_LABELS = { sale: 'Satış', swap: 'Dəyiş-düyüş' }
 
-function Sidebar({ p, set, setMany, counts, onDone }) {
+function Sidebar({ p, setMany, counts, onDone }) {
   const [open, setOpen] = useState(p.dept)
   useEffect(() => setOpen(p.dept), [p.dept])
 
   const pickDept = (id) => {
-    if (p.dept === id && !p.sub && !p.cat) {
+    if (p.dept === id && !p.sub) {
       setOpen(open === id ? '' : id)
       return
     }
@@ -37,109 +37,69 @@ function Sidebar({ p, set, setMany, counts, onDone }) {
   }
 
   return (
-    <div className="side">
-      <section className="side-sec">
-        <h3 className="side-title">Kateqoriyalar</h3>
-        <ul className="tree">
-          <li>
-            <button className={`tree-dept ${!p.dept ? 'is-on' : ''}`} onClick={() => setMany({ dept: '', cat: '', sub: '' })}>
-              <span className="tree-icon"><LayoutGrid size={17} strokeWidth={1.6} /></span>
-              <span className="tree-label">Hamısı</span>
-              <span className="tree-count">{counts.all}</span>
-            </button>
-          </li>
-          {DEPARTMENTS.map((d) => {
-            const Icon = ICONS[d.icon] || LayoutGrid
-            const isOpen = open === d.id
-            return (
-              <li key={d.id} className={isOpen ? 'is-open' : ''}>
-                <button className={`tree-dept ${p.dept === d.id ? 'is-on' : ''}`} onClick={() => pickDept(d.id)} aria-expanded={isOpen}>
-                  <span className="tree-icon"><Icon size={17} strokeWidth={1.6} /></span>
-                  <span className="tree-label">{d.label}</span>
-                  <span className="tree-count">{counts.dept[d.id] || 0}</span>
-                  <ChevronDown size={15} className="tree-chev" />
-                </button>
-                <div className="tree-sub" hidden={!isOpen}>
-                  {d.groups.map((g) => (
-                    <div key={g.title} className="tree-group">
-                      <span className="tree-group-title">{g.title}</span>
-                      {g.items.map((it) => (
+    <nav className="catnav" aria-label="Kateqoriyalar">
+      <p className="catnav-title">Kateqoriyalar</p>
+      <ul className="catnav-list">
+        <li>
+          <button
+            className={`catnav-dept ${!p.dept ? 'is-on' : ''}`}
+            onClick={() => {
+              setMany({ dept: '', cat: '', sub: '' })
+              onDone?.()
+            }}
+          >
+            <LayoutGrid size={18} strokeWidth={1.4} className="catnav-icon" />
+            <span className="catnav-label">Bütün elanlar</span>
+            <span className="catnav-count">{counts.all}</span>
+          </button>
+        </li>
+        {DEPARTMENTS.map((d) => {
+          const Icon = ICONS[d.icon] || LayoutGrid
+          const isOpen = open === d.id
+          return (
+            <li key={d.id} className={isOpen ? 'is-open' : ''}>
+              <button className={`catnav-dept ${p.dept === d.id ? 'is-on' : ''}`} onClick={() => pickDept(d.id)} aria-expanded={isOpen}>
+                <Icon size={18} strokeWidth={1.4} className="catnav-icon" />
+                <span className="catnav-label">{d.label}</span>
+                <span className="catnav-count">{counts.dept[d.id] || 0}</span>
+                <ChevronDown size={14} className="catnav-chev" />
+              </button>
+              <div className="catnav-sub" hidden={!isOpen}>
+                {d.groups.map((g) => (
+                  <div key={g.title} className="catnav-group">
+                    <span className="catnav-group-title">{g.title}</span>
+                    {g.items.map((it) => {
+                      const n = counts.sub[`${d.id}:${it}`] || 0
+                      return (
                         <button
                           key={it}
-                          className={`tree-item ${p.dept === d.id && p.sub === it ? 'is-on' : ''}`}
+                          className={`catnav-item ${p.dept === d.id && p.sub === it ? 'is-on' : ''} ${n === 0 ? 'is-empty' : ''}`}
                           onClick={() => {
                             setMany({ dept: d.id, cat: '', sub: p.sub === it ? '' : it })
                             onDone?.()
                           }}
                         >
-                          {it}
-                          {counts.sub[`${d.id}:${it}`] > 0 && <em>{counts.sub[`${d.id}:${it}`]}</em>}
+                          <span>{it}</span>
+                          {n > 0 && <em>{n}</em>}
                         </button>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </li>
-            )
-          })}
-        </ul>
-      </section>
+                      )
+                    })}
+                  </div>
+                ))}
+              </div>
+            </li>
+          )
+        })}
+      </ul>
 
-      <section className="side-sec">
-        <h3 className="side-title">Satış növü</h3>
-        <div className="seg2">
-          <button className={!p.mode ? 'is-on' : ''} onClick={() => set('mode', '')}>Hamısı</button>
-          {Object.entries(MODE_LABELS).map(([k, v]) => (
-            <button key={k} className={p.mode === k ? 'is-on' : ''} onClick={() => set('mode', p.mode === k ? '' : k)}>
-              {v}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="side-sec">
-        <h3 className="side-title">Qiymət</h3>
-        <div className="radio-list">
-          {PRICES.map((o) => (
-            <button key={o.value} className={p.price === o.value ? 'is-on' : ''} onClick={() => set('price', p.price === o.value ? '' : o.value)}>
-              <span className="radio-dot">{p.price === o.value && <Check size={11} strokeWidth={3} />}</span>
-              {o.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="side-sec">
-        <h3 className="side-title">Vəziyyət</h3>
-        <div className="radio-list">
-          {CONDITIONS.map((c) => (
-            <button key={c} className={p.cond === c ? 'is-on' : ''} onClick={() => set('cond', p.cond === c ? '' : c)}>
-              <span className="radio-dot">{p.cond === c && <Check size={11} strokeWidth={3} />}</span>
-              {c}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="side-sec">
-        <h3 className="side-title">Ərazi</h3>
-        <div className="district-chips">
-          {DISTRICTS.map((d) => (
-            <button key={d} className={p.district === d ? 'is-on' : ''} onClick={() => set('district', p.district === d ? '' : d)}>
-              {d}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <Link to="/ikinci-sans" className="side-promo">
-        <Sparkles size={18} strokeWidth={1.6} />
-        <div>
+      <Link to="/ikinci-sans" className="catnav-promo">
+        <Sparkles size={16} strokeWidth={1.5} />
+        <span>
           <strong>İkinci şans</strong>
-          <span>Düzəldilə bilən qüsurlu əşyalar</span>
-        </div>
+          Düzəldilə bilən qüsurlu əşyalar
+        </span>
       </Link>
-    </div>
+    </nav>
   )
 }
 
@@ -152,7 +112,6 @@ export default function Explore() {
     q: params.get('q') || '',
     cat: params.get('cat') || '',
     mode: params.get('mode') || '',
-    cond: params.get('cond') || '',
     district: params.get('district') || '',
     price: params.get('price') || '',
     sort: params.get('sort') || 'new',
@@ -186,7 +145,6 @@ export default function Explore() {
       if (p.sub && l.sub !== p.sub) return false
       if (p.cat && l.category !== p.cat) return false
       if (p.mode && !l.modes.includes(p.mode)) return false
-      if (p.cond && l.condition !== p.cond) return false
       if (p.district && l.district !== p.district) return false
       if (min !== null && l.price < min) return false
       if (max !== null && l.price > max) return false
@@ -195,7 +153,7 @@ export default function Explore() {
     if (p.sort === 'low') r = [...r].sort((a, b) => a.price - b.price)
     if (p.sort === 'high') r = [...r].sort((a, b) => b.price - a.price)
     return r
-  }, [pool, p.q, p.dept, p.sub, p.cat, p.mode, p.cond, p.district, p.price, p.sort])
+  }, [pool, p.q, p.dept, p.sub, p.cat, p.mode, p.district, p.price, p.sort])
 
   const deptLabel = p.dept ? deptById(p.dept)?.label : ''
   const title = p.sub || deptLabel || 'Bütün elanlar'
@@ -203,7 +161,6 @@ export default function Explore() {
   const active = [
     p.mode && { k: 'mode', label: MODE_LABELS[p.mode] },
     p.price && { k: 'price', label: PRICES.find((x) => x.value === p.price)?.label },
-    p.cond && { k: 'cond', label: p.cond },
     p.district && { k: 'district', label: p.district },
     p.q && { k: 'q', label: `“${p.q}”` },
   ].filter(Boolean)
@@ -211,7 +168,7 @@ export default function Explore() {
   return (
     <div className="container explore2">
       <aside className="explore2-side" aria-label="Kateqoriyalar və filterlər">
-        <Sidebar p={p} set={set} setMany={setMany} counts={counts} />
+        <Sidebar p={p} setMany={setMany} counts={counts} />
       </aside>
 
       <div className="explore2-main">
@@ -236,20 +193,23 @@ export default function Explore() {
             <span className="explore-count">{results.length} elan</span>
           </div>
 
-          <div className="explore2-tools">
-            <form className="search-big" onSubmit={(e) => e.preventDefault()} role="search">
-              <Search size={18} />
-              <input value={p.q} onChange={(e) => set('q', e.target.value)} placeholder="Bu bölmədə axtar..." aria-label="Axtarış" />
-              {p.q && (
-                <button type="button" className="icon-btn icon-btn-sm" onClick={() => set('q', '')} aria-label="Təmizlə">
-                  <X size={16} />
-                </button>
-              )}
-            </form>
-            <button className="btn btn-ghost explore2-filter-btn" onClick={() => setSheet(true)}>
-              <SlidersHorizontal size={16} /> Filterlər
-              {active.length > 0 && <span className="pill-count">{active.length}</span>}
+          <form className="search-big explore2-search" onSubmit={(e) => e.preventDefault()} role="search">
+            <Search size={18} />
+            <input value={p.q} onChange={(e) => set('q', e.target.value)} placeholder={deptLabel ? `${deptLabel} bölməsində axtar...` : 'Bütün elanlarda axtar...'} aria-label="Axtarış" />
+            {p.q && (
+              <button type="button" className="icon-btn icon-btn-sm" onClick={() => set('q', '')} aria-label="Təmizlə">
+                <X size={16} />
+              </button>
+            )}
+          </form>
+
+          <div className="explore2-filters">
+            <button className="btn btn-ghost btn-sm explore2-filter-btn" onClick={() => setSheet(true)}>
+              <SlidersHorizontal size={15} /> Kateqoriyalar
             </button>
+            <Dropdown label="Satış növü" allLabel="Hamısı" value={p.mode} onChange={(v) => set('mode', v)} options={Object.entries(MODE_LABELS).map(([value, label]) => ({ value, label }))} />
+            <Dropdown label="Qiymət" allLabel="İstənilən qiymət" value={p.price} onChange={(v) => set('price', v)} options={PRICES} />
+            <Dropdown label="Ərazi" allLabel="Bütün Bakı" value={p.district} onChange={(v) => set('district', v)} options={DISTRICTS.map((d) => ({ value: d, label: d }))} />
             <div className="filter-sort-wrap">
               <span>Sırala:</span>
               <Dropdown label="Sırala" align="right" value={p.sort} onChange={(v) => set('sort', v === 'new' ? '' : v)} options={SORTS} />
@@ -263,7 +223,7 @@ export default function Explore() {
                   {a.label} <X size={13} />
                 </button>
               ))}
-              <button className="active-clear" onClick={() => setMany({ mode: '', price: '', cond: '', district: '', q: '' })}>
+              <button className="active-clear" onClick={() => setMany({ mode: '', price: '', district: '', q: '' })}>
                 Hamısını təmizlə
               </button>
             </div>
@@ -302,13 +262,13 @@ export default function Explore() {
         <div className="sheet-backdrop" onClick={() => setSheet(false)}>
           <div className="sheet explore2-sheet" onClick={(e) => e.stopPropagation()}>
             <div className="sheet-head">
-              <h3>Kateqoriyalar və filterlər</h3>
+              <h3>Kateqoriyalar</h3>
               <button className="icon-btn" onClick={() => setSheet(false)} aria-label="Bağla">
                 <X size={20} />
               </button>
             </div>
             <div className="sheet-body">
-              <Sidebar p={p} set={set} setMany={setMany} counts={counts} onDone={() => setSheet(false)} />
+              <Sidebar p={p} setMany={setMany} counts={counts} onDone={() => setSheet(false)} />
             </div>
             <div className="sheet-foot">
               <button className="btn btn-primary" onClick={() => setSheet(false)}>
