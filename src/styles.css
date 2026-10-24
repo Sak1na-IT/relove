@@ -10870,3 +10870,177 @@ body {
 .pd-details .pd-desc {
   order: -1;
 }
+
+/* v26 — Elan haqqında kartı */
+.pd-card {
+  margin-top: 28px;
+  padding: 36px 40px 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.pd-label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.pd-desc-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--forest);
+}
+
+.pd-story {
+  margin: 28px 0 0;
+  padding: 4px 0 4px 22px;
+  border-left: 2px solid var(--brass);
+}
+
+.pd-story blockquote {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.7;
+  font-style: italic;
+  color: var(--ink-2);
+}
+
+.pd-story figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.pd-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.pd-row .pd-label {
+  margin: 0;
+}
+
+.pd-wants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pd-wants span {
+  padding: 7px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--line-2);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--forest);
+}
+
+.pd-seller {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 28px -40px 0;
+  padding: 20px 40px;
+  background: #fbf9f4;
+  border-top: 1px solid var(--line);
+}
+
+.pd-seller-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.pd-seller .seller-avatar {
+  width: 48px;
+  height: 48px;
+}
+
+.pd-seller-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.pd-seller-text strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pd-seller-text small {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.pd-seller-text small svg {
+  color: var(--brass);
+}
+
+.pd-seller-text em {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 10px;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.pd-seller-text em svg {
+  color: var(--forest);
+}
+
+.pd-report {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: 12.5px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.pd-report:hover {
+  color: var(--pom);
+}
+
+@media (max-width: 700px) {
+  .pd-card {
+    padding: 26px 22px 0;
+  }
+
+  .pd-seller {
+    margin: 24px -22px 0;
+    padding: 18px 22px;
+    flex-wrap: wrap;
+  }
+
+  .pd-desc-text {
+    font-size: 22px;
+  }
+}
