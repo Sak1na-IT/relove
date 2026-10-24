@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
   Search, X, ChevronDown, LayoutGrid, User, UserRound, Baby, Sofa, Smartphone, Bike, BookOpen,
-  SlidersHorizontal, Sparkles,
+  SlidersHorizontal, Sparkles, Plus,
 } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 import Dropdown from '../components/Dropdown'
@@ -21,7 +21,6 @@ const PRICES = [
   { value: '200-500', label: '200 – 500 AZN' },
   { value: '500-', label: '500 AZN-dən çox' },
 ]
-const MODE_LABELS = { sale: 'İkinci əl (satış)', swap: 'Dəyiş-düyüş', free: 'İkinci şans (pulsuz)' }
 
 function Sidebar({ p, setMany, counts, onDone }) {
   const [open, setOpen] = useState(p.dept)
@@ -103,7 +102,13 @@ function Sidebar({ p, setMany, counts, onDone }) {
   )
 }
 
-export default function Explore({ preset }) {
+const DEFAULT_PRESET = {
+  mode: 'sale',
+  title: 'İkinci əl',
+  lead: 'Yaxşı vəziyyətdə, ikinci əl əşyalar — sərfəli qiymətə, birbaşa sahibindən.',
+}
+
+export default function Explore({ preset = DEFAULT_PRESET }) {
   const { listings } = useApp()
   const [params, setParams] = useSearchParams()
   const [sheet, setSheet] = useState(false)
@@ -159,7 +164,6 @@ export default function Explore({ preset }) {
   const title = p.sub || deptLabel || preset?.title || 'Bütün elanlar'
 
   const active = [
-    !preset && p.mode && { k: 'mode', label: MODE_LABELS[p.mode] },
     p.price && { k: 'price', label: PRICES.find((x) => x.value === p.price)?.label },
     p.district && { k: 'district', label: p.district },
     p.q && { k: 'q', label: `“${p.q}”` },
@@ -174,7 +178,7 @@ export default function Explore({ preset }) {
       <div className="explore2-main">
         <header className="explore2-head">
           <nav className="crumbs2" aria-label="Yol">
-            <button onClick={() => setMany({ dept: '', sub: '', cat: '' })}>{preset?.title || 'Kəşf et'}</button>
+            <button onClick={() => setMany({ dept: '', sub: '', cat: '' })}>{preset?.title || 'İkinci əl'}</button>
             {deptLabel && (
               <>
                 <span>/</span>
@@ -188,11 +192,18 @@ export default function Explore({ preset }) {
               </>
             )}
           </nav>
-          <div className="explore-title-row">
-            <h1 className="page-title">{title}</h1>
-            <span className="explore-count">{results.length} elan</span>
+          <div className="section-head2">
+            <div>
+              <div className="explore-title-row">
+                <h1 className="page-title">{title}</h1>
+                <span className="explore-count">{results.length} elan</span>
+              </div>
+              {preset?.lead && !p.dept && <p className="page-lead">{preset.lead}</p>}
+            </div>
+            <Link to="/paylas?mode=sale" className="btn btn-primary">
+              <Plus size={16} /> Satış elanı yerləşdir
+            </Link>
           </div>
-          {preset?.lead && !p.dept && <p className="page-lead">{preset.lead}</p>}
 
           <form className="search-big explore2-search" onSubmit={(e) => e.preventDefault()} role="search">
             <Search size={18} />
@@ -208,7 +219,6 @@ export default function Explore({ preset }) {
             <button className="btn btn-ghost btn-sm explore2-filter-btn" onClick={() => setSheet(true)}>
               <SlidersHorizontal size={15} /> Kateqoriyalar
             </button>
-            {!preset && <Dropdown label="Satış növü" allLabel="Hamısı" value={p.mode} onChange={(v) => set('mode', v)} options={Object.entries(MODE_LABELS).map(([value, label]) => ({ value, label }))} />}
             <Dropdown label="Qiymət" allLabel="İstənilən qiymət" value={p.price} onChange={(v) => set('price', v)} options={PRICES} />
             <Dropdown label="Ərazi" allLabel="Bütün Bakı" value={p.district} onChange={(v) => set('district', v)} options={DISTRICTS.map((d) => ({ value: d, label: d }))} />
             <div className="filter-sort-wrap">
@@ -224,7 +234,7 @@ export default function Explore({ preset }) {
                   {a.label} <X size={13} />
                 </button>
               ))}
-              <button className="active-clear" onClick={() => setMany({ mode: '', price: '', district: '', q: '' })}>
+              <button className="active-clear" onClick={() => setMany({ price: '', district: '', q: '' })}>
                 Hamısını təmizlə
               </button>
             </div>
@@ -254,7 +264,7 @@ export default function Explore({ preset }) {
           </div>
           <div className="results-end-actions">
             <Link to="/deyis" className="btn btn-primary">Axtarışı yadda saxla</Link>
-            <Link to="/paylas" className="btn btn-ghost">Öz əşyanı paylaş</Link>
+            <Link to="/paylas?mode=sale" className="btn btn-ghost">Satış elanı yerləşdir</Link>
           </div>
         </div>
       </div>

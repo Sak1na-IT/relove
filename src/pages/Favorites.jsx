@@ -28,7 +28,7 @@ export default function Favorites() {
           <Heart size={30} strokeWidth={1.4} />
           <h3>Hələ heç nə bəyənməmisən</h3>
           <p>Əşyanın üzərindəki ürək işarəsinə bas — burada saxlanacaq.</p>
-          <Link to="/kesf" className="btn btn-primary">Kəşfə başla</Link>
+          <Link to="/ikinci-el" className="btn btn-primary">Kəşfə başla</Link>
         </div>
       )}
     </div>

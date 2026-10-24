@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom'
 import { BadgeCheck, MapPin, Star, Calendar, Zap, Plus } from 'lucide-react'
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
-import { USERS, REVIEWS } from '../data'
+import { USERS, REVIEWS, DISTRICTS } from '../data'
 import { useApp } from '../store'
 
 export default function Profile() {
   const me = USERS.me
   const { myItems, getItem, offers } = useApp()
-  const [tab, setTab] = useState('items')
-  const { notify } = useApp()
-  const [contact, setContact] = useState({ phone: me.phone, whatsapp: me.whatsapp, showPhone: true, pref: me.contactPref })
+  const [tab, setTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'items')
+  const { notify, profile, setProfile } = useApp()
+  const [contact, setContact] = useState(profile)
   const swapItems = myItems.filter((m) => m.modes.includes('swap'))
 
   const TABS = [
@@ -71,6 +71,7 @@ export default function Profile() {
             className="contact-form section-tight"
             onSubmit={(e) => {
               e.preventDefault()
+              setProfile(contact)
               notify('Əlaqə məlumatların yadda saxlanıldı')
             }}
           >
@@ -85,6 +86,16 @@ export default function Profile() {
               <span>Telefon nömrəsi</span>
               <input value={contact.phone} onChange={(e) => setContact({ ...contact, phone: e.target.value })} placeholder="+994 50 000 00 00" />
             </label>
+            <div className="field">
+              <span>Ərazi (elanlarında görünür)</span>
+              <div className="district-chips">
+                {DISTRICTS.map((d) => (
+                  <button type="button" key={d} className={contact.district === d ? 'is-on' : ''} onClick={() => setContact({ ...contact, district: d })}>
+                    {d}
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="field">
               <span>Üstünlük verdiyin əlaqə</span>
               <div className="seg2 seg2-auto">

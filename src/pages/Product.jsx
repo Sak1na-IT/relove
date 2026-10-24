@@ -82,7 +82,7 @@ export default function Product() {
         <div className="product-info">
           <div className="product-sticky">
             <p className="crumbs">
-              <Link to="/kesf">Kəşf et</Link> / <Link to={`/kesf?cat=${item.category}`}>{catById(item.category)?.short}</Link>
+              <Link to="/ikinci-el">Kəşf et</Link> / <Link to={`/ikinci-el?cat=${item.category}`}>{catById(item.category)?.short}</Link>
             </p>
             <h1 className="product-title">{item.title}</h1>
             <div className="product-badges">

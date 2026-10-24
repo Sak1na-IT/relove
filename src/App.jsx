@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import MobileNav from './components/MobileNav'
 import Footer from './components/Footer'
@@ -15,6 +15,12 @@ import Messages from './pages/Messages'
 import NotFound from './pages/NotFound'
 import SecondChance from './pages/SecondChance'
 import Collections, { CollectionDetail } from './pages/Collections'
+import MyListings from './pages/MyListings'
+
+function KesfRedirect() {
+  const { search } = useLocation()
+  return <Navigate to={`/ikinci-el${search}`} replace />
+}
 
 export default function App() {
   const location = useLocation()
@@ -31,15 +37,13 @@ export default function App() {
       <main className="page" key={location.pathname}>
         <Routes location={location}>
           <Route path="/" element={<Home />} />
-          <Route path="/kesf" element={<Explore />} />
-          <Route
-            path="/ikinci-el"
-            element={<Explore key="ikinci-el" preset={{ mode: 'sale', title: 'İkinci əl', lead: 'Yaxşı vəziyyətdə, ikinci əl əşyalar — sərfəli qiymətə, birbaşa sahibindən.' }} />}
-          />
+          <Route path="/kesf" element={<KesfRedirect />} />
+          <Route path="/ikinci-el" element={<Explore />} />
           <Route path="/elan/:id" element={<Product />} />
           <Route path="/deyis" element={<Swap />} />
           <Route path="/paylas" element={<Share />} />
           <Route path="/profil" element={<Profile />} />
+          <Route path="/paylasdiqlarim" element={<MyListings />} />
           <Route path="/secilmisler" element={<Favorites />} />
           <Route path="/ikinci-sans" element={<SecondChance />} />
           <Route path="/kolleksiyalar" element={<Collections />} />

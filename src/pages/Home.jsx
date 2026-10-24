@@ -45,7 +45,7 @@ function Hero() {
             etdir.
           </p>
           <div className="hero4-ctas">
-            <Link to="/kesf" className="btn btn-primary btn-lg">
+            <Link to="/ikinci-el" className="btn btn-primary btn-lg">
               Kəşfə başla
             </Link>
             <Link to="/paylas" className="btn btn-ghost btn-lg">
@@ -106,13 +106,13 @@ export default function Home() {
       <section className="container block">
         <div className="block-head">
           <h2 className="h2">Kateqoriyalar</h2>
-          <Link to="/kesf" className="link-arrow">
+          <Link to="/ikinci-el" className="link-arrow">
             Bütün kateqoriyalar <ArrowRight size={15} />
           </Link>
         </div>
         <div className="cat-cards">
           {HOME_CATEGORIES.map((c) => (
-            <Link key={c.id} to={`/kesf?cat=${c.id}`} className="cat-card">
+            <Link key={c.id} to={`/ikinci-el?cat=${c.id}`} className="cat-card">
               <div className="cat-card-media">
                 <Img src={c.photo} alt={c.label} />
               </div>
@@ -144,7 +144,7 @@ export default function Home() {
       <section className="container block">
         <div className="block-head">
           <h2 className="h2">İndi kəşf edilənlər</h2>
-          <Link to="/kesf" className="link-arrow">
+          <Link to="/ikinci-el" className="link-arrow">
             Bütün elanlar <ArrowRight size={15} />
           </Link>
         </div>

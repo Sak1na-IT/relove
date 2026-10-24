@@ -44,7 +44,7 @@ export default function Swap() {
   const navigate = useNavigate()
   const { listings, myItems, offers, getItem, startConversation, notify } = useApp()
   const [target, setTarget] = useState(null)
-  const [tab, setTab] = useState('all')
+  const [tab, setTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'all')
   const [dept, setDept] = useState('')
   const [q, setQ] = useState('')
   const [incoming, setIncoming] = useState(INCOMING.map((o) => ({ ...o, status: 'new' })))

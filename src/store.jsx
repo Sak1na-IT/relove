@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
-import { LISTINGS, MY_ITEMS, CONVERSATIONS } from './data'
+import { LISTINGS, MY_ITEMS, CONVERSATIONS, USERS } from './data'
 
 const AppContext = createContext(null)
 
@@ -10,6 +10,15 @@ export function AppProvider({ children }) {
   const [offers, setOffers] = useState([])
   const [conversations, setConversations] = useState(CONVERSATIONS)
   const [toast, setToast] = useState(null)
+  // istifadəçinin əlaqə və ərazi seçimləri — bütün bölmələrdə eyni istifadə olunur
+  const [profile, setProfile] = useState({
+    phone: USERS.me.phone,
+    whatsapp: USERS.me.whatsapp,
+    showPhone: true,
+    pref: USERS.me.contactPref,
+    district: USERS.me.district,
+    delivery: ['meet'],
+  })
   const timer = useRef(null)
 
   const notify = useCallback((message, tone = 'default') => {
@@ -31,7 +40,15 @@ export function AppProvider({ children }) {
   const getItem = useCallback((id) => allItems.find((l) => l.id === id), [allItems])
 
   const addListing = useCallback((item) => {
-    setMyItems((m) => [item, ...m])
+    setMyItems((m) => [{ ...item, status: 'active' }, ...m])
+  }, [])
+
+  const updateItem = useCallback((id, patch) => {
+    setMyItems((m) => m.map((it) => (it.id === id ? { ...it, ...patch } : it)))
+  }, [])
+
+  const removeItem = useCallback((id) => {
+    setMyItems((m) => m.filter((it) => it.id !== id))
   }, [])
 
   const sendOffer = useCallback(
@@ -68,7 +85,8 @@ export function AppProvider({ children }) {
   )
 
   const value = {
-    listings, myItems, allItems, getItem, addListing,
+    listings, myItems, allItems, getItem, addListing, updateItem, removeItem,
+    profile, setProfile,
     favorites, toggleFavorite,
     offers, sendOffer,
     conversations, sendMessage, startConversation,

@@ -6,24 +6,25 @@ import ModeBadge from '../components/ModeBadge'
 import { CATEGORIES, CONDITIONS, DISTRICTS, REPAIR_LEVELS, formatPrice } from '../data'
 import { useApp } from '../store'
 
-const STEPS = ['Şəkillər', 'Məlumat', 'Paylaşım', 'Təhvil', 'Önbaxış']
+const STEPS = ['Şəkillər', 'Məlumat', 'Qiymət və şərtlər', 'Təhvil', 'Önbaxış']
 
 const MODE_CARDS = [
-  { id: 'sale', icon: Tag, title: 'Satış', text: 'Əşyamı satmaq istəyirəm' },
+  { id: 'sale', icon: Tag, title: 'İkinci əl', text: 'Əşyamı satmaq istəyirəm' },
   { id: 'swap', icon: Repeat, title: 'Dəyiş-düyüş', text: 'Başqa əşya ilə dəyişmək istəyirəm' },
   { id: 'free', icon: Gift, title: 'İkinci şans', text: 'Qüsurludur, atmaq əvəzinə düzəldə bilən birinə vermək istəyirəm' },
 ]
 
 export default function Share() {
   const navigate = useNavigate()
-  const { addListing, notify } = useApp()
+  const { addListing, notify, profile } = useApp()
   const fileRef = useRef(null)
   const [search] = useSearchParams()
+  const lockedMode = ['sale', 'swap', 'free'].includes(search.get('mode')) ? search.get('mode') : ''
   const [step, setStep] = useState(0)
   const [photos, setPhotos] = useState([])
   const [form, setForm] = useState({
     title: '', category: '', condition: '', description: '', story: '', price: '',
-    modes: [['free', 'swap'].includes(search.get('mode')) ? search.get('mode') : 'sale'], wantsText: '', district: 'Yasamal', delivery: ['meet'],
+    modes: [lockedMode || 'sale'], wantsText: '', district: profile.district, delivery: profile.delivery,
     defect: '', repair: '',
   })
 
@@ -31,14 +32,7 @@ export default function Share() {
   const toggleIn = (k, v) =>
     setForm((f) => ({ ...f, [k]: f[k].includes(v) ? f[k].filter((x) => x !== v) : [...f[k], v] }))
 
-  const toggleMode = (id) => {
-    setForm((f) => {
-      if (id === 'free') return { ...f, modes: f.modes.includes('free') ? ['sale'] : ['free'] }
-      const base = f.modes.filter((m) => m !== 'free')
-      const next = base.includes(id) ? base.filter((m) => m !== id) : [...base, id]
-      return { ...f, modes: next.length ? next : [id] }
-    })
-  }
+  const toggleMode = (id) => setForm((f) => ({ ...f, modes: [id] }))
 
   const onFiles = (files) => {
     const list = Array.from(files || []).filter((f) => f.type.startsWith('image/')).slice(0, 8 - photos.length)
@@ -52,7 +46,9 @@ export default function Share() {
   const valid = [
     photos.length > 0,
     form.title.trim() && form.category && form.condition,
-    form.modes.length > 0 && (isFree ? form.defect.trim() && form.repair : Number(form.price) > 0),
+    form.modes.length > 0 &&
+      (isFree ? form.defect.trim() && form.repair : Number(form.price) > 0) &&
+      (!form.modes.includes('swap') || form.wantsText.trim()),
     form.district && form.delivery.length > 0,
     true,
   ]
@@ -80,16 +76,16 @@ export default function Share() {
 
   const publish = () => {
     addListing(preview)
-    notify('Elanın dərc edildi! ✦', 'lime')
-    navigate(isFree ? '/ikinci-sans' : `/elan/${preview.id}`)
+    notify('Elanın dərc edildi — Paylaşdıqlarım bölməsində idarə edə bilərsən')
+    navigate('/paylasdiqlarim')
   }
 
   return (
     <div className="container share">
       <div className="share-head">
-        <p className="eyebrow">Əşya paylaş</p>
+        <p className="eyebrow">{{ sale: 'İkinci əl · satış elanı', swap: 'Dəyiş-düyüş elanı', free: 'İkinci şans elanı' }[lockedMode] || 'Yeni elan'}</p>
         <h1 className="display display-md">
-          {['Şəklini çək və ya seç', 'Əşyan haqqında danış', 'Necə paylaşmaq istəyirsən?', 'Məkan və təhvil', 'Belə görünəcək'][step]}
+          {['Şəklini çək və ya seç', 'Əşyan haqqında danış', { sale: 'Qiyməti yaz', swap: 'Nə ilə dəyişmək istəyirsən?', free: 'Qüsurunu dürüst yaz' }[lockedMode] || 'Hansı bölməyə paylaşırsan?', 'Məkan və təhvil', 'Belə görünəcək'][step]}
         </h1>
         <div className="stepper" aria-label="Addımlar">
           {STEPS.map((s, i) => (
@@ -185,6 +181,7 @@ export default function Share() {
 
         {step === 2 && (
           <div className="fade-in">
+            {!lockedMode && (
             <div className="mode-cards">
               {MODE_CARDS.map(({ id, icon: Icon, title, text }) => (
                 <button key={id} className={`mode-card mode-${id} ${form.modes.includes(id) ? 'is-on' : ''}`} onClick={() => toggleMode(id)}>
@@ -195,7 +192,7 @@ export default function Share() {
                 </button>
               ))}
             </div>
-            <p className="hint">Satış və dəyiş-düyüşü eyni anda seçə bilərsən.</p>
+            )}
 
             <div className="form-grid">
               {isFree && (
@@ -222,7 +219,7 @@ export default function Share() {
               )}
               {!isFree && (
                 <label className="field">
-                  <span>Qiymət (AZN)</span>
+                  <span>{form.modes.includes('swap') ? 'Təxmini dəyəri (AZN)' : 'Qiymət (AZN)'}</span>
                   <input type="number" min="1" value={form.price} onChange={(e) => update('price', e.target.value)} placeholder="Məsələn: 45" />
                 </label>
               )}
