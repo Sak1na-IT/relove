@@ -2,23 +2,21 @@ import { useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
-import CategoryThumb from '../components/CategoryThumb'
-import { CATEGORIES, CONDITIONS, DISTRICTS, MODES, catById } from '../data'
+import Dropdown from '../components/Dropdown'
+import { CATEGORIES, CONDITIONS, DISTRICTS, catById } from '../data'
 import { useApp } from '../store'
 
-const SORTS = { new: 'Ən yeni', low: 'Ucuzdan bahaya', high: 'Bahadan ucuza' }
-const PRICES = { '': 'Qiymət', '0-50': '50 AZN-ə qədər', '50-200': '50–200 AZN', '200-': '200 AZN-dən çox' }
-
-function FilterSelect({ value, onChange, placeholder, options, label }) {
-  return (
-    <select className={`filter-select ${value ? 'is-on' : ''}`} value={value} onChange={(e) => onChange(e.target.value)} aria-label={label}>
-      <option value="">{placeholder}</option>
-      {options.map(([v, t]) => (
-        <option key={v} value={v}>{t}</option>
-      ))}
-    </select>
-  )
-}
+const SORTS = [
+  { value: 'new', label: 'Ən yeni' },
+  { value: 'low', label: 'Ucuzdan bahaya' },
+  { value: 'high', label: 'Bahadan ucuza' },
+]
+const PRICES = [
+  { value: '0-50', label: '50 AZN-ə qədər' },
+  { value: '50-200', label: '50–200 AZN' },
+  { value: '200-', label: '200 AZN-dən çox' },
+]
+const MODE_LABELS = { sale: 'Satış', swap: 'Dəyiş-düyüş', free: 'Pulsuz paylaşım' }
 
 export default function Explore() {
   const { listings } = useApp()
@@ -57,12 +55,15 @@ export default function Explore() {
   }, [listings, q, cat, mode, cond, district, price, sort])
 
   const hasFilters = [q, cat, mode, cond, district, price].some(Boolean)
-  const title = cat ? catById(cat)?.label : mode ? MODES[mode].label : 'Kəşf et'
+  const title = cat ? catById(cat)?.label : mode ? MODE_LABELS[mode] : 'Kəşf et'
 
   return (
     <div className="container explore">
       <header className="explore-head">
-        <h1 className="page-title">{title}</h1>
+        <div className="explore-title-row">
+          <h1 className="page-title">{title}</h1>
+          <span className="explore-count">{results.length} elan</span>
+        </div>
         <form className="search-big" onSubmit={(e) => e.preventDefault()} role="search">
           <Search size={18} />
           <input value={q} onChange={(e) => set('q', e.target.value)} placeholder="Əşya, marka və ya kateqoriya axtar..." aria-label="Axtarış" />
@@ -74,33 +75,37 @@ export default function Explore() {
         </form>
       </header>
 
-      <div className="cat-row cat-row-sm">
+      <div className="cat-chips" role="tablist" aria-label="Kateqoriyalar">
+        <button className={`cat-chip ${!cat ? 'is-on' : ''}`} onClick={() => set('cat', '')}>
+          Hamısı
+        </button>
         {CATEGORIES.map((c) => (
-          <button key={c.id} className={`cat-item ${cat === c.id ? 'is-on' : ''}`} onClick={() => set('cat', cat === c.id ? '' : c.id)}>
-            <CategoryThumb category={c} small />
-            <span className="cat-label">{c.label}</span>
+          <button key={c.id} className={`cat-chip ${cat === c.id ? 'is-on' : ''}`} onClick={() => set('cat', cat === c.id ? '' : c.id)}>
+            <span className="cat-chip-img">
+              <img src={c.photo} alt="" loading="lazy" onError={(e) => (e.currentTarget.style.visibility = 'hidden')} />
+            </span>
+            {c.label}
           </button>
         ))}
       </div>
 
-      <div className="filters">
-        <FilterSelect label="Satış növü" value={mode} onChange={(v) => set('mode', v)} placeholder="Satış növü" options={Object.entries(MODES).map(([k, m]) => [k, m.label])} />
-        <FilterSelect label="Qiymət" value={price} onChange={(v) => set('price', v)} placeholder="Qiymət" options={Object.entries(PRICES).filter(([k]) => k)} />
-        <FilterSelect label="Vəziyyət" value={cond} onChange={(v) => set('cond', v)} placeholder="Vəziyyət" options={CONDITIONS.map((c) => [c, c])} />
-        <FilterSelect label="Ərazi" value={district} onChange={(v) => set('district', v)} placeholder="Ərazi" options={DISTRICTS.map((d) => [d, d])} />
-        <select className="filter-select filter-sort" value={sort} onChange={(e) => set('sort', e.target.value === 'new' ? '' : e.target.value)} aria-label="Sıralama">
-          {Object.entries(SORTS).map(([k, v]) => (
-            <option key={k} value={k}>{v}</option>
-          ))}
-        </select>
-        {hasFilters && (
-          <button className="filter-clear" onClick={() => setParams({}, { replace: true })}>
-            <X size={14} /> Təmizlə
-          </button>
-        )}
+      <div className="filter-bar">
+        <div className="filter-group">
+          <Dropdown label="Satış növü" allLabel="Hamısı" value={mode} onChange={(v) => set('mode', v)} options={Object.entries(MODE_LABELS).map(([value, label]) => ({ value, label }))} />
+          <Dropdown label="Qiymət" allLabel="İstənilən qiymət" value={price} onChange={(v) => set('price', v)} options={PRICES} />
+          <Dropdown label="Vəziyyət" allLabel="İstənilən vəziyyət" value={cond} onChange={(v) => set('cond', v)} options={CONDITIONS.map((c) => ({ value: c, label: c }))} />
+          <Dropdown label="Ərazi" allLabel="Bütün Bakı" value={district} onChange={(v) => set('district', v)} options={DISTRICTS.map((d) => ({ value: d, label: d }))} />
+          {hasFilters && (
+            <button className="filter-clear" onClick={() => setParams({}, { replace: true })}>
+              <X size={14} /> Filterləri təmizlə
+            </button>
+          )}
+        </div>
+        <div className="filter-sort-wrap">
+          <span>Sırala:</span>
+          <Dropdown label="Sırala" align="right" value={sort} onChange={(v) => set('sort', v === 'new' ? '' : v)} options={SORTS} />
+        </div>
       </div>
-
-      <p className="result-count">{results.length} elan</p>
 
       {results.length > 0 ? (
         <>

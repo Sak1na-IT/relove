@@ -5063,3 +5063,288 @@ body {
     width: 100%;
   }
 }
+
+/* =========================================================
+   Kəşf et — v4.3 (premium filterlər)
+   ========================================================= */
+.explore-head {
+  padding: 40px 0 0;
+}
+
+.explore-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.explore-count {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.search-big {
+  max-width: none;
+  height: 56px;
+  margin-top: 20px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.search-big:focus-within {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 4px rgba(31, 61, 51, 0.08);
+}
+
+/* category chips */
+.cat-chips {
+  display: flex;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 2px 0 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cat-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.cat-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 16px 0 5px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.cat-chip:first-child {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.cat-chip:hover {
+  border-color: var(--forest);
+}
+
+.cat-chip.is-on {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--ivory);
+}
+
+.cat-chip-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--lime);
+  flex-shrink: 0;
+}
+
+.cat-chip-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* filter bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 16px 0 32px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.filter-sort-wrap .dd-btn {
+  border-color: transparent;
+  background: transparent;
+  padding-left: 6px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.filter-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--forest);
+  border-bottom: 1px solid var(--brass);
+}
+
+/* dropdown */
+.dd {
+  position: relative;
+}
+
+.dd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px 0 16px;
+  border-radius: 99px;
+  border: 1px solid var(--line-2);
+  background: var(--white);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.dd-btn:hover,
+.dd.is-open .dd-btn {
+  border-color: var(--forest);
+}
+
+.dd-btn.is-set {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--ivory);
+}
+
+.dd-chev {
+  transition: transform 0.25s var(--ease);
+}
+
+.dd.is-open .dd-chev {
+  transform: rotate(180deg);
+}
+
+.dd-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 40;
+  min-width: 220px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 48px -20px rgba(16, 36, 29, 0.3);
+  animation: ddIn 0.2s var(--ease) both;
+}
+
+.dd-left {
+  left: 0;
+}
+
+.dd-right {
+  right: 0;
+}
+
+@keyframes ddIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.dd-menu button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--ink);
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.dd-menu button:hover {
+  background: var(--ivory);
+}
+
+.dd-menu button.is-on {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.dd-menu svg {
+  color: var(--brass);
+}
+
+@media (max-width: 900px) {
+  .explore-head {
+    padding-top: 24px;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .filter-group {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+
+  .filter-group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-group .dd {
+    position: static;
+  }
+
+  .filter-bar {
+    position: relative;
+  }
+
+  .filter-group .dd-menu {
+    left: 0;
+    right: 0;
+    top: 62px;
+  }
+
+  .dd-btn {
+    flex-shrink: 0;
+  }
+
+  .cat-chips {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
