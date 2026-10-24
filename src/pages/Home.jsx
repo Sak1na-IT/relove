@@ -115,7 +115,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="swap-banner-media">
-            <Img src={img('1576566588028-4147f3842f27', 1200)} alt="Dəyiş-düyüş" />
+            <Img src={img('1489987707025-afc232f7ea0f', 1200)} alt="Dəyiş-düyüş" />
             <span className="swap-banner-icon">
               <Repeat size={26} strokeWidth={1.6} />
             </span>

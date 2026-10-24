@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <Wordmark className="wordmark-light" />
+            <Wordmark light />
             <p className="footer-claim">Əşyaların ikinci həyatı</p>
           </div>
           <div className="footer-cols">
