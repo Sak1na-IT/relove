@@ -10,6 +10,7 @@ export function AppProvider({ children }) {
   const [offers, setOffers] = useState([])
   const [conversations, setConversations] = useState(CONVERSATIONS)
   const [toast, setToast] = useState(null)
+  const [userCollections, setUserCollections] = useState([])
   // istifadəçinin əlaqə və ərazi seçimləri — bütün bölmələrdə eyni istifadə olunur
   const [profile, setProfile] = useState({
     phone: USERS.me.phone,
@@ -87,6 +88,8 @@ export function AppProvider({ children }) {
   const value = {
     listings, myItems, allItems, getItem, addListing, updateItem, removeItem,
     profile, setProfile,
+    userCollections,
+    addCollection: (c) => setUserCollections((list) => [c, ...list]),
     favorites, toggleFavorite,
     offers, sendOffer,
     conversations, sendMessage, startConversation,
