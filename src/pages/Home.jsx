@@ -6,7 +6,7 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { HOME_CATEGORIES, CURATED } from '../data'
+import { CURATED, likesOf } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
@@ -48,11 +48,8 @@ function Hero() {
             <Link to="/ikinci-el" className="btn btn-primary btn-lg">
               Kəşfə başla
             </Link>
-            <Link to="/paylas" className="btn btn-ghost btn-lg">
+            <Link to="/paylasdiqlarim" className="btn btn-ghost btn-lg">
               Əşya paylaş
-            </Link>
-            <Link to="/deyis" className="hero4-more">
-              Necə işləyir?
             </Link>
           </div>
           <ul className="hero4-features">
@@ -92,64 +89,80 @@ function Rail({ children }) {
   )
 }
 
+const TRENDING = [
+  { term: 'Palto', img: 'l18' },
+  { term: 'Kreslo', img: 'l5' },
+  { term: 'Qulaqlıq', img: 'l4' },
+  { term: 'Fotoaparat', img: 'l1' },
+  { term: 'Çanta', img: 'l17' },
+  { term: 'Krossovka', img: 'l7' },
+  { term: 'Velosiped', img: 'l10' },
+  { term: 'Lampa', img: 'l15' },
+]
+
+function SectionHead({ title, text, to, label }) {
+  return (
+    <div className="block-head">
+      <div>
+        <h2 className="h2">{title}</h2>
+        {text && <p className="block-sub">{text}</p>}
+      </div>
+      {to && (
+        <Link to={to} className="link-arrow">
+          {label} <ArrowRight size={15} />
+        </Link>
+      )}
+    </div>
+  )
+}
+
 export default function Home() {
   const { listings, getItem } = useApp()
-  const count = (cats) => listings.filter((l) => cats.includes(l.category) && !l.modes.includes('free')).length
   const swapA = getItem('l1')
   const swapB = getItem('l4')
+  const sale = listings.filter((l) => l.modes.includes('sale'))
+  const popular = [...sale].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 4)
+  const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
+  const hits = (term) =>
+    listings.filter((l) => `${l.title} ${l.sub || ''}`.toLowerCase().includes(term.toLowerCase().slice(0, 5))).length
 
   return (
     <>
       <Hero />
 
-      {/* CATEGORIES */}
+      {/* ƏN ÇOX AXTARILANLAR */}
       <section className="container block">
-        <div className="block-head">
-          <h2 className="h2">Kateqoriyalar</h2>
-          <Link to="/ikinci-el" className="link-arrow">
-            Bütün kateqoriyalar <ArrowRight size={15} />
-          </Link>
+        <SectionHead title="Ən çox axtarılanlar" text="Bu həftə Relove-da insanların ən çox axtardığı əşyalar." />
+        <div className="trend">
+          {TRENDING.map((t, i) => {
+            const it = getItem(t.img)
+            return (
+              <Link key={t.term} to={`/ikinci-el?q=${encodeURIComponent(t.term)}`} className="trend-item">
+                <span className="trend-rank">{i + 1}</span>
+                <span className="trend-thumb">{it && <Img src={it.images[0]} alt="" />}</span>
+                <span className="trend-text">
+                  <strong>{t.term}</strong>
+                  <small>{hits(t.term)} elan</small>
+                </span>
+              </Link>
+            )
+          })}
         </div>
-        <div className="cat-cards">
-          {HOME_CATEGORIES.map((c) => (
-            <Link key={c.id} to={`/ikinci-el?cat=${c.id}`} className="cat-card">
-              <div className="cat-card-media">
-                <Img src={c.photo} alt={c.label} />
-              </div>
-              <strong>{c.label}</strong>
-              <small>{count(c.cats)} elan</small>
-            </Link>
-          ))}
+        <div className="trend-popular">
+          <h3 className="trend-subtitle">Ən çox bəyənilənlər</h3>
+          <div className="grid-4">
+            {popular.map((item) => (
+              <ProductCard key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* VALUES */}
-      <section className="container block-sm">
-        <ul className="values">
-          {VALUES.map(({ icon: Icon, title, text }) => (
-            <li key={title}>
-              <span className="values-icon">
-                <Icon size={20} strokeWidth={1.5} />
-              </span>
-              <div>
-                <strong>{title}</strong>
-                <p>{text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* DISCOVER */}
+      {/* İKİNCİ ƏL */}
       <section className="container block">
-        <div className="block-head">
-          <h2 className="h2">İndi kəşf edilənlər</h2>
-          <Link to="/ikinci-el" className="link-arrow">
-            Bütün elanlar <ArrowRight size={15} />
-          </Link>
-        </div>
+        <SectionHead title="İkinci əl" text="Yaxşı vəziyyətdə əşyalar — birbaşa sahibindən." to="/ikinci-el" label="Bütün satış elanları" />
         <Rail>
-          {listings.filter((l) => !l.modes.includes('free')).slice(0, 12).map((item) => (
+          {sale.slice(0, 12).map((item) => (
             <div className="rail2-item" key={item.id}>
               <ProductCard item={item} />
             </div>
@@ -157,7 +170,7 @@ export default function Home() {
         </Rail>
       </section>
 
-      {/* SWAP */}
+      {/* DƏYİŞ-DÜYÜŞ */}
       <section className="container block">
         <div className="swap4">
           <Leaves className="swap4-leaves" />
@@ -167,9 +180,9 @@ export default function Home() {
               <br />
               yeni hekayələr başlasın!
             </h2>
-            <p>Bəlkə də axtardığın əşya sənin evində artıq kiminsə gözlədiyi şeydir.</p>
+            <p>Əşyanı ver, əvəzində ehtiyacın olanı al — pul xərcləmədən.</p>
             <Link to="/deyis" className="btn btn-light">
-              Dəyiş-düyüş təklif et
+              Dəyiş elanlarına bax
             </Link>
           </div>
           {swapA && swapB && (
@@ -189,14 +202,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COLLECTIONS */}
-      <section className="container block block-last">
-        <div className="block-head">
-          <h2 className="h2">Sizin üçün seçdiyimiz kolleksiyalar</h2>
-          <Link to="/kolleksiyalar" className="link-arrow">
-            Bütün kolleksiyalar <ArrowRight size={15} />
-          </Link>
+      {/* İKİNCİ ŞANS */}
+      <section className="container block">
+        <div className="sc-teaser">
+          <div className="sc-teaser-copy">
+            <h2 className="h2">İkinci şans</h2>
+            <p>
+              Sökülmüş şərf, laxlayan stul, bir tərəfi işləməyən qulaqlıq. Atma — paylaş. Kimsə onu düzəldib yenidən
+              istifadə edəcək.
+            </p>
+            <div className="sc-teaser-ctas">
+              <Link to="/ikinci-sans" className="btn btn-primary">İkinci şans əşyalarına bax</Link>
+              <Link to="/paylas?mode=free" className="link-arrow">Qüsurlu əşya paylaş</Link>
+            </div>
+          </div>
+          <div className="sc-teaser-items">
+            {repairs.map((it) => (
+              <Link key={it.id} to={`/elan/${it.id}`} className="sc-teaser-item">
+                <span className="sc-teaser-photo"><Img src={it.images[0]} alt={it.title} /></span>
+                <strong>{it.title}</strong>
+                <small>{it.repair} · {it.price ? `${it.price} AZN` : 'Pulsuz'}</small>
+              </Link>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* KOLLEKSİYALAR */}
+      <section className="container block">
+        <SectionHead title="Kolleksiyalar" text="Mövzu ilə seçilmiş tapıntılar." to="/kolleksiyalar" label="Bütün kolleksiyalar" />
         <div className="col-grid">
           {CURATED.slice(0, 6).map((c) => {
             const items = listings.filter(c.match)
@@ -211,6 +245,23 @@ export default function Home() {
             )
           })}
         </div>
+      </section>
+
+      {/* DƏYƏRLƏR */}
+      <section className="container block block-last">
+        <ul className="values">
+          {VALUES.map(({ icon: Icon, title, text }) => (
+            <li key={title}>
+              <span className="values-icon">
+                <Icon size={20} strokeWidth={1.5} />
+              </span>
+              <div>
+                <strong>{title}</strong>
+                <p>{text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   )

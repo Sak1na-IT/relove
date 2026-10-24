@@ -23,14 +23,14 @@ export default function Footer() {
             <div>
               <h4>Sürətli keçid</h4>
               <Link to="/">Ana səhifə</Link>
-              <Link to="/ikinci-el">Kəşf et</Link>
+              <Link to="/ikinci-el">İkinci əl</Link>
               <Link to="/deyis">Dəyiş-düyüş</Link>
               <Link to="/ikinci-sans">İkinci şans</Link>
               <Link to="/kolleksiyalar">Kolleksiyalar</Link>
             </div>
             <div>
               <h4>İstifadəçi üçün</h4>
-              <Link to="/paylas">Əşya paylaş</Link>
+              <Link to="/paylasdiqlarim">Paylaşdıqlarım</Link>
               <Link to="/profil">Profilim</Link>
               <span>Təhlükəsiz görüş qaydaları</span>
               <span>Şərtlər və məxfilik</span>
