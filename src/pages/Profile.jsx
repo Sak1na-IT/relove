@@ -16,7 +16,7 @@ const NOTIFY = [
 export default function Profile() {
   const me = USERS.me
   const { notify } = useApp()
-  const [info, setInfo] = useState({ name: me.name, email: 'nermin@example.com', bio: me.bio })
+  const [info, setInfo] = useState({ name: me.name, email: 'pasayevasekine844@gmail.com', bio: me.bio })
   const [notifs, setNotifs] = useState({ msg: true, offer: true, saved: true, news: false })
 
   return (
