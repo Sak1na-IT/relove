@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 import CategoryThumb from '../components/CategoryThumb'
@@ -103,11 +103,23 @@ export default function Explore() {
       <p className="result-count">{results.length} elan</p>
 
       {results.length > 0 ? (
-        <div className="grid-5">
-          {results.map((item) => (
-            <ProductCard key={item.id} item={item} />
-          ))}
-        </div>
+        <>
+          <div className="grid-4 explore-grid">
+            {results.map((item) => (
+              <ProductCard key={item.id} item={item} />
+            ))}
+          </div>
+          <div className="results-end">
+            <div>
+              <h3>Axtardığını tapmadın?</h3>
+              <p>Axtarışını yadda saxla — uyğun əşya paylaşılanda sənə ilk biz xəbər verək.</p>
+            </div>
+            <div className="results-end-actions">
+              <Link to="/deyis" className="btn btn-primary">Axtarışı yadda saxla</Link>
+              <Link to="/paylas" className="btn btn-ghost">Öz əşyanı paylaş</Link>
+            </div>
+          </div>
+        </>
       ) : (
         <div className="empty">
           <h3>Heç nə tapılmadı</h3>

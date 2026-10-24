@@ -4934,3 +4934,132 @@ body {
 .swap4 {
   box-shadow: var(--shadow-lg);
 }
+
+/* =========================================================
+   v4.2 — balanslı qalınlıq, səhifə boşluqları
+   ========================================================= */
+body {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.hero4-title {
+  font-weight: 600;
+}
+
+.h2,
+.page-title,
+.display,
+.product-title,
+.swap4 h2,
+.values strong,
+.wordmark {
+  font-weight: 600;
+}
+
+.hero4-text,
+.swap4 p,
+.values p,
+.cat-card small,
+.col-card small,
+.card-meta,
+.footer-cols a,
+.footer-cols span {
+  font-weight: 400;
+}
+
+.nav-link,
+.hero4-features {
+  font-weight: 500;
+}
+
+.btn,
+.link-arrow,
+.hero4-more,
+.tag {
+  font-weight: 600;
+}
+
+.card-title {
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.card-price {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.cat-card strong,
+.col-card strong,
+.footer-cols h4,
+.footer-news h4 {
+  font-weight: 600;
+}
+
+/* hər səhifənin sonunda footer-dən əvvəl boşluq */
+.page {
+  padding-bottom: 96px;
+}
+
+.block-last {
+  padding-bottom: 0;
+}
+
+/* Kəşf et */
+.explore-grid {
+  gap: 36px 20px;
+}
+
+.results-end {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 64px;
+  padding: 36px 40px;
+  border-radius: var(--radius-lg);
+  background: var(--lime);
+  border: 1px solid var(--lime-2);
+}
+
+.results-end h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 30px;
+  color: var(--forest);
+}
+
+.results-end p {
+  margin: 6px 0 0;
+  max-width: 34em;
+  color: var(--ink-2);
+}
+
+.results-end-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding-bottom: 56px;
+  }
+
+  .results-end {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 26px 22px;
+  }
+
+  .results-end-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .results-end-actions .btn {
+    width: 100%;
+  }
+}
