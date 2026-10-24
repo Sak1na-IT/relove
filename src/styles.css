@@ -10806,3 +10806,67 @@ body {
 .mine .mine-add {
   margin-top: 36px;
 }
+
+/* v25 — Elan səhifəsi: təfərrüatlar qalereyanın altında */
+.product-left {
+  min-width: 0;
+}
+
+.pd-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px 28px;
+  margin-top: 36px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+
+.pd-details .pd-desc {
+  grid-column: 1 / -1;
+}
+
+.pd-desc h3,
+.pd-details .wants h4 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.pd-details .product-desc {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.pd-details .wants {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.pd-details .story {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.pd-details .seller {
+  margin: 0;
+}
+
+.pd-details .report {
+  margin: 0;
+  align-self: center;
+  justify-self: start;
+}
+
+@media (max-width: 900px) {
+  .pd-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pd-details .pd-desc {
+  order: -1;
+}
