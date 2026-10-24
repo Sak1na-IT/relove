@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
-  ArrowLeft, ChevronLeft, ChevronRight, Heart, MapPin, Star, BadgeCheck, Zap, Repeat, MessageCircle, Gift, Handshake, Truck, Share2, Flag,
+  ArrowLeft, Heart, MapPin, Star, BadgeCheck, Zap, Repeat, MessageCircle, Gift, Handshake, Truck, Share2, Flag,
 } from 'lucide-react'
 import Img from '../components/Img'
 import ModeBadge from '../components/ModeBadge'
@@ -53,25 +53,6 @@ export default function Product() {
         <div className={`gallery ${item.images.length > 1 ? '' : 'is-single'}`}>
           <div className="gallery-main">
             <Img key={item.images[active]} src={item.images[active]} alt={item.title} />
-            {item.images.length > 1 && (
-              <>
-                <button
-                  className="gallery-arrow gallery-arrow-prev"
-                  onClick={() => setActive((a) => (a - 1 + item.images.length) % item.images.length)}
-                  aria-label="Əvvəlki şəkil"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  className="gallery-arrow gallery-arrow-next"
-                  onClick={() => setActive((a) => (a + 1) % item.images.length)}
-                  aria-label="Növbəti şəkil"
-                >
-                  <ChevronRight size={20} />
-                </button>
-                <span className="gallery-count">{active + 1} / {item.images.length}</span>
-              </>
-            )}
             <div className="gallery-actions">
               <button className={`fav-btn static ${fav ? 'is-on' : ''}`} onClick={() => toggleFavorite(item.id)} aria-label="Seçilmişlər">
                 <Heart size={18} fill={fav ? 'currentColor' : 'none'} />

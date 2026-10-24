@@ -11128,58 +11128,40 @@ body {
   }
 }
 
-/* v28 — qalereya oxları */
-.gallery-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 2;
-  width: 46px;
-  height: 46px;
-  margin-top: -23px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--forest);
-  box-shadow: 0 6px 18px -8px rgba(22, 27, 23, 0.35);
-  opacity: 0;
-  transition: opacity 0.25s, transform 0.25s, background 0.2s;
+/* v28 — sağ məlumat sütunu öz sürüşdürmə zolağı ilə */
+.product-info {
+  position: sticky;
+  top: calc(var(--nav-h) + 20px);
+  max-height: calc(100vh - var(--nav-h) - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
 }
 
-.gallery-arrow-prev {
-  left: 16px;
+.product-info::-webkit-scrollbar {
+  width: 6px;
 }
 
-.gallery-arrow-next {
-  right: 16px;
+.product-info::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.gallery-main:hover .gallery-arrow,
-.gallery-arrow:focus-visible {
-  opacity: 1;
-}
-
-.gallery-arrow:hover {
-  background: var(--white);
-  transform: scale(1.06);
-}
-
-.gallery-count {
-  position: absolute;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
-  padding: 5px 12px;
+.product-info::-webkit-scrollbar-thumb {
+  background: var(--line-2);
   border-radius: 99px;
-  background: rgba(22, 27, 23, 0.55);
-  color: var(--ivory);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
 }
 
-@media (hover: none) {
-  .gallery-arrow {
-    opacity: 1;
+.product-info::-webkit-scrollbar-thumb:hover {
+  background: var(--brass);
+}
+
+@media (max-width: 900px) {
+  .product-info {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
   }
 }
