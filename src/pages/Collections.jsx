@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Plus, X, Check, Search, Lock, Globe } from 'lucide-react'
@@ -57,6 +58,7 @@ function CreateCollection({ onClose }) {
   }
 
   return (
+    createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <form className="modal cc" onClick={(e) => e.stopPropagation()} onSubmit={save} role="dialog" aria-label="Kolleksiya yarat">
         <button type="button" className="icon-btn modal-close" onClick={onClose} aria-label="Bağla">
@@ -116,7 +118,9 @@ function CreateCollection({ onClose }) {
           </button>
         </div>
       </form>
-    </div>
+    </div>,
+      document.body,
+    )
   )
 }
 

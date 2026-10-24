@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { X, ArrowLeftRight, Check, Plus } from 'lucide-react'
@@ -33,6 +34,7 @@ export default function SwapModal({ target, onClose }) {
   }
 
   return (
+    createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Dəyiş təklifi">
         <button className="icon-btn modal-close" onClick={onClose} aria-label="Bağla">
@@ -129,6 +131,8 @@ export default function SwapModal({ target, onClose }) {
           </>
         )}
       </div>
-    </div>
+    </div>,
+      document.body,
+    )
   )
 }
