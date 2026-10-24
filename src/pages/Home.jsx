@@ -1,61 +1,100 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowRight, Search, Repeat, Gift, ShieldCheck, MessageCircle, Star } from 'lucide-react'
+import { ArrowRight, Search, Repeat, Gift, ShieldCheck, MessageCircle, MapPin, BadgeCheck, Heart } from 'lucide-react'
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import CategoryThumb from '../components/CategoryThumb'
-import Leaves from '../components/Leaves'
-import { CATEGORIES, HERO_SLIDES, HOME_COLLECTIONS, USERS, img } from '../data'
+import { CATEGORIES, HOME_COLLECTIONS, USERS, formatPrice, img } from '../data'
 import { useApp } from '../store'
 
-function Hero() {
-  const [i, setI] = useState(0)
+const QUICK_SEARCHES = ['Palto', 'Kreslo', 'Kitablar', 'Velosiped', 'Qulaqlıq']
+
+const SAFETY = [
+  { icon: ShieldCheck, title: 'Təsdiqlənmiş profillər', text: 'Telefon nömrəsi yoxlanılmış istifadəçilər xüsusi nişan alır.' },
+  { icon: MessageCircle, title: 'Nömrən gizli qalır', text: 'Bütün danışıqlar Relove mesajlarında aparılır.' },
+  { icon: MapPin, title: 'Təhlükəsiz görüş', text: 'Gündüz və ictimai yerlərdə görüşməyi tövsiyə edirik.' },
+]
+
+function Passport({ item, back }) {
+  const seller = USERS[item.seller]
+  return (
+    <div className="passport-wrap">
+      {back && (
+        <div className="passport-back" aria-hidden="true">
+          <Img src={back.images[0]} alt="" />
+        </div>
+      )}
+      <Link to={`/elan/${item.id}`} className="passport">
+        <div className="passport-photo">
+          <Img src={item.images[0]} alt={item.title} />
+          <span className="passport-tag">Əşya pasportu</span>
+        </div>
+        <div className="passport-body">
+          <div className="passport-head">
+            <strong>{item.title}</strong>
+            <span>{formatPrice(item.price)}</span>
+          </div>
+          <ol className="passport-steps">
+            <li style={{ '--d': '0.5s' }}>
+              <span className="passport-dot"><BadgeCheck size={14} /></span>
+              <div>
+                <b>{seller.name}</b>
+                <small>Təsdiqlənmiş satıcı, {seller.district}</small>
+              </div>
+            </li>
+            <li style={{ '--d': '0.9s' }}>
+              <span className="passport-dot"><ShieldCheck size={14} /></span>
+              <div>
+                <b>Elan yoxlanılıb</b>
+                <small>Real fotolar, vəziyyəti: {item.condition.toLowerCase()}</small>
+              </div>
+            </li>
+            <li style={{ '--d': '1.3s' }} className="is-next">
+              <span className="passport-dot"><Heart size={13} fill="currentColor" /></span>
+              <div>
+                <b>Növbəti sahibi: sən</b>
+                <small>Mesaj yaz, görüşü birlikdə seçin</small>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </Link>
+    </div>
+  )
+}
+
+function Hero({ item, back }) {
   const [q, setQ] = useState('')
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const t = setInterval(() => setI((n) => (n + 1) % HERO_SLIDES.length), 6500)
-    return () => clearInterval(t)
-  }, [])
-
-  const slide = HERO_SLIDES[i]
+  const go = (term) => navigate(`/kesf${term.trim() ? `?q=${encodeURIComponent(term.trim())}` : ''}`)
 
   return (
-    <section className="container">
-      <div className="hero">
-        {HERO_SLIDES.map((s, n) => (
-          <div key={s.image} className={`hero-slide ${n === i ? 'is-on' : ''}`} aria-hidden={n !== i}>
-            <Img src={s.image} alt="" />
-          </div>
-        ))}
-        <div className="hero-shade" />
-        <div className="hero-content" key={i}>
-          <h1 className="hero-title">
-            {slide.title[0]}
-            <br />
-            {slide.title[1]}
-          </h1>
-          <p className="hero-text">{slide.text}</p>
-          <form
-            className="hero-search"
-            onSubmit={(e) => {
-              e.preventDefault()
-              navigate(`/kesf${q.trim() ? `?q=${encodeURIComponent(q.trim())}` : ''}`)
-            }}
-            role="search"
-          >
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nə axtarırsan?" aria-label="Axtarış" />
-            <button type="submit" aria-label="Axtar">
-              <Search size={18} />
-            </button>
-          </form>
-        </div>
-        <div className="hero-dots">
-          {HERO_SLIDES.map((s, n) => (
-            <button key={s.image} className={n === i ? 'is-on' : ''} onClick={() => setI(n)} aria-label={`Slayd ${n + 1}`} />
+    <section className="container hero3">
+      <div className="hero3-copy">
+        <h1 className="hero3-title">Əşyaların ikinci həyatı.</h1>
+        <p className="hero3-text">
+          Bakıda ikinci əl əşyaları rahat sat, dəyiş və ya hədiyyə et. Hər profil yoxlanılır, hər danışıq platformada qalır.
+        </p>
+        <form
+          className="hero3-search"
+          onSubmit={(e) => {
+            e.preventDefault()
+            go(q)
+          }}
+          role="search"
+        >
+          <Search size={19} />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nə axtarırsan?" aria-label="Axtarış" />
+          <button type="submit" className="btn btn-primary">Axtar</button>
+        </form>
+        <div className="hero3-quick">
+          <span>Tez-tez axtarılanlar:</span>
+          {QUICK_SEARCHES.map((t) => (
+            <button key={t} onClick={() => go(t)}>{t}</button>
           ))}
         </div>
       </div>
+      <Passport item={item} back={back} />
     </section>
   )
 }
@@ -66,10 +105,27 @@ export default function Home() {
   const fresh = listings.slice(6, 12)
   const freeItems = listings.filter((l) => l.modes.includes('free')).slice(0, 4)
   const story = listings.find((l) => l.id === 'l5') || listings.find((l) => l.story)
+  const heroItem = listings.find((l) => l.id === 'l2') || listings[0]
+  const heroBack = listings.find((l) => l.id === 'l15')
 
   return (
     <>
-      <Hero />
+      <Hero item={heroItem} back={heroBack} />
+
+      {/* SAFETY */}
+      <section className="container">
+        <ul className="safety">
+          {SAFETY.map(({ icon: Icon, title, text }) => (
+            <li key={title}>
+              <span className="safety-icon"><Icon size={20} strokeWidth={1.6} /></span>
+              <div>
+                <strong>{title}</strong>
+                <p>{text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {/* CATEGORIES */}
       <section className="container">
@@ -101,7 +157,6 @@ export default function Home() {
       {/* SWAP BANNER */}
       <section className="container block">
         <div className="swap-banner">
-          <Leaves className="swap-banner-leaves" />
           <div className="swap-banner-copy">
             <h2>
               Dəyiş-düyüş et,
@@ -155,11 +210,9 @@ export default function Home() {
               </div>
             </div>
             <div className="story-copy">
-              <p className="eyebrow">Relove hekayəsi</p>
+              <p className="eyebrow">Bu həftənin hekayəsi</p>
               <h2 className="h2">
-                Hər əşyanın bir keçmişi var.
-                <br />
-                <em>Sənin evində isə gələcəyi.</em>
+                Hər əşyanın bir keçmişi var. Sənin evində isə gələcəyi.
               </h2>
               <blockquote className="story-quote">“{story.story}”</blockquote>
               <div className="story-author">
@@ -218,32 +271,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* TRUST */}
-      <section className="container block">
-        <div className="trust">
-          <div className="trust-item">
-            <ShieldCheck size={22} strokeWidth={1.5} />
-            <div>
-              <h3>Təsdiqlənmiş profillər</h3>
-              <p>Əlaqə məlumatları yoxlanılmış istifadəçilər xüsusi nişan alır.</p>
-            </div>
-          </div>
-          <div className="trust-item">
-            <Star size={22} strokeWidth={1.5} />
-            <div>
-              <h3>Real rəylər</h3>
-              <p>Rəyi yalnız əməliyyatı tamamlayan istifadəçi yaza bilər.</p>
-            </div>
-          </div>
-          <div className="trust-item">
-            <MessageCircle size={22} strokeWidth={1.5} />
-            <div>
-              <h3>Məxfi ünsiyyət</h3>
-              <p>Nömrən və ünvanın sən istəməyincə heç kimə görünmür.</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   )
 }
