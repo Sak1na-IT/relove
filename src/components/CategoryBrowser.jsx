@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Search, X, LayoutGrid } from 'lucide-react'
 import Img from './Img'
 import Dropdown from './Dropdown'
-import { DEPARTMENTS, DISTRICTS, deptById } from '../data'
+import { DEPARTMENTS, DISTRICTS, deptById, likesOf } from '../data'
 
 // Ortaq filter tərifləri
 export const PRICE_FILTER = {
@@ -34,6 +34,7 @@ const SORTS = [
   { value: 'new', label: 'Ən yeni' },
   { value: 'low', label: 'Ucuzdan bahaya' },
   { value: 'high', label: 'Bahadan ucuza' },
+  { value: 'likes', label: 'Ən çox bəyənilən' },
 ]
 
 const POPULAR_SUBS = [
@@ -180,6 +181,7 @@ export default function CategoryBrowser({
     })
     if (sort === 'low') r = [...r].sort((a, b) => a.price - b.price)
     if (sort === 'high') r = [...r].sort((a, b) => b.price - a.price)
+    if (sort === 'likes') r = [...r].sort((a, b) => likesOf(b.id) - likesOf(a.id))
     return r
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pool, params])

@@ -6,7 +6,7 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { CURATED, USERS, formatPrice, likesOf } from '../data'
+import { CURATED, likesOf } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
@@ -110,39 +110,28 @@ export default function Home() {
   const swapA = getItem('l1')
   const swapB = getItem('l4')
   const sale = listings.filter((l) => l.modes.includes('sale'))
-  const featured = listings.find((l) => l.id === 'l5')
-  const popular = [...sale].filter((l) => l.id !== 'l5').sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 2)
+  const popular = [...listings].sort((a, b) => likesOf(b.id) - likesOf(a.id)).slice(0, 4)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
     <>
       <Hero />
 
-      {/* BU HƏFTƏNİN TAPINTILARI */}
+      {/* ƏN ÇOX BƏYƏNİLƏNLƏR */}
       <section className="container block">
-        <SectionHead title="Bu həftənin tapıntıları" text="Redaksiyamızın seçdiyi, hekayəsi olan əşyalar." to="/kolleksiyalar" label="Bütün kolleksiyalar" />
-        <div className="finds">
-          {featured && (
-            <Link to={`/elan/${featured.id}`} className="finds-feature">
-              <div className="finds-feature-photo">
-                <Img src={featured.images[0]} alt={featured.title} />
-              </div>
-              <div className="finds-feature-body">
-                <span className="finds-tag">Həftənin seçimi</span>
-                <h3>{featured.title}</h3>
-                {featured.story && <blockquote>“{featured.story}”</blockquote>}
-                <div className="finds-feature-foot">
-                  <strong>{formatPrice(featured.price)}</strong>
-                  <span>{USERS[featured.seller].name} · {featured.district}</span>
-                </div>
-              </div>
-            </Link>
-          )}
-          <div className="finds-side">
-            {popular.map((item) => (
-              <ProductCard key={item.id} item={item} />
-            ))}
-          </div>
+        <SectionHead
+          title="Ən çox bəyənilənlər"
+          text="İnsanların ən çox seçilmişlərə əlavə etdiyi əşyalar."
+          to="/ikinci-el?sort=likes"
+          label="Hamısına bax"
+        />
+        <div className="liked">
+          {popular.map((item, i) => (
+            <div key={item.id} className="liked-item">
+              <span className="liked-rank">{i + 1}</span>
+              <ProductCard item={item} />
+            </div>
+          ))}
         </div>
       </section>
 
