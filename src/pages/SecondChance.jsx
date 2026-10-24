@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Wrench, Plus, Scissors, Hammer, Cpu } from 'lucide-react'
+import { Wrench, Recycle, HandHeart, Plus, Scissors, Hammer, Cpu } from 'lucide-react'
 import Img from '../components/Img'
 import CategoryBrowser, { DISTRICT_FILTER } from '../components/CategoryBrowser'
 import { REPAIR_LEVELS, formatPrice, likesOf } from '../data'
@@ -68,43 +68,45 @@ export default function SecondChance() {
 
   return (
     <div className="sc-page">
-      <section className="container sc2-hero">
-        <div className="sc2-top">
+      <section className="sc-hero">
+        <div className="container sc-hero-inner">
           <div>
-            <h1 className="page-title">İkinci şans</h1>
-            <p className="sc2-lead">
+            <h1 className="sc-title">İkinci şans</h1>
+            <p className="sc-lead">
               Qüsurlu, amma hələ dəyəri olan əşyalar üçün. Sən atmırsan — onu düzəldə bilən biri pulsuz və ya simvolik
               qiymətə götürür.
             </p>
+            <div className="sc-hero-ctas">
+              <Link to="/paylas?mode=free" className="btn btn-light">
+                <Plus size={16} /> Qüsurlu əşya paylaş
+              </Link>
+              <a href="#sc-list" className="sc-hero-link">Əşyalara bax</a>
+            </div>
           </div>
-          <Link to="/paylas?mode=free" className="btn btn-primary">
-            <Plus size={16} /> Qüsurlu əşya paylaş
-          </Link>
+          <ul className="sc-steps">
+            <li>
+              <Recycle size={22} strokeWidth={1.5} />
+              <div>
+                <strong>Qüsurunu açıq yaz</strong>
+                <p>Nəyin sınıq və ya cırıq olduğunu dəqiq qeyd et.</p>
+              </div>
+            </li>
+            <li>
+              <Wrench size={22} strokeWidth={1.5} />
+              <div>
+                <strong>Bacaran biri götürür</strong>
+                <p>Dərzilər, təmirçilər və əl işi sevənlər burada əşya axtarır.</p>
+              </div>
+            </li>
+            <li>
+              <HandHeart size={22} strokeWidth={1.5} />
+              <div>
+                <strong>Əşya zibilliyə yox, evə gedir</strong>
+                <p>Pulsuz və ya 5–10 AZN simvolik qiymətə yeni sahibinə keçir.</p>
+              </div>
+            </li>
+          </ul>
         </div>
-
-        <ol className="sc2-steps">
-          <li>
-            <span className="sc2-num">I</span>
-            <div>
-              <strong>Qüsurunu açıq yaz</strong>
-              <p>Nəyin sınıq və ya cırıq olduğunu dəqiq qeyd et — götürən nəyə hazır olduğunu bilsin.</p>
-            </div>
-          </li>
-          <li>
-            <span className="sc2-num">II</span>
-            <div>
-              <strong>Bacaran biri götürür</strong>
-              <p>Dərzilər, təmirçilər və əl işi sevənlər burada düzəldiləcək əşya axtarır.</p>
-            </div>
-          </li>
-          <li>
-            <span className="sc2-num">III</span>
-            <div>
-              <strong>Əşya zibilliyə yox, evə gedir</strong>
-              <p>Pulsuz və ya 5–10 AZN simvolik qiymətə yeni sahibinə keçir.</p>
-            </div>
-          </li>
-        </ol>
       </section>
 
       <div className="container" id="sc-list">
