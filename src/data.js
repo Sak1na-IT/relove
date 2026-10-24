@@ -10,7 +10,7 @@ export const MODES = {
   free: { label: 'İkinci şans', short: 'İkinci şans', tone: 'free' },
 }
 
-export const CONDITIONS = ['Yeni kimi', 'Çox yaxşı', 'Yaxşı', 'İstifadə olunub']
+export const CONDITIONS = ['Yeni kimi', 'Çox yaxşı', 'Yaxşı', 'İstifadə olunmayıb']
 export const REPAIR_LEVELS = ['Kiçik təmir', 'Ciddi təmir', 'Hissələr üçün']
 
 export const DISTRICTS = [
