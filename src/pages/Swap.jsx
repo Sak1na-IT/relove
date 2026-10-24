@@ -1,245 +1,231 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeftRight, Sparkles, X, Heart, Plus, MapPin, Clock, RotateCcw } from 'lucide-react'
+import { Repeat, Plus, Clock, ArrowRight, MapPin, Heart } from 'lucide-react'
 import Img from '../components/Img'
-import ProductCard from '../components/ProductCard'
 import SwapModal from '../components/SwapModal'
-import { CATEGORIES, formatPrice } from '../data'
+import { CATEGORIES, USERS, formatPrice } from '../data'
 import { useApp } from '../store'
 
-const TABS = [
-  { id: 'mine', label: 'Dəyişmək istədiklərim' },
-  { id: 'wants', label: 'Mənim axtardıqlarım' },
-  { id: 'offers', label: 'Təkliflərim' },
+const STEPS = [
+  { title: 'Təklif göndər', text: 'Bəyəndiyin əşya üçün öz əşyanı təklif et.' },
+  { title: 'Qarşı tərəf təsdiqləyir', text: 'Razılaşmadan heç nə tamamlanmır.' },
+  { title: 'Görüşüb dəyişin', text: 'Yeri və vaxtı mesajlarda seçin.' },
 ]
 
+const firstName = (id) => (id === 'me' ? 'Sənin' : `${USERS[id].name.split(' ')[0]}`)
+
+function SwapCard({ item, onOffer }) {
+  const { favorites, toggleFavorite } = useApp()
+  const fav = favorites.includes(item.id)
+  return (
+    <article className="swapcard">
+      <div className="swapcard-media">
+        <Link to={`/elan/${item.id}`} className="card-media-link" aria-label={item.title}>
+          <Img src={item.images[0]} alt={item.title} />
+        </Link>
+        <button className={`card-heart ${fav ? 'is-on' : ''}`} onClick={() => toggleFavorite(item.id)} aria-label="Seçilmişlər">
+          <Heart size={16} strokeWidth={1.8} fill={fav ? 'currentColor' : 'none'} />
+        </button>
+      </div>
+      <div className="swapcard-body">
+        <Link to={`/elan/${item.id}`} className="swapcard-title">{item.title}</Link>
+        <div className="swapcard-meta">
+          <span>Dəyəri ~{formatPrice(item.price)}</span>
+          <span className="with-icon"><MapPin size={12} /> {item.district}</span>
+        </div>
+        {item.wantsText.length > 0 && (
+          <p className="swapcard-wants">
+            <span>Əvəzində istəyir:</span> {item.wantsText.join(', ')}
+          </p>
+        )}
+        <button className="btn btn-ghost btn-sm swapcard-btn" onClick={() => onOffer(item)}>
+          <Repeat size={14} /> Təklif göndər
+        </button>
+      </div>
+    </article>
+  )
+}
+
 export default function Swap() {
-  const { listings, myItems, offers, getItem, notify } = useApp()
-  const [tab, setTab] = useState('mine')
+  const { listings, myItems, offers, getItem } = useApp()
   const [target, setTarget] = useState(null)
   const [cat, setCat] = useState('')
-  const [deck, setDeck] = useState(0)
-  const [wants, setWants] = useState(['Fotoaparat', 'Kitab rəfi', 'Vinil plastinkalar'])
-  const [wantInput, setWantInput] = useState('')
+  const [tab, setTab] = useState('items')
 
   const mySwap = myItems.filter((m) => m.modes.includes('swap'))
-  const openToSwap = listings.filter((l) => l.modes.includes('swap'))
+  const open = listings.filter((l) => l.modes.includes('swap'))
 
   const matches = useMemo(() => {
     const pairs = []
-    mySwap.forEach((mine) => {
-      openToSwap.forEach((theirs) => {
+    mySwap.forEach((mine) =>
+      open.forEach((theirs) => {
         if (theirs.wants.includes(mine.category) && mine.wants.includes(theirs.category)) {
-          const score = 100 - Math.min(40, Math.round((Math.abs(theirs.price - mine.price) / Math.max(theirs.price, mine.price, 1)) * 60))
-          pairs.push({ mine, theirs, score })
+          const diff = Math.abs(theirs.price - mine.price) / Math.max(theirs.price, mine.price, 1)
+          pairs.push({ mine, theirs, score: 100 - Math.min(40, Math.round(diff * 60)) })
         }
-      })
-    })
-    return pairs.sort((a, b) => b.score - a.score).slice(0, 3)
-  }, [mySwap, openToSwap])
+      }),
+    )
+    // hər qarşı əşya yalnız bir dəfə
+    const seen = new Set()
+    return pairs
+      .sort((a, b) => b.score - a.score)
+      .filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
+      .slice(0, 3)
+  }, [mySwap, open])
 
-  const grid = cat ? openToSwap.filter((l) => l.category === cat) : openToSwap
-  const card = openToSwap[deck % openToSwap.length]
-
-  const addWant = (e) => {
-    e.preventDefault()
-    const w = wantInput.trim()
-    if (w && !wants.includes(w)) setWants([...wants, w])
-    setWantInput('')
-  }
+  const cats = CATEGORIES.filter((c) => open.some((l) => l.category === c.id))
+  const grid = cat ? open.filter((l) => l.category === cat) : open
 
   return (
-    <div className="swap-page">
-      <section className="swap-hero">
-        <div className="container swap-hero-inner">
-          <p className="eyebrow eyebrow-lime">Dəyiş</p>
-          <h1 className="display">
-            Axtardığını tap. <em>Əlindəkini dəyərləndir.</em>
-          </h1>
-          <p className="lead lead-light">
-            Pul ödəmədən, əşyanı əşya ilə dəyiş. Hər iki tərəf razılaşmadan heç nə tamamlanmır.
+    <div className="swap2">
+      {/* intro */}
+      <section className="container swap2-intro">
+        <div>
+          <h1 className="page-title">Dəyiş-düyüş</h1>
+          <p className="page-lead">
+            Pul xərcləmədən əşyanı əşya ilə dəyiş. Hər iki tərəf razılaşmadan heç bir dəyiş tamamlanmır.
           </p>
+        </div>
+        <ol className="swap2-steps">
+          {STEPS.map((s, i) => (
+            <li key={s.title}>
+              <span className="swap2-step-num">{i + 1}</span>
+              <div>
+                <strong>{s.title}</strong>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* matches */}
+      {matches.length > 0 && (
+        <section className="container block-sm">
+          <div className="block-head">
+            <div>
+              <h2 className="h2">Sənə uyğun təkliflər</h2>
+              <p className="block-sub">Sənin əşyalarınla qarşılıqlı maraq olan elanlar.</p>
+            </div>
+          </div>
+          <div className="match2-grid">
+            {matches.map(({ mine, theirs, score }) => (
+              <article key={theirs.id} className="match2">
+                <div className="match2-pair">
+                  <div className="match2-side">
+                    <div className="match2-photo"><Img src={mine.images[0]} alt={mine.title} /></div>
+                    <small>Sənin</small>
+                    <strong>{mine.title}</strong>
+                  </div>
+                  <span className="match2-icon"><Repeat size={18} strokeWidth={1.7} /></span>
+                  <Link to={`/elan/${theirs.id}`} className="match2-side">
+                    <div className="match2-photo"><Img src={theirs.images[0]} alt={theirs.title} /></div>
+                    <small>{firstName(theirs.seller)}</small>
+                    <strong>{theirs.title}</strong>
+                  </Link>
+                </div>
+                <div className="match2-foot">
+                  <span className="match2-score">
+                    <span style={{ width: `${score}%` }} />
+                  </span>
+                  <span className="match2-score-text">{score}% uyğun</span>
+                  <button className="btn btn-primary btn-sm" onClick={() => setTarget(theirs)}>
+                    Təklif göndər
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* open to swap */}
+      <section className="container block">
+        <div className="block-head">
+          <div>
+            <h2 className="h2">Dəyişməyə açıq əşyalar</h2>
+            <p className="block-sub">Sahibləri pul əvəzinə başqa əşya qəbul edir.</p>
+          </div>
+          <span className="explore-count">{grid.length} əşya</span>
+        </div>
+        <div className="tabs2" role="tablist" aria-label="Kateqoriya">
+          <button role="tab" aria-selected={!cat} className={!cat ? 'is-on' : ''} onClick={() => setCat('')}>
+            Hamısı <em>{open.length}</em>
+          </button>
+          {cats.map((c) => (
+            <button key={c.id} role="tab" aria-selected={cat === c.id} className={cat === c.id ? 'is-on' : ''} onClick={() => setCat(c.id)}>
+              {c.label} <em>{open.filter((l) => l.category === c.id).length}</em>
+            </button>
+          ))}
+        </div>
+        <div className="swap2-grid">
+          {grid.map((item) => (
+            <SwapCard key={item.id} item={item} onOffer={setTarget} />
+          ))}
         </div>
       </section>
 
-      <div className="container">
-        {/* MATCHES */}
-        {matches.length > 0 && (
-          <section className="section section-tight">
-            <div className="section-head">
-              <div>
-                <p className="eyebrow"><Sparkles size={14} /> Sənin üçün</p>
-                <h2 className="h2">Sənin əşyanla <em>uyğun təkliflər</em> tapıldı</h2>
-              </div>
-            </div>
-            <div className="matches">
-              {matches.map(({ mine, theirs, score }) => (
-                <article key={mine.id + theirs.id} className="match">
-                  <div className="match-score">{score}% uyğun</div>
-                  <div className="match-pair">
-                    <div className="match-side">
-                      <Img src={mine.images[0]} alt={mine.title} />
-                      <small>Sənin</small>
-                      <strong>{mine.title}</strong>
-                      <span>{formatPrice(mine.price)}</span>
-                    </div>
-                    <span className="match-arrow"><ArrowLeftRight size={18} /></span>
-                    <Link to={`/elan/${theirs.id}`} className="match-side">
-                      <Img src={theirs.images[0]} alt={theirs.title} />
-                      <small>Onun</small>
-                      <strong>{theirs.title}</strong>
-                      <span>{formatPrice(theirs.price)}</span>
-                    </Link>
-                  </div>
-                  <button className="btn btn-primary btn-block" onClick={() => setTarget(theirs)}>
-                    Dəyiş təklif et
-                  </button>
-                </article>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* QUICK DECK + TABS */}
-        <section className="section section-tight swap-split">
-          <div className="deck-wrap">
-            <h2 className="h2">Sürətli <em>kəşf</em></h2>
-            <p className="section-text">Bəyən və ya keç. Bəyəndiyinə dərhal təklif göndər.</p>
-            {card && (
-              <div className="deck">
-                <div className="deck-shadow deck-shadow-2" />
-                <div className="deck-shadow" />
-                <Link to={`/elan/${card.id}`} className="deck-card" key={card.id}>
-                  <Img src={card.images[0]} alt={card.title} />
-                  <div className="deck-info">
-                    <strong>{card.title}</strong>
-                    <span>
-                      {formatPrice(card.price)} · <MapPin size={12} /> {card.district}
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            )}
-            <div className="deck-actions">
-              <button className="round-btn" onClick={() => setDeck((d) => d + 1)} aria-label="Keç">
-                <X size={22} />
+      {/* my swaps */}
+      <section className="container block">
+        <div className="myswap">
+          <div className="myswap-head">
+            <h2 className="h2">Mənim dəyişlərim</h2>
+            <div className="tabs2 tabs2-light" role="tablist">
+              <button role="tab" aria-selected={tab === 'items'} className={tab === 'items' ? 'is-on' : ''} onClick={() => setTab('items')}>
+                Dəyişməyə qoyduqlarım <em>{mySwap.length}</em>
               </button>
-              <button className="round-btn round-btn-sm" onClick={() => setDeck(0)} aria-label="Yenidən başla">
-                <RotateCcw size={16} />
-              </button>
-              <button className="round-btn round-btn-lime" onClick={() => setTarget(card)} aria-label="Bəyən və təklif et">
-                <Heart size={22} fill="currentColor" />
+              <button role="tab" aria-selected={tab === 'offers'} className={tab === 'offers' ? 'is-on' : ''} onClick={() => setTab('offers')}>
+                Göndərdiyim təkliflər <em>{offers.length}</em>
               </button>
             </div>
           </div>
 
-          <div className="tabs-wrap">
-            <div className="tabs" role="tablist">
-              {TABS.map((t) => (
-                <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'is-on' : ''} onClick={() => setTab(t.id)}>
-                  {t.label}
-                  {t.id === 'offers' && offers.length > 0 && <span className="pill-count">{offers.length}</span>}
-                </button>
-              ))}
-            </div>
-
-            {tab === 'mine' && (
-              <div className="my-swap-list">
-                {mySwap.map((m) => (
-                  <Link to={`/elan/${m.id}`} key={m.id} className="row-item">
-                    <Img src={m.images[0]} alt={m.title} />
-                    <div>
-                      <strong>{m.title}</strong>
-                      <small>Axtarır: {m.wantsText.join(', ') || 'Təklifə açıqdır'}</small>
-                    </div>
-                    <span className="row-price">{formatPrice(m.price)}</span>
-                  </Link>
-                ))}
-                <Link to="/paylas" className="row-add">
-                  <Plus size={18} /> Dəyişmək üçün yeni əşya əlavə et
-                </Link>
-              </div>
-            )}
-
-            {tab === 'wants' && (
-              <div className="wants-editor">
-                <p className="section-text">Bu əşyalar paylaşılanda sənə ilk olaraq göstərəcəyik.</p>
-                <div className="chip-wrap">
-                  {wants.map((w) => (
-                    <span key={w} className="chip chip-static chip-removable">
-                      {w}
-                      <button onClick={() => setWants(wants.filter((x) => x !== w))} aria-label={`${w} sil`}>
-                        <X size={13} />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-                <form onSubmit={addWant} className="inline-form">
-                  <input value={wantInput} onChange={(e) => setWantInput(e.target.value)} placeholder="Məsələn: Planşet" />
-                  <button className="btn btn-primary btn-sm" type="submit">Əlavə et</button>
-                </form>
-                <button className="link-arrow" onClick={() => notify('Axtarışların yadda saxlanıldı')}>
-                  Yadda saxla
-                </button>
-              </div>
-            )}
-
-            {tab === 'offers' && (
-              <div className="my-swap-list">
-                {offers.length === 0 ? (
-                  <div className="empty empty-sm">
-                    <h3>Hələ təklif göndərməmisən</h3>
-                    <p>Uyğun təkliflərdən birini seç və ya sürətli kəşfdə bəyən.</p>
+          {tab === 'items' && (
+            <div className="myswap-list">
+              {mySwap.map((m) => (
+                <Link key={m.id} to={`/elan/${m.id}`} className="myswap-row">
+                  <div className="myswap-thumb"><Img src={m.images[0]} alt={m.title} /></div>
+                  <div className="myswap-text">
+                    <strong>{m.title}</strong>
+                    <span>Əvəzində istəyirəm: {m.wantsText.join(', ') || 'təklifə açığam'}</span>
                   </div>
-                ) : (
-                  offers.map((o) => {
-                    const t = getItem(o.targetId)
-                    const m = getItem(o.myItemId)
-                    return (
-                      <div key={o.id} className="offer-row">
-                        <div className="offer-thumbs">
-                          <Img src={m.images[0]} alt={m.title} />
-                          <span><ArrowLeftRight size={14} /></span>
-                          <Img src={t.images[0]} alt={t.title} />
-                        </div>
-                        <div>
-                          <strong>{m.title} ↔ {t.title}</strong>
-                          <small>
-                            {o.cash > 0 ? `+ ${formatPrice(o.cash)} fərq · ` : ''}
-                            {o.created}
-                          </small>
-                        </div>
-                        <span className="status"><Clock size={13} /> {o.status}</span>
+                  <span className="myswap-price">~{formatPrice(m.price)}</span>
+                  <ArrowRight size={16} className="myswap-arrow" />
+                </Link>
+              ))}
+              <Link to="/paylas" className="myswap-add">
+                <Plus size={16} /> Dəyişmək üçün əşya əlavə et
+              </Link>
+            </div>
+          )}
+
+          {tab === 'offers' && (
+            <div className="myswap-list">
+              {offers.length === 0 ? (
+                <p className="myswap-empty">Hələ təklif göndərməmisən. Yuxarıdakı uyğun təkliflərdən başlaya bilərsən.</p>
+              ) : (
+                offers.map((o) => {
+                  const t = getItem(o.targetId)
+                  const m = getItem(o.myItemId)
+                  return (
+                    <div key={o.id} className="myswap-row">
+                      <div className="myswap-thumb myswap-thumb-pair">
+                        <Img src={m.images[0]} alt={m.title} />
+                        <Img src={t.images[0]} alt={t.title} />
                       </div>
-                    )
-                  })
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* ALL SWAP LISTINGS */}
-        <section className="section section-tight">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">Barter</p>
-              <h2 className="h2">Dəyişməyə <em>açıq olan hər şey</em></h2>
+                      <div className="myswap-text">
+                        <strong>{m.title} → {t.title}</strong>
+                        <span>{o.cash > 0 ? `Üstünə ${formatPrice(o.cash)} · ` : ''}{o.created}</span>
+                      </div>
+                      <span className="status"><Clock size={13} /> Cavab gözlənilir</span>
+                    </div>
+                  )
+                })
+              )}
             </div>
-          </div>
-          <div className="chips-scroll">
-            <button className={`chip ${!cat ? 'is-on' : ''}`} onClick={() => setCat('')}>Hamısı</button>
-            {CATEGORIES.filter((c) => openToSwap.some((l) => l.category === c.id)).map((c) => (
-              <button key={c.id} className={`chip ${cat === c.id ? 'is-on' : ''}`} onClick={() => setCat(c.id)}>
-                {c.short}
-              </button>
-            ))}
-          </div>
-          <div className="grid-4">
-            {grid.map((l) => <ProductCard key={l.id} item={l} />)}
-          </div>
-        </section>
-      </div>
+          )}
+        </div>
+      </section>
 
       {target && <SwapModal target={target} onClose={() => setTarget(null)} />}
     </div>
