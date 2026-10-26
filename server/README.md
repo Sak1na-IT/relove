@@ -129,6 +129,6 @@ Qaydalar: ən azı bir şəkil linki; satış elanında qiymət; İkinci şans (
    - `NODE_VERSION` = `22`
    - `NODE_ENV` = `production`
    - `JWT_SECRET` = uzun təsadüfi mətn (ən azı 32 simvol)
-   - `CLIENT_ORIGIN` = saytın ünvanı, məs. `https://relove.netlify.app`
+   - `CLIENT_ORIGIN` = saytın ünvanı, məs. `https://relove.vercel.app` (bir neçə ünvan vergüllə: `https://relove.vercel.app,https://relove.netlify.app`)
 
 Bilmək lazımdır: pulsuz Render-də SQLite faylı daimi deyil, server yenidən başlayanda yeni qeydiyyatlar və elanlar silinə bilər (demo məlumat hər dəfə yenidən yaranır). Daimi saxlama üçün Render-in pullu diskinə və ya PostgreSQL-ə keçmək lazımdır.
