@@ -59,15 +59,24 @@ export function strList(value, field, { maxItems = 12, maxLen = 80, allowed } = 
   return [...new Set(out)]
 }
 
-// Şəkillər hələlik link kimi saxlanılır: yalnız http(s) ünvanları
+// Şəkillər: http(s) linki, saytın öz şəkli (/elanlar/...) və ya cihazdan seçilmiş sıxılmış şəkil (data:image/...;base64)
+const DATA_IMAGE = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/
+const MAX_DATA_IMAGE = 900_000 // ~650 KB şəkil
+
 export function imageUrls(value, { required = false } = {}) {
   if (value === undefined) {
-    if (required) throw badRequest('Ən azı bir şəkil linki tələb olunur')
+    if (required) throw badRequest('Ən azı bir şəkil tələb olunur')
     return undefined
   }
-  const list = strList(value, 'images', { maxItems: 10, maxLen: 1000 })
-  if (required && list.length === 0) throw badRequest('Ən azı bir şəkil linki tələb olunur')
+  const list = strList(value, 'images', { maxItems: 10, maxLen: MAX_DATA_IMAGE })
+  if (required && list.length === 0) throw badRequest('Ən azı bir şəkil tələb olunur')
   for (const u of list) {
+    if (u.startsWith('data:')) {
+      if (!DATA_IMAGE.test(u)) throw badRequest('Şəkil formatı dəstəklənmir (JPEG, PNG və ya WebP olmalıdır)')
+      continue
+    }
+    if (/^\/elanlar\/[a-z0-9-]+\.(jpe?g|png|webp)$/i.test(u)) continue
+    if (u.length > 1000) throw badRequest('Şəkil linki çox uzundur')
     let url
     try {
       url = new URL(u)

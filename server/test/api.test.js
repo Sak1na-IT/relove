@@ -213,6 +213,14 @@ test('başqasının elanını dəyişmək və silmək olmur', async () => {
   assert.equal((await api('/listings/l1', { method: 'DELETE', token })).status, 403)
 })
 
+test('cihazdan seçilmiş şəkil (data URL) qəbul olunur', async () => {
+  const token = await login()
+  const tiny = 'data:image/jpeg;base64,' + 'A'.repeat(4000)
+  const res = await api('/listings', { method: 'POST', token, body: { ...NEW_LISTING, images: [tiny] } })
+  assert.equal(res.status, 201)
+  assert.equal((res.data.listing || res.data).images[0], tiny)
+})
+
 test('elan yoxlamaları', async () => {
   const token = await login()
   const bad = async (patch) => (await api('/listings', { method: 'POST', token, body: { ...NEW_LISTING, ...patch } })).status
@@ -222,6 +230,8 @@ test('elan yoxlamaları', async () => {
   assert.equal(await bad({ images: [] }), 400)
   assert.equal(await bad({ images: ['javascript:alert(1)'] }), 400)
   assert.equal(await bad({ images: ['yox-link'] }), 400)
+  assert.equal(await bad({ images: ['data:image/svg+xml;base64,PHN2Zz4='] }), 400)
+  assert.equal(await bad({ images: ['data:text/html;base64,PGI+'] }), 400)
   assert.equal(await bad({ price: -5 }), 400)
   assert.equal(await bad({ price: 12.5 }), 400)
   // İkinci şans: qüsur mütləqdir, qiymət ən çoxu 10, başqa bölmə ilə qarışmır

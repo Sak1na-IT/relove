@@ -15,7 +15,7 @@ export const forbidden = (message = 'Bu əməliyyata icazən yoxdur') => new Htt
 export const notFound = (message = 'Tapılmadı') => new HttpError(404, message)
 export const conflict = (message) => new HttpError(409, message)
 
-const MAX_BODY = 1024 * 1024 // 1 MB — şəkillər link kimi gəldiyi üçün kifayətdir
+const MAX_BODY = 8 * 1024 * 1024 // 8 MB — cihazdan seçilən şəkillər sıxılmış data URL kimi gəlir
 
 export function readJson(req) {
   return new Promise((resolve, reject) => {
