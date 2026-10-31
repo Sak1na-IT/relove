@@ -10,7 +10,7 @@ import { CURATED, isFashion } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=2400&q=80'
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=2400&q=80'
 
 const HERO_FEATURES = [
   { icon: Tag, label: 'Sat.' },
@@ -30,7 +30,7 @@ function Hero() {
   return (
     <section className="hero4">
       <div className="hero4-media">
-        <Img src={HERO_IMAGE} alt="Yaşıl kreslo və isti işıqlı qonaq otağı" />
+        <Img src={HERO_IMAGE} alt="Taxta asılqanlarda düzülmüş geyimlər" />
       </div>
       <div className="hero4-shade" />
       <div className="container hero4-inner">
