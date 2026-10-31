@@ -2,6 +2,8 @@
 
 **Əşyalar bir daha sevilsin.** — Bakı üçün ikinci əl alış-satış, dəyiş-düyüş və pulsuz paylaşım platforması.
 
+**Canlı versiya:** [relove.vercel.app](https://relove.vercel.app) (sayt, Vercel) · [relove-api-py9o.onrender.com](https://relove-api-py9o.onrender.com/api/health) (API, Render). Demo giriş: `sakina@relove.demo` / `parol123`.
+
 ## İşə salmaq
 
 Sayt məlumatları backend-dən götürür, ona görə iki terminal lazımdır:
