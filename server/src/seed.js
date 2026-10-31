@@ -81,7 +81,7 @@ export function seed(db) {
 
     // Sakina-ya gələn bir dəyiş təklifi (Rəşadın elanı → Sakinanın qulaqlığı)
     db.prepare(`INSERT INTO offers (id, from_user_id, to_user_id, target_listing_id, offered_listing_id, cash, note)
-      VALUES ('o_demo1', 'u_u4', 'u_sakina', 'm1', 'l9', 0, 'Salam! Plyonka fotoaparatımı qulaqlığınla dəyişməyə hazıram.')`).run()
+      VALUES ('o_demo1', 'u_u4', 'u_sakina', 'm1', 'l9', 0, 'Salam! Kodak fotoaparatımı boz hudinlə dəyişməyə hazıram.')`).run()
 
     const insRev = db.prepare('INSERT INTO reviews (id, author_id, target_id, stars, text, created_at) VALUES (?, ?, ?, ?, ?, ?)')
     REVIEWS.forEach((r, i) => insRev.run(`r_demo${i}`, userId(r.from), 'u_sakina', r.stars, r.text, new Date(Date.now() - (i + 1) * 30 * 24 * 3600_000).toISOString()))
