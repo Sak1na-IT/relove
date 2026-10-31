@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import Dropdown from './Dropdown'
-import { DEPARTMENTS, DISTRICTS, deptById } from '../data'
+import { DEPARTMENTS, DISTRICTS, deptById, isFashion } from '../data'
 
 // Ortaq filter tərifləri
 export const PRICE_FILTER = {
@@ -153,6 +153,8 @@ export default function CategoryBrowser({
       }
       return filters.every((f) => !get(f.key) || f.test(l, get(f.key)))
     })
+    // standart sıralamada geyim önə çıxır
+    if (!sort || sort === 'new') r = [...r.filter(isFashion), ...r.filter((l) => !isFashion(l))]
     if (sort === 'low') r = [...r].sort((a, b) => a.price - b.price)
     if (sort === 'high') r = [...r].sort((a, b) => b.price - a.price)
     if (sort === 'likes') r = [...r].sort((a, b) => (b.likes || 0) - (a.likes || 0))

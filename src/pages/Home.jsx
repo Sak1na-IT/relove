@@ -6,7 +6,7 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { CURATED } from '../data'
+import { CURATED, isFashion } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
@@ -109,8 +109,10 @@ export default function Home() {
   const { listings, getItem } = useApp()
   const swapA = getItem('l1')
   const swapB = getItem('l4')
-  const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...listings].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6)
+  // Relove-da əvvəlcə geyim görünür: paltar, ayaqqabı, çanta, aksesuar
+  const fashionFirst = (arr) => [...arr.filter(isFashion), ...arr.filter((l) => !isFashion(l))]
+  const sale = fashionFirst(listings.filter((l) => l.modes.includes('sale')))
+  const popular = fashionFirst([...listings].sort((a, b) => (b.likes || 0) - (a.likes || 0))).slice(0, 6)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
