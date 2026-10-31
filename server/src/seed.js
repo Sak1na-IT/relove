@@ -59,7 +59,7 @@ export function seed(db) {
       insListing.run(l.id, userId(l.seller), l.title, l.category, l.dept || null, l.sub || null, l.price, l.condition, l.district,
         JSON.stringify(l.modes), JSON.stringify(l.images), l.description || '', l.story || null, JSON.stringify(l.wants || []),
         JSON.stringify(l.wantsText || []), JSON.stringify(l.delivery || ['meet']), l.defect || null, l.repair || null,
-        l.aspect || 'square', 'active', likesOf(l.id), created, created)
+        l.aspect || 'square', 'active', l.likesBase ?? likesOf(l.id), created, created)
     })
 
     const fav = db.prepare('INSERT INTO favorites (user_id, listing_id) VALUES (?, ?)')
