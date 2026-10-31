@@ -119,9 +119,8 @@ export default function Swap() {
               pool={open}
               renderItem={(item) => <SwapCard key={item.id} item={item} onOffer={openOffer} />}
               gridClass="swap2-grid"
-              searchPlaceholder="Dəyiş elanlarında axtar — məs. sviter, çəkmə, lampa..."
+              searchPlaceholder="Dəyiş elanlarında axtar — məs. qulaqlıq, palto..."
               allTitle="Bütün dəyiş elanları"
-              mixEvery={3}
             />
           </>
         )}

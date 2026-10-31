@@ -128,7 +128,6 @@ export default function CategoryBrowser({
   allTitle = 'Bütün elanlar',
   unit = 'elan',
   footer = null,
-  mixEvery = 0,
 }) {
   const [params, setParams] = useSearchParams()
   const get = (k) => params.get(k) || ''
@@ -155,19 +154,7 @@ export default function CategoryBrowser({
       return filters.every((f) => !get(f.key) || f.test(l, get(f.key)))
     })
     // standart sıralamada geyim önə çıxır
-    if (!sort || sort === 'new') {
-      const wear = r.filter(isFashion)
-      const rest = r.filter((l) => !isFashion(l))
-      if (mixEvery > 0) {
-        // hər "mixEvery" geyimdən sonra bir başqa əşya — geyim önə çıxır, digərləri də görünür
-        r = []
-        wear.forEach((l, i) => {
-          r.push(l)
-          if ((i + 1) % mixEvery === 0 && rest.length) r.push(rest.shift())
-        })
-        r.push(...rest)
-      } else r = [...wear, ...rest]
-    }
+    if (!sort || sort === 'new') r = [...r.filter(isFashion), ...r.filter((l) => !isFashion(l))]
     if (sort === 'low') r = [...r].sort((a, b) => a.price - b.price)
     if (sort === 'high') r = [...r].sort((a, b) => b.price - a.price)
     if (sort === 'likes') r = [...r].sort((a, b) => (b.likes || 0) - (a.likes || 0))
