@@ -59,7 +59,7 @@ export function seed(db) {
       insListing.run(l.id, userId(l.seller), l.title, l.category, l.dept || null, l.sub || null, l.price, l.condition, l.district,
         JSON.stringify(l.modes), JSON.stringify(l.images), l.description || '', l.story || null, JSON.stringify(l.wants || []),
         JSON.stringify(l.wantsText || []), JSON.stringify(l.delivery || ['meet']), l.defect || null, l.repair || null,
-        l.aspect || 'square', 'active', likesOf(l.id), created, created)
+        l.aspect || 'square', 'active', l.likesBase ?? likesOf(l.id), created, created)
     })
 
     const fav = db.prepare('INSERT INTO favorites (user_id, listing_id) VALUES (?, ?)')
@@ -81,7 +81,7 @@ export function seed(db) {
 
     // Sakina-ya gələn bir dəyiş təklifi (Rəşadın elanı → Sakinanın qulaqlığı)
     db.prepare(`INSERT INTO offers (id, from_user_id, to_user_id, target_listing_id, offered_listing_id, cash, note)
-      VALUES ('o_demo1', 'u_u4', 'u_sakina', 'm1', 'l9', 0, 'Salam! Plyonka fotoaparatımı qulaqlığınla dəyişməyə hazıram.')`).run()
+      VALUES ('o_demo1', 'u_u4', 'u_sakina', 'm1', 'l9', 0, 'Salam! Kodak fotoaparatımı boz hudinlə dəyişməyə hazıram.')`).run()
 
     const insRev = db.prepare('INSERT INTO reviews (id, author_id, target_id, stars, text, created_at) VALUES (?, ?, ?, ?, ?, ?)')
     REVIEWS.forEach((r, i) => insRev.run(`r_demo${i}`, userId(r.from), 'u_sakina', r.stars, r.text, new Date(Date.now() - (i + 1) * 30 * 24 * 3600_000).toISOString()))

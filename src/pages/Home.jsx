@@ -6,11 +6,11 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { CURATED } from '../data'
+import { CURATED, isFashion } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=2400&q=80'
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=2400&q=80'
 
 const HERO_FEATURES = [
   { icon: Tag, label: 'Sat.' },
@@ -30,7 +30,7 @@ function Hero() {
   return (
     <section className="hero4">
       <div className="hero4-media">
-        <Img src={HERO_IMAGE} alt="Yaşıl kreslo və isti işıqlı qonaq otağı" />
+        <Img src={HERO_IMAGE} alt="Taxta asılqanlarda düzülmüş geyimlər" />
       </div>
       <div className="hero4-shade" />
       <div className="container hero4-inner">
@@ -40,10 +40,6 @@ function Hero() {
             <br />
             ikinci həyat ver.
           </h1>
-          <p className="hero4-text">
-            Evində istifadə etmədiyin əşyanı sat, dəyiş və ya düzəldə bilən birinə ver. Başqasının əşyası isə sənin
-            yeni sevimlin ola bilər.
-          </p>
           <div className="hero4-ctas">
             <Link to="/ikinci-el" className="btn btn-primary btn-lg">
               Kəşfə başla
@@ -109,8 +105,10 @@ export default function Home() {
   const { listings, getItem } = useApp()
   const swapA = getItem('l1')
   const swapB = getItem('l4')
-  const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...listings].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6)
+  // Relove-da əvvəlcə geyim görünür: paltar, ayaqqabı, çanta, aksesuar
+  const fashionFirst = (arr) => [...arr.filter(isFashion), ...arr.filter((l) => !isFashion(l))]
+  const sale = fashionFirst(listings.filter((l) => l.modes.includes('sale')))
+  const popular = fashionFirst([...listings].sort((a, b) => (b.likes || 0) - (a.likes || 0))).slice(0, 6)
   const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
 
   return (
@@ -195,8 +193,7 @@ export default function Home() {
           <div className="sc-teaser-copy">
             <h2 className="h2">İkinci şans</h2>
             <p>
-              Sökülmüş şərf, laxlayan stul, bir tərəfi işləməyən qulaqlıq. Atma — paylaş. Kimsə onu düzəldib yenidən
-              istifadə edəcək.
+              Qüsurlu əşyanı atma — paylaş, kimsə onu düzəldəcək.
             </p>
             <div className="sc-teaser-ctas">
               <Link to="/ikinci-sans" className="btn btn-primary">İkinci şans əşyalarına bax</Link>

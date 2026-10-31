@@ -12352,3 +12352,14 @@ body {
   font-size: 13px;
   color: var(--muted);
 }
+
+/* v35 — Hero: izah mətni yoxdur, başlıqdan düymələrə qədər rahat boşluq */
+.hero4-title + .hero4-ctas {
+  margin-top: 40px;
+}
+
+@media (max-width: 700px) {
+  .hero4-title + .hero4-ctas {
+    margin-top: 28px;
+  }
+}
