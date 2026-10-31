@@ -6,50 +6,50 @@ import {
 import Img from '../components/Img'
 import ProductCard from '../components/ProductCard'
 import Leaves from '../components/Leaves'
-import { CURATED } from '../data'
+import { CURATED, WARDROBE, isFashion } from '../data'
 import { CollectionCover } from './Collections'
 import { useApp } from '../store'
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=2400&q=80'
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=2400&q=80'
 
 const HERO_FEATURES = [
   { icon: Tag, label: 'Sat.' },
   { icon: Repeat, label: 'Dəyiş.' },
   { icon: Gift, label: 'Paylaş.' },
-  { icon: Heart, label: 'Yenidən sev.' },
+  { icon: Heart, label: 'Yenidən geyin.' },
 ]
 
 const VALUES = [
-  { icon: Leaf, title: 'Davamlı seçim', text: 'İkinci əl seçmək daha təmiz bir gələcək deməkdir.' },
+  { icon: Leaf, title: 'Davamlı moda', text: 'Hər ikinci əl parça bir az daha az tekstil tullantısı deməkdir.' },
   { icon: ShieldCheck, title: 'Təhlükəsiz alış-veriş', text: 'Təsdiqlənmiş profillər və platformadaxili mesajlar.' },
   { icon: Users, title: 'Güclü icma', text: 'Dəyiş, paylaş, yeni dostlar qazan.' },
-  { icon: Gem, title: 'Hər əşya dəyər qazanır', text: 'Unudulmuş əşyalar yeni sahibində yaşayır.' },
+  { icon: Gem, title: 'Hər parça dəyər qazanır', text: 'Şkafda unudulmuş paltar yeni sahibində yenidən geyinilir.' },
 ]
 
 function Hero() {
   return (
     <section className="hero4">
       <div className="hero4-media">
-        <Img src={HERO_IMAGE} alt="Yaşıl kreslo və isti işıqlı qonaq otağı" />
+        <Img src={HERO_IMAGE} alt="Asılqanda düzülmüş geyimlər" />
       </div>
       <div className="hero4-shade" />
       <div className="container hero4-inner">
         <div className="hero4-copy">
           <h1 className="hero4-title">
-            Əşyalara
+            Qarderobuna
             <br />
-            ikinci həyat ver.
+            ikinci nəfəs ver.
           </h1>
           <p className="hero4-text">
-            Evində istifadə etmədiyin əşyanı sat, dəyiş və ya düzəldə bilən birinə ver. Başqasının əşyası isə sənin
-            yeni sevimlin ola bilər.
+            Geyinmədiyin paltarı, ayaqqabını və çantanı sat, dəyiş və ya pulsuz ver. Başqasının şkafında unudulmuş
+            parça isə sənin yeni sevimlin ola bilər.
           </p>
           <div className="hero4-ctas">
-            <Link to="/ikinci-el" className="btn btn-primary btn-lg">
-              Kəşfə başla
+            <Link to="/ikinci-el?dept=qadin" className="btn btn-primary btn-lg">
+              Geyimlərə bax
             </Link>
-            <Link to="/paylasdiqlarim" className="btn btn-ghost btn-lg">
-              Əşya paylaş
+            <Link to="/paylas?mode=sale" className="btn btn-ghost btn-lg">
+              Paltar sat
             </Link>
           </div>
           <ul className="hero4-features">
@@ -64,7 +64,7 @@ function Hero() {
           </ul>
         </div>
         <p className="hero4-note" aria-hidden="true">
-          Daha yaxşı bir gələcək üçün, birlikdə.
+          Az al. Daha çox geyin.
         </p>
       </div>
     </section>
@@ -89,6 +89,44 @@ function Rail({ children }) {
   )
 }
 
+function Wardrobe({ listings }) {
+  const count = (to) => {
+    const q = new URLSearchParams(to.split('?')[1])
+    return listings.filter((l) => {
+      if (!l.modes.includes('sale')) return false
+      if (q.get('sub') && l.sub !== q.get('sub')) return false
+      if (q.get('cat') && l.category !== q.get('cat')) return false
+      if (q.get('q') && !l.title.toLowerCase().includes(q.get('q'))) return false
+      return true
+    }).length
+  }
+  return (
+    <section className="container block">
+      <div className="block-head wardrobe-head">
+        <div>
+          <h2 className="h2">Şkafa göz at</h2>
+        </div>
+        <div className="wardrobe-depts">
+          <Link to="/ikinci-el?dept=qadin">Qadın</Link>
+          <Link to="/ikinci-el?dept=kisi">Kişi</Link>
+          <Link to="/ikinci-el?dept=usaq">Uşaq</Link>
+        </div>
+      </div>
+      <div className="wardrobe">
+        {WARDROBE.map((w) => (
+          <Link key={w.label} to={w.to} className="wardrobe-tile">
+            <span className="wardrobe-photo">
+              <Img src={w.photo} alt={w.label} />
+            </span>
+            <strong>{w.label}</strong>
+            <small>{count(w.to)} elan</small>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 function SectionHead({ title, text, to, label }) {
   return (
     <div className="block-head">
@@ -107,15 +145,21 @@ function SectionHead({ title, text, to, label }) {
 
 export default function Home() {
   const { listings, getItem } = useApp()
-  const swapA = getItem('l1')
-  const swapB = getItem('l4')
+  const swapA = getItem('l18')
+  const swapB = getItem('l2')
   const sale = listings.filter((l) => l.modes.includes('sale'))
-  const popular = [...listings].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6)
-  const repairs = listings.filter((l) => l.modes.includes('free')).slice(0, 3)
+  const fashion = sale.filter(isFashion)
+  const others = sale.filter((l) => !isFashion(l))
+  const popular = [...fashion].sort((a, b) => (b.likes || 0) - (a.likes || 0)).slice(0, 6)
+  const free = listings.filter((l) => l.modes.includes('free'))
+  const repairs = [...free.filter(isFashion), ...free.filter((l) => !isFashion(l))].slice(0, 3)
 
   return (
     <>
       <Hero />
+
+      {/* ŞKAFA GÖZ AT */}
+      <Wardrobe listings={listings} />
 
       {/* ƏN ÇOX BƏYƏNİLƏNLƏR */}
       <section className="container block">
@@ -147,9 +191,9 @@ export default function Home() {
 
       {/* İKİNCİ ƏL */}
       <section className="container block">
-        <SectionHead title="İkinci əl" to="/ikinci-el" label="Bütün satış elanları" />
+        <SectionHead title="Yeni gələn geyimlər" to="/ikinci-el" label="Bütün elanlar" />
         <Rail>
-          {sale.slice(0, 12).map((item) => (
+          {fashion.slice(0, 12).map((item) => (
             <div className="rail2-item" key={item.id}>
               <ProductCard item={item} onlyModes={['sale']} />
             </div>
@@ -163,11 +207,11 @@ export default function Home() {
           <Leaves className="swap4-leaves" />
           <div className="swap4-copy">
             <h2>
-              Dəyiş-düyüş et,
+              Paltarını dəyiş,
               <br />
-              yeni hekayələr başlasın!
+              qarderobun təzələnsin!
             </h2>
-            <p>Əşyanı ver, əvəzində ehtiyacın olanı al — pul xərcləmədən.</p>
+            <p>Geyinmədiyin parçanı ver, əvəzində ölçünə uyğun yenisini al — pul xərcləmədən.</p>
             <Link to="/deyis" className="btn btn-light">
               Dəyiş elanlarına bax
             </Link>
@@ -183,7 +227,7 @@ export default function Home() {
               <div className="swap4-photo swap4-photo-b">
                 <Img src={swapB.images[0]} alt="" />
               </div>
-              <p className="swap4-note">İki əşya, bir yeni başlanğıc.</p>
+              <p className="swap4-note">İki parça, bir yeni stil.</p>
             </div>
           )}
         </div>
@@ -195,8 +239,8 @@ export default function Home() {
           <div className="sc-teaser-copy">
             <h2 className="h2">İkinci şans</h2>
             <p>
-              Sökülmüş şərf, laxlayan stul, bir tərəfi işləməyən qulaqlıq. Atma — paylaş. Kimsə onu düzəldib yenidən
-              istifadə edəcək.
+              Sökülmüş tikiş, düşmüş düymə, yeyilmiş daban. Atma — paylaş. Dərzi və ya usta əli dəyən parça yenidən
+              geyiniləcək.
             </p>
             <div className="sc-teaser-ctas">
               <Link to="/ikinci-sans" className="btn btn-primary">İkinci şans əşyalarına bax</Link>
@@ -214,6 +258,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ŞKAFDAN KƏNAR */}
+      {others.length > 0 && (
+        <section className="container block">
+          <SectionHead title="Şkafdan kənar" to="/ikinci-el?dept=ev" label="Ev, texnika və hobbi" />
+          <Rail>
+            {others.slice(0, 12).map((item) => (
+              <div className="rail2-item rail2-item-sm" key={item.id}>
+                <ProductCard item={item} onlyModes={['sale']} />
+              </div>
+            ))}
+          </Rail>
+        </section>
+      )}
 
       {/* KOLLEKSİYALAR */}
       <section className="container block">

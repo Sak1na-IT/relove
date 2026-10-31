@@ -3,7 +3,7 @@ import { Home, Tag, Repeat, Sparkles, LayoutList } from 'lucide-react'
 
 const ITEMS = [
   { to: '/', label: 'Ana səhifə', icon: Home, end: true },
-  { to: '/ikinci-el', label: 'İkinci əl', icon: Tag },
+  { to: '/ikinci-el', label: 'Geyim', icon: Tag },
   { to: '/deyis', label: 'Dəyiş', icon: Repeat },
   { to: '/ikinci-sans', label: 'İkinci şans', icon: Sparkles },
   { to: '/paylasdiqlarim', label: 'Elanlarım', icon: LayoutList },

@@ -37,8 +37,9 @@ export default function Footer() {
           </div>
         </div>
         <nav className="f2-links" aria-label="Sayt xəritəsi">
-          <Link to="/">Ana səhifə</Link>
-          <Link to="/ikinci-el">İkinci əl</Link>
+          <Link to="/ikinci-el?dept=qadin">Qadın</Link>
+          <Link to="/ikinci-el?dept=kisi">Kişi</Link>
+          <Link to="/ikinci-el?dept=usaq">Uşaq</Link>
           <Link to="/deyis">Dəyiş-düyüş</Link>
           <Link to="/ikinci-sans">İkinci şans</Link>
           <Link to="/kolleksiyalar">Kolleksiyalar</Link>

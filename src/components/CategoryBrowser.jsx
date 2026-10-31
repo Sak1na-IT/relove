@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, X } from 'lucide-react'
 import Dropdown from './Dropdown'
-import { DEPARTMENTS, DISTRICTS, deptById } from '../data'
+import { DEPARTMENTS, DISTRICTS, deptById, catById } from '../data'
 
 // Ortaq filter tərifləri
 export const PRICE_FILTER = {
@@ -133,6 +133,7 @@ export default function CategoryBrowser({
   const get = (k) => params.get(k) || ''
   const dept = get('dept')
   const sub = get('sub')
+  const cat = get('cat')
   const q = get('q')
   const sort = get('sort') || 'new'
 
@@ -147,6 +148,7 @@ export default function CategoryBrowser({
     let r = pool.filter((l) => {
       if (dept && l.dept !== dept) return false
       if (sub && l.sub !== sub) return false
+      if (cat && l.category !== cat) return false
       if (q) {
         const hay = `${l.title} ${l.description || ''} ${(l.wantsText || []).join(' ')} ${l.defect || ''}`.toLowerCase()
         if (!hay.includes(q.toLowerCase())) return false
@@ -162,7 +164,9 @@ export default function CategoryBrowser({
 
   const d = dept ? deptById(dept) : null
   const activeFilters = filters.filter((f) => get(f.key))
-  const pick = (dd, ss) => setMany({ dept: dd, sub: ss })
+  const pick = (dd, ss) => setMany({ dept: dd, sub: ss, cat: '' })
+  // Bölmə seçilmədən gələn seçim (məs. ana səhifədəki "Ayaqqabı" plitəsi)
+  const looseLabel = !dept && (sub || (cat && catById(cat)?.label) || '')
 
   return (
     <div className="browse4">
@@ -186,6 +190,11 @@ export default function CategoryBrowser({
             <span className="browse-count">
               <b>{results.length}</b> {unit}
             </span>
+            {looseLabel && (
+              <button className="browse-chip" onClick={() => setMany({ sub: '', cat: '' })} aria-label={`${looseLabel} seçimini sil`}>
+                {looseLabel} <X size={13} />
+              </button>
+            )}
             {filters.map((f) => (
               <Dropdown key={f.key} label={f.label} allLabel={f.allLabel} value={get(f.key)} onChange={(v) => set(f.key, v)} options={f.options} />
             ))}

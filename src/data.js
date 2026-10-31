@@ -18,16 +18,32 @@ export const DISTRICTS = [
 ]
 
 export const CATEGORIES = [
-  { id: 'geyim', label: 'Geyim', short: 'Geyim', icon: 'Shirt', photo: img('1434389677669-e08b4cac3105', 240) },
-  { id: 'ayaqqabi', label: 'Ayaqqabı', short: 'Ayaqqabı', icon: 'Footprints', photo: img('1542291026-7eec264c27ff', 240) },
-  { id: 'canta', label: 'Çanta', short: 'Çanta', icon: 'ShoppingBag', photo: img('1548036328-c9fa89d128fa', 240) },
-  { id: 'ev', label: 'Ev əşyaları', short: 'Ev əşyaları', icon: 'Sofa', photo: img('1507473885765-e6ed057f782c', 240) },
-  { id: 'elektronika', label: 'Elektronika', short: 'Elektronika', icon: 'Smartphone', photo: img('1505740420928-5e560c06d30e', 240) },
+  { id: 'geyim', label: 'Geyim', short: 'Geyim', icon: 'Shirt', photo: '/elanlar/yun-palto.jpg' },
+  { id: 'ayaqqabi', label: 'Ayaqqabı', short: 'Ayaqqabı', icon: 'Footprints', photo: '/elanlar/nike-air-max.jpg' },
+  { id: 'canta', label: 'Çanta', short: 'Çanta', icon: 'ShoppingBag', photo: img('1590874103328-eac38a683ce7', 240) },
+  { id: 'aksesuar', label: 'Aksesuar', short: 'Aksesuar', icon: 'Watch', photo: img('1621891336630-b48679cb379a', 240) },
+  { id: 'usaq', label: 'Uşaq', short: 'Uşaq', icon: 'Baby', photo: '/elanlar/taxta-oyuncaq.jpg' },
+  { id: 'ev', label: 'Ev əşyaları', short: 'Ev əşyaları', icon: 'Sofa', photo: '/elanlar/masa-lampasi.jpg' },
+  { id: 'elektronika', label: 'Elektronika', short: 'Elektronika', icon: 'Smartphone', photo: '/elanlar/fujifilm.jpg' },
   { id: 'kitab', label: 'Kitab', short: 'Kitab', icon: 'BookOpen', photo: img('1544947950-fa07a98d237f', 240) },
-  { id: 'usaq', label: 'Uşaq', short: 'Uşaq', icon: 'Baby', photo: img('1515488042361-ee00e0ddd4e4', 240) },
-  { id: 'idman', label: 'İdman', short: 'İdman', icon: 'Bike', photo: img('1485965120184-e220f721d03e', 240) },
-  { id: 'kolleksiya', label: 'Kolleksiya', short: 'Kolleksiya', icon: 'Gem', photo: img('1526170375885-4d8ecf77b99f', 240) },
-  { id: 'diger', label: 'Digər', short: 'Digər', icon: 'Ellipsis', photo: img('1614594975525-e45190c55d0b', 240) },
+  { id: 'idman', label: 'İdman və hobbi', short: 'Hobbi', icon: 'Bike', photo: img('1485965120184-e220f721d03e', 240) },
+  { id: 'kolleksiya', label: 'Kolleksiya', short: 'Kolleksiya', icon: 'Gem', photo: '/elanlar/kodak-plyonka.jpg' },
+  { id: 'diger', label: 'Digər', short: 'Digər', icon: 'Ellipsis', photo: '/elanlar/monstera.jpg' },
+]
+
+// Relove-un əsas istiqaməti: geyim, ayaqqabı, çanta və aksesuar
+export const FASHION_CATS = ['geyim', 'ayaqqabi', 'canta', 'aksesuar']
+export const isFashion = (l) => FASHION_CATS.includes(l.category)
+
+// Ana səhifədəki "Şkafa göz at" plitələri
+export const WARDROBE = [
+  { label: 'Palto və gödəkçə', photo: '/elanlar/yun-palto.jpg', to: '/ikinci-el?sub=Palto və gödəkçə' },
+  { label: 'Köynək və bluz', photo: '/elanlar/damali-koynek.jpg', to: '/ikinci-el?q=köynək' },
+  { label: 'Cins və şalvar', photo: img('1614990354198-b06764dcb13c', 600), to: '/ikinci-el?sub=Şalvar və cins' },
+  { label: 'Trikotaj', photo: img('1545590148-584b2278bb37', 600), to: '/ikinci-el?sub=Trikotaj' },
+  { label: 'Ayaqqabı', photo: '/elanlar/nike-air-max.jpg', to: '/ikinci-el?cat=ayaqqabi' },
+  { label: 'Çanta', photo: img('1590874103328-eac38a683ce7', 600), to: '/ikinci-el?cat=canta' },
+  { label: 'Aksesuar', photo: img('1621891336630-b48679cb379a', 600), to: '/ikinci-el?cat=aksesuar' },
 ]
 
 export const HERO_SLIDES = [
@@ -199,6 +215,112 @@ LISTINGS.splice(1, 0,
     description: 'M ölçü, isti və yüngül. Payız üçün ideal.',
     wants: ['geyim', 'canta'], wantsText: ['Çanta', 'Şərf', 'Çəkmə'], delivery: ['meet'],
   },
+  {
+    id: 'f1', title: 'Mom jeans — açıq mavi', category: 'geyim', price: 25, condition: 'Çox yaxşı',
+    district: 'Yasamal', modes: ['sale'], seller: 'u2', posted: '2 saat əvvəl', aspect: 'tall',
+    images: [img('1614990354198-b06764dcb13c')], dept: 'qadin', sub: 'Şalvar və cins',
+    description: 'Ölçü: W27 / 36. Yüksək bel, düz kəsim. Rəngi solmayıb.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 'f2', title: 'Klassik cins şalvar', category: 'geyim', price: 30, condition: 'Yaxşı',
+    district: 'Nərimanov', modes: ['sale', 'swap'], seller: 'u1', posted: 'Dünən', aspect: 'tall',
+    images: [img('1515459961680-58264ee27219')], dept: 'kisi', sub: 'Şalvar və cins',
+    description: 'Ölçü: W32 / L32. Tünd mavi, qalın parça. Diz hissəsi yeyilməyib.',
+    wants: ['geyim'], wantsText: ['Gödəkçə', 'Sviter'], delivery: ['meet'],
+  },
+  {
+    id: 'f3', title: 'Boz yun sviter', category: 'geyim', price: 22, condition: 'Çox yaxşı',
+    district: 'Nəsimi', modes: ['sale'], seller: 'u4', posted: '5 saat əvvəl', aspect: 'tall',
+    images: [img('1545590148-584b2278bb37')], dept: 'qadin', sub: 'Trikotaj',
+    description: 'Ölçü: S–M, oversize. Yun qarışığı, tükləşməyib.',
+    story: 'Ötən qışın ən çox geyindiyim sviteri idi, indi şkafda yer açıram.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 'f4', title: 'Payız dəsti — sviter, cins və bere', category: 'geyim', price: 45, condition: 'Yaxşı',
+    district: 'Səbail', modes: ['sale', 'swap'], seller: 'u2', posted: '3 gün əvvəl', aspect: 'tall',
+    images: [img('1556905055-8f358a7a47b2')], dept: 'qadin', sub: 'Trikotaj',
+    description: 'Ölçü: M. Üç parça birlikdə satılır — ayrıca da soruşa bilərsən.',
+    wants: ['canta', 'ayaqqabi'], wantsText: ['Çəkmə', 'Kiçik çanta'], delivery: ['meet'],
+  },
+  {
+    id: 'f5', title: 'Çəhrayı yüngül gödəkçə', category: 'geyim', price: 35, condition: 'Çox yaxşı',
+    district: 'Xətai', modes: ['sale'], seller: 'u4', posted: 'Bu gün', aspect: 'tall',
+    images: [img('1542901689-f103b03b9e97')], dept: 'qadin', sub: 'Palto və gödəkçə',
+    description: 'Ölçü: S. Yaz və erkən payız üçün, astarı təmizdir.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 'f6', title: 'Terrakota bomber gödəkçə', category: 'geyim', price: 40, condition: 'Yaxşı',
+    district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u2', posted: '4 saat əvvəl', aspect: 'tall',
+    images: [img('1591047139829-d91aecb6caea')], dept: 'qadin', sub: 'Palto və gödəkçə',
+    description: 'Ölçü: M. Fermuarı və cibləri işləyir, rəngi canlıdır.',
+    wants: ['geyim'], wantsText: ['Trikotaj', 'Don'], delivery: ['meet'],
+  },
+  {
+    id: 'f7', title: 'Tünd qış gödəkçəsi', category: 'geyim', price: 55, condition: 'Yaxşı',
+    district: 'Binəqədi', modes: ['sale'], seller: 'u5', posted: 'Dünən', aspect: 'tall',
+    images: [img('1693733575626-c990dca10e7a')], dept: 'kisi', sub: 'Palto və gödəkçə',
+    description: 'Ölçü: L. İsti, kapüşonlu. Bir mövsüm geyinilib.',
+    wants: [], wantsText: [], delivery: ['meet'],
+  },
+  {
+    id: 'f8', title: 'Damalı flanel köynək', category: 'geyim', price: 15, condition: 'Yaxşı',
+    district: 'Nizami', modes: ['sale', 'swap'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'tall',
+    images: [img('1600247354058-a55b0f6fb720')], dept: 'kisi', sub: 'Köynək',
+    description: 'Ölçü: M. Yumşaq flanel, düymələri tamdır.',
+    wants: ['geyim'], wantsText: ['Futbolka', 'Kəmər'], delivery: ['meet'],
+  },
+  {
+    id: 'f9', title: 'Dəri çəkmə — qəhvəyi', category: 'ayaqqabi', price: 60, condition: 'Yaxşı',
+    district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u4', posted: '2 gün əvvəl', aspect: 'tall',
+    images: [img('1511283402428-355853756676')], dept: 'qadin', sub: 'Çəkmə',
+    description: 'Ölçü: 38. Təbii dəri, dabanı yenilənib. Payız-qış üçün.',
+    wants: ['geyim', 'canta'], wantsText: ['Palto', 'Çanta'], delivery: ['meet'],
+  },
+  {
+    id: 'f10', title: 'Ağ-qəhvəyi kətan krossovka', category: 'ayaqqabi', price: 30, condition: 'Çox yaxşı',
+    district: 'Xətai', modes: ['sale'], seller: 'u3', posted: 'Bu gün', aspect: 'tall',
+    images: [img('1592670587543-f409a95839e0')], dept: 'kisi', sub: 'Krossovka',
+    description: 'Ölçü: 43. Bir neçə dəfə geyinilib, altı təmizdir.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 'f11', title: 'Qara dəri əl çantası', category: 'canta', price: 45, condition: 'Çox yaxşı',
+    district: 'Səbail', modes: ['sale'], seller: 'u4', posted: '3 saat əvvəl', aspect: 'tall',
+    images: [img('1614179689702-355944cd0918')], dept: 'qadin', sub: 'Əl çantası',
+    description: 'Gümüşü furnitura, içi təmizdir. Qayışı uzanır.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 'f12', title: 'Qəhvəyi dəri çiyin çantası', category: 'canta', price: 50, condition: 'Yaxşı',
+    district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u2', posted: 'Dünən', aspect: 'tall',
+    images: [img('1590874103328-eac38a683ce7')], dept: 'qadin', sub: 'Çiyin çantası',
+    description: 'Təbii dəri, vaxtla gözəl rəng alıb. Fermuarı işləyir.',
+    wants: ['ayaqqabi'], wantsText: ['Çəkmə', 'Loafer'], delivery: ['meet'],
+  },
+  {
+    id: 'f13', title: 'Ağ kiçik çanta', category: 'canta', price: 25, condition: 'Yeni kimi',
+    district: 'Nərimanov', modes: ['sale'], seller: 'u1', posted: '5 gün əvvəl', aspect: 'tall',
+    images: [img('1682745230951-8a5aa9a474a0')], dept: 'qadin', sub: 'Əl çantası',
+    description: 'Cəmi iki dəfə istifadə olunub. Axşam çıxışları üçün.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
+  {
+    id: 'f14', title: 'Klassik qol saatı', category: 'aksesuar', price: 70, condition: 'Çox yaxşı',
+    district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u1', posted: '1 həftə əvvəl', aspect: 'tall',
+    images: [img('1621891336630-b48679cb379a')], dept: 'kisi', sub: 'Saat',
+    description: 'Mexaniki, gümüşü korpus. Batareya tələb etmir, dəqiq işləyir.',
+    wants: ['geyim'], wantsText: ['Ceket', 'Palto'], delivery: ['meet'],
+  },
+  {
+    id: 'f15', title: 'İki cins — tünd və açıq', category: 'geyim', price: 35, condition: 'Yaxşı',
+    district: 'Binəqədi', modes: ['sale'], seller: 'u5', posted: '4 gün əvvəl', aspect: 'tall',
+    images: [img('1566564206548-3d8eb5bf9875')], dept: 'qadin', sub: 'Şalvar və cins',
+    description: 'Ölçü: W28. İkisi birlikdə satılır, hər ikisi skinny kəsimdir.',
+    wants: [], wantsText: [], delivery: ['meet', 'courier'],
+  },
 )
 
 // "Mənim" dəyişməyə hazır əşyalarım (Dəyiş səhifəsi üçün)
@@ -271,31 +393,32 @@ export const formatPrice = (p) => (p === 0 ? 'Pulsuz' : `${p.toLocaleString('en-
    ========================================================= */
 export const DEPARTMENTS = [
   {
-    id: 'qadin', photo: img('1490481651871-ab68de25d43d', 600), label: 'Qadın', icon: 'User',
+    id: 'qadin', photo: '/elanlar/yun-palto.jpg', label: 'Qadın', icon: 'User',
     groups: [
-      { title: 'Geyim', cat: 'geyim', items: ['Palto və gödəkçə', 'Köynək və bluz', 'Ətək və şalvar', 'Trikotaj'] },
+      { title: 'Geyim', cat: 'geyim', items: ['Palto və gödəkçə', 'Ceket və blazer', 'Köynək və bluz', 'Trikotaj', 'Don və ətək', 'Şalvar və cins'] },
       { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Çəkmə', 'Klassik ayaqqabı'] },
-      { title: 'Çanta və aksesuar', cat: 'canta', items: ['Əl çantası', 'Sırt çantası', 'Şərf', 'Saat'] },
+      { title: 'Çanta', cat: 'canta', items: ['Əl çantası', 'Çiyin çantası', 'Bel çantası'] },
+      { title: 'Aksesuar', cat: 'aksesuar', items: ['Şərf', 'Kəmər', 'Eynək', 'Zərgərlik'] },
     ],
   },
   {
-    id: 'kisi', photo: img('1551028719-00167b16eac5', 600), label: 'Kişi', icon: 'UserRound',
+    id: 'kisi', photo: '/elanlar/deri-godekce.jpg', label: 'Kişi', icon: 'UserRound',
     groups: [
-      { title: 'Geyim', cat: 'geyim', items: ['Gödəkçə', 'Köynək', 'Şalvar'] },
-      { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Klassik ayaqqabı'] },
-      { title: 'Aksesuar', cat: 'canta', items: ['Saat', 'Çanta', 'Kəmər'] },
+      { title: 'Geyim', cat: 'geyim', items: ['Palto və gödəkçə', 'Ceket və blazer', 'Köynək', 'Trikotaj', 'Şalvar və cins'] },
+      { title: 'Ayaqqabı', cat: 'ayaqqabi', items: ['Krossovka', 'Çəkmə', 'Klassik ayaqqabı'] },
+      { title: 'Aksesuar', cat: 'aksesuar', items: ['Saat', 'Kəmər', 'Çanta'] },
     ],
   },
   {
-    id: 'usaq', photo: img('1515488042361-ee00e0ddd4e4', 600), label: 'Uşaq', icon: 'Baby',
+    id: 'usaq', photo: '/elanlar/taxta-oyuncaq.jpg', label: 'Uşaq', icon: 'Baby',
     groups: [
-      { title: 'Oyuncaqlar', cat: 'usaq', items: ['Taxta oyuncaq', 'Konstruktor', 'Yumşaq oyuncaq'] },
       { title: 'Uşaq geyimi', cat: 'usaq', items: ['0–2 yaş', '3–7 yaş', '8+ yaş'] },
+      { title: 'Oyuncaqlar', cat: 'usaq', items: ['Taxta oyuncaq', 'Konstruktor', 'Yumşaq oyuncaq'] },
       { title: 'Uşaq kitabları', cat: 'kitab', items: ['Nağıllar', 'Təhsil kitabları'] },
     ],
   },
   {
-    id: 'ev', photo: img('1586023492125-27b2c045efd7', 600), label: 'Ev və yaşam', icon: 'Sofa',
+    id: 'ev', photo: '/elanlar/kreslo.jpg', label: 'Ev və yaşam', icon: 'Sofa',
     groups: [
       { title: 'Mebel', cat: 'ev', items: ['Kreslo', 'Stul', 'Stol', 'Rəf'] },
       { title: 'Dekor', cat: 'ev', items: ['Vaza', 'Güzgü', 'Bitki', 'Tablo'] },
@@ -303,7 +426,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'elektronika', photo: img('1505740420928-5e560c06d30e', 600), label: 'Elektronika', icon: 'Smartphone',
+    id: 'elektronika', photo: '/elanlar/fujifilm.jpg', label: 'Elektronika', icon: 'Smartphone',
     groups: [
       { title: 'Səs', cat: 'elektronika', items: ['Qulaqlıq', 'Kolonka'] },
       { title: 'Foto və video', cat: 'elektronika', items: ['Fotoaparat', 'Obyektiv'] },
@@ -311,7 +434,7 @@ export const DEPARTMENTS = [
     ],
   },
   {
-    id: 'hobbi', photo: img('1485965120184-e220f721d03e', 600), label: 'İdman və hobbi', icon: 'Bike',
+    id: 'hobbi', photo: img('1485965120184-e220f721d03e', 600), label: 'Hobbi', icon: 'Bike',
     groups: [
       { title: 'İdman', cat: 'idman', items: ['Velosiped', 'Fitnes'] },
       { title: 'Musiqi', cat: 'idman', items: ['Gitara', 'Klavişli alətlər'] },
@@ -331,11 +454,11 @@ export const deptById = (id) => DEPARTMENTS.find((d) => d.id === id)
 
 // hər elanın bölməsi və alt-kateqoriyası
 const META = {
-  l1: ['elektronika', 'Fotoaparat'], l2: ['kisi', 'Gödəkçə'], l3: ['ev', 'Vaza'], l4: ['elektronika', 'Qulaqlıq'],
-  l5: ['ev', 'Kreslo'], l6: ['kitab', 'Klassika'], l7: ['kisi', 'Krossovka'], l8: ['hobbi', 'Gitara'],
+  l1: ['elektronika', 'Fotoaparat'], l2: ['qadin', 'Palto və gödəkçə'], l3: ['ev', 'Vaza'], l4: ['elektronika', 'Qulaqlıq'],
+  l5: ['ev', 'Kreslo'], l6: ['kitab', 'Klassika'], l7: ['qadin', 'Krossovka'], l8: ['hobbi', 'Gitara'],
   l9: ['hobbi', 'Retro fotoaparat'], l10: ['hobbi', 'Velosiped'], l11: ['usaq', 'Taxta oyuncaq'],
   l12: ['elektronika', 'Noutbuk'], l13: ['qadin', 'Köynək və bluz'], l14: ['ev', 'Bitki'],
-  l15: ['ev', 'Masa lampası'], l16: ['elektronika', 'Ağıllı saat'], l17: ['qadin', 'Əl çantası'],
+  l15: ['ev', 'Masa lampası'], l16: ['elektronika', 'Ağıllı saat'], l17: ['qadin', 'Bel çantası'],
   l18: ['qadin', 'Palto və gödəkçə'], m1: ['elektronika', 'Qulaqlıq'], m2: ['kitab', 'Foto albom'], m3: ['ev', 'Güzgü'],
 }
 
@@ -344,7 +467,7 @@ const META = {
    ========================================================= */
 export const SECOND_CHANCE = [
   {
-    id: 's1', title: 'Yun şərf — kənarı sökülüb', category: 'canta', price: 0, condition: 'Təmir tələb edir',
+    id: 's1', title: 'Yun şərf — kənarı sökülüb', category: 'aksesuar', price: 0, condition: 'Təmir tələb edir',
     district: 'Nəsimi', modes: ['free'], seller: 'u2', posted: 'Bu gün', aspect: 'square', repair: 'Kiçik təmir',
     defect: 'Bir kənarında 5 sm-lik sökülmə var, qalan hissəsi tam salamatdır.',
     images: [img('1564019472667-e568a3c0cde5')],
@@ -411,7 +534,7 @@ export const SECOND_CHANCE = [
 
 const SC_META = {
   s1: ['qadin', 'Şərf'], s2: ['ev', 'Stul'], s3: ['elektronika', 'Qulaqlıq'], s4: ['ev', 'Masa lampası'],
-  s5: ['kisi', 'Krossovka'], s6: ['hobbi', 'Retro fotoaparat'], s7: ['elektronika', 'Ağıllı saat'], s8: ['kisi', 'Gödəkçə'],
+  s5: ['kisi', 'Krossovka'], s6: ['hobbi', 'Retro fotoaparat'], s7: ['elektronika', 'Ağıllı saat'], s8: ['kisi', 'Palto və gödəkçə'],
 }
 
 ;[...LISTINGS, ...MY_ITEMS, ...SECOND_CHANCE].forEach((l) => {
@@ -429,18 +552,19 @@ export const isSecondChance = (l) => l.modes.includes('free')
    Seçilmiş kolleksiyalar (redaksiya seçimi)
    ========================================================= */
 export const CURATED = [
+  { id: 'payiz', title: 'Payız qarderobu', text: 'Palto, gödəkçə, trikotaj və çəkmə — soyuq günlərə hazırlıq.', match: (l) => ['Palto və gödəkçə', 'Trikotaj', 'Çəkmə'].includes(l.sub) && !isSecondChance(l) },
+  { id: 'deri', title: 'Dəri parçalar', text: 'İllərlə yumşalan, köhnəldikcə gözəlləşən dəri gödəkçə və çantalar.', match: (l) => isFashion(l) && /dəri/i.test(l.title) && !isSecondChance(l) },
+  { id: 'cins', title: 'Cins hər şeydir', text: 'Mom jeans, klassik kəsim, tünd və açıq tonlar.', match: (l) => l.sub === 'Şalvar və cins' },
+  { id: 'vintage', title: 'Vintage tapıntılar', text: 'Keçmişin ruhunu daşıyan, bu gün də gözəl görünən parçalar.', match: (l) => /vintage|retro|plyonka|mid-century|flanel|klassik/i.test(l.title) && !isSecondChance(l) },
+  { id: 'ayaqqabi', title: 'Ayaqqabı rəfi', text: 'Krossovkadan çəkməyə — ölçünü tap, yola çıx.', match: (l) => l.category === 'ayaqqabi' && !isSecondChance(l) },
+  { id: 'canta-aksesuar', title: 'Çanta və aksesuar', text: 'Görünüşü tamamlayan kiçik detallar.', match: (l) => ['canta', 'aksesuar'].includes(l.category) && !isSecondChance(l) },
+  { id: 'ucuz', title: '30 AZN-dən aşağı', text: 'Kiçik büdcə, böyük qarderob.', match: (l) => isFashion(l) && l.price > 0 && l.price <= 30 },
+  { id: 'deyis', title: 'Dəyişməyə hazır', text: 'Sahibləri pul əvəzinə başqa parça qəbul edir.', match: (l) => isFashion(l) && l.modes.includes('swap') },
+  { id: 'ikinci-sans', title: 'Düzəlt və yaşat', text: 'Bir az iynə-sap və ya usta əli ilə yenidən həyata qayıdan əşyalar.', match: (l) => isSecondChance(l) },
   { id: 'minimalist-ev', title: 'Minimalist ev', text: 'Sadə xətlər, təbii materiallar, sakit rənglər.', match: (l) => l.category === 'ev' && !isSecondChance(l) },
-  { id: 'vintage', title: 'Vintage tapıntılar', text: 'Keçmişin ruhunu daşıyan, bu gün də gözəl olan əşyalar.', match: (l) => /vintage|retro|plyonka|mid-century/i.test(l.title) && !isSecondChance(l) },
-  { id: 'payiz', title: 'Payız qarderobu', text: 'Palto, gödəkçə və isti parçalar — yeni mövsümə hazırlıq.', match: (l) => ['geyim', 'canta'].includes(l.category) && !isSecondChance(l) },
-  { id: 'ucuz', title: '50 AZN-dən aşağı', text: 'Kiçik büdcə, böyük sevinc.', match: (l) => l.price > 0 && l.price <= 50 },
-  { id: 'kitab', title: 'Kitab həvəskarları', text: 'Rəflərdən rəflərə keçən hekayələr.', match: (l) => l.category === 'kitab' },
   { id: 'texnologiya', title: 'Texnologiya sevənlər', text: 'Yaxşı işləyən, yarı qiymətə texnika.', match: (l) => l.category === 'elektronika' && !isSecondChance(l) },
-  { id: 'telebe', title: 'Tələbə evi üçün', text: 'İlk ev üçün lazım olan hər şey, sərfəli qiymətə.', match: (l) => ['ev', 'kitab'].includes(l.category) && l.price <= 100 && !isSecondChance(l) },
-  { id: 'seyahet', title: 'Səyahət yoldaşları', text: 'Fotoaparat, çanta, qulaqlıq — yola çıxmağa hazır.', match: (l) => ['Fotoaparat', 'Qulaqlıq', 'Əl çantası', 'Retro fotoaparat'].includes(l.sub) && !isSecondChance(l) },
-  { id: 'aktiv', title: 'Aktiv həyat', text: 'Velosiped, musiqi və hobbi üçün.', match: (l) => ['idman'].includes(l.category) },
+  { id: 'kitab', title: 'Kitab həvəskarları', text: 'Rəflərdən rəflərə keçən hekayələr.', match: (l) => l.category === 'kitab' },
   { id: 'usaq', title: 'Kiçiklər üçün', text: 'Uşaqlar tez böyüyür — əşyalar isə yaxşı qalır.', match: (l) => l.category === 'usaq' || l.dept === 'usaq' },
-  { id: 'deyis', title: 'Dəyişməyə hazır', text: 'Sahibləri pul əvəzinə başqa əşya qəbul edir.', match: (l) => l.modes.includes('swap') },
-  { id: 'ikinci-sans', title: 'Düzəlt və yaşat', text: 'Bir az əl işi ilə yenidən həyata qayıdan əşyalar.', match: (l) => isSecondChance(l) },
 ]
 
 export const curatedById = (id) => CURATED.find((c) => c.id === id)

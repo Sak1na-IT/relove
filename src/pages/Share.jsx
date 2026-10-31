@@ -3,7 +3,21 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ImagePlus, X, Star, Tag, Repeat, Gift, Check, ArrowLeft, ArrowRight, Handshake, Truck, MapPin } from 'lucide-react'
 import Img from '../components/Img'
 import ModeBadge from '../components/ModeBadge'
-import { CATEGORIES, CONDITIONS, DISTRICTS, REPAIR_LEVELS, formatPrice } from '../data'
+import { CATEGORIES, CONDITIONS, DISTRICTS, REPAIR_LEVELS, DEPARTMENTS, FASHION_CATS, formatPrice } from '../data'
+
+// Geyim üçün "kimin üçün", digərləri üçün kateqoriyadan çıxan bölmə
+const WHO = [
+  { id: 'qadin', label: 'Qadın' },
+  { id: 'kisi', label: 'Kişi' },
+  { id: 'usaq', label: 'Uşaq' },
+]
+const DEPT_OF_CAT = { usaq: 'usaq', ev: 'ev', elektronika: 'elektronika', kitab: 'kitab', idman: 'hobbi', kolleksiya: 'hobbi' }
+const subsFor = (dept, category) => {
+  const d = DEPARTMENTS.find((x) => x.id === dept)
+  if (!d) return []
+  const groups = d.groups.filter((g) => g.cat === category)
+  return (groups.length ? groups : d.groups).flatMap((g) => g.items)
+}
 import { useApp } from '../store'
 
 const STEPS = ['Şəkillər', 'Məlumat', 'Qiymət və şərtlər', 'Təhvil', 'Önbaxış']
@@ -24,7 +38,7 @@ export default function Share() {
   const [form, setForm] = useState({
     title: '', category: '', condition: '', description: '', story: '', price: '',
     modes: [lockedMode || 'sale'], wantsText: '', district: profile.district, delivery: profile.delivery,
-    defect: '', repair: '',
+    defect: '', repair: '', dept: '', sub: '',
   })
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }))
@@ -89,7 +103,7 @@ export default function Share() {
   const isFree = form.modes.includes('free')
   const valid = [
     photos.length > 0,
-    form.title.trim() && form.category && form.condition,
+    form.title.trim() && form.category && form.condition && (!FASHION_CATS.includes(form.category) || form.dept),
     form.modes.length > 0 &&
       (isFree ? form.defect.trim() && form.repair : Number(form.price) > 0) &&
       (!form.modes.includes('swap') || form.wantsText.trim()),
@@ -101,6 +115,8 @@ export default function Share() {
     id: 'preview',
     title: form.title || 'Əşyanın adı',
     category: form.category || 'diger',
+    dept: form.dept || undefined,
+    sub: form.sub || undefined,
     price: isFree ? Number(form.price) || 0 : Number(form.price) || 0,
     condition: isFree ? 'Təmir tələb edir' : form.condition || 'Yaxşı',
     defect: isFree ? form.defect.trim() : undefined,
@@ -213,18 +229,47 @@ export default function Share() {
           <div className="form-grid fade-in">
             <label className="field span-2">
               <span>Əşyanın adı</span>
-              <input value={form.title} onChange={(e) => update('title', e.target.value)} placeholder="Məsələn: Vintage dəri gödəkçə" maxLength={60} />
+              <input value={form.title} onChange={(e) => update('title', e.target.value)} placeholder="Məsələn: Qəhvəyi dəri gödəkçə" maxLength={60} />
             </label>
             <div className="field span-2">
               <span>Kateqoriya</span>
               <div className="chip-wrap">
                 {CATEGORIES.map((c) => (
-                  <button key={c.id} type="button" className={`chip ${form.category === c.id ? 'is-on' : ''}`} onClick={() => update('category', c.id)}>
+                  <button
+                    key={c.id}
+                    type="button"
+                    className={`chip ${form.category === c.id ? 'is-on' : ''}`}
+                    onClick={() => setForm((f) => ({ ...f, category: c.id, dept: FASHION_CATS.includes(c.id) ? (FASHION_CATS.includes(f.category) ? f.dept : '') : DEPT_OF_CAT[c.id] || '', sub: '' }))}
+                  >
                     {c.short}
                   </button>
                 ))}
               </div>
             </div>
+            {FASHION_CATS.includes(form.category) && (
+              <div className="field span-2">
+                <span>Kimin üçün</span>
+                <div className="chip-wrap">
+                  {WHO.map((w) => (
+                    <button key={w.id} type="button" className={`chip ${form.dept === w.id ? 'is-on' : ''}`} onClick={() => setForm((f) => ({ ...f, dept: w.id, sub: '' }))}>
+                      {w.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {form.dept && subsFor(form.dept, form.category).length > 0 && (
+              <div className="field span-2">
+                <span>Növü <small>(istəyə bağlı)</small></span>
+                <div className="chip-wrap">
+                  {subsFor(form.dept, form.category).map((it) => (
+                    <button key={it} type="button" className={`chip ${form.sub === it ? 'is-on' : ''}`} onClick={() => update('sub', form.sub === it ? '' : it)}>
+                      {it}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="field span-2">
               <span>Vəziyyəti</span>
               <div className="chip-wrap">
@@ -237,7 +282,7 @@ export default function Share() {
             </div>
             <label className="field span-2">
               <span>Qısa açıqlama</span>
-              <textarea rows={3} value={form.description} onChange={(e) => update('description', e.target.value)} placeholder="Ölçü, rəng, qüsurlar, nə ilə birlikdə verilir…" />
+              <textarea rows={3} value={form.description} onChange={(e) => update('description', e.target.value)} placeholder="Ölçü (S, M, 38…), rəng, parça, qüsurlar…" />
             </label>
             <label className="field span-2">
               <span>Əşyanın hekayəsi <small>(istəyə bağlı)</small></span>

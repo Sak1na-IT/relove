@@ -5,8 +5,10 @@ import Logo from './Logo'
 import { useApp } from '../store'
 
 const LINKS = [
-  { to: '/', label: 'Ana səhifə' },
-  { to: '/ikinci-el', label: 'İkinci əl' },
+  { to: '/ikinci-el?dept=qadin', label: 'Qadın' },
+  { to: '/ikinci-el?dept=kisi', label: 'Kişi' },
+  { to: '/ikinci-el?dept=usaq', label: 'Uşaq' },
+  { to: '/ikinci-el', label: 'Hamısı', sep: true },
   { to: '/deyis', label: 'Dəyiş-düyüş' },
   { to: '/ikinci-sans', label: 'İkinci şans' },
   { to: '/kolleksiyalar', label: 'Kolleksiyalar' },
@@ -18,7 +20,14 @@ export default function Navbar() {
   const { conversations, favorites, me } = useApp()
   const unread = conversations.reduce((n, c) => n + c.unread, 0)
 
-  const isActive = (to) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
+  const isActive = (to) => {
+    const [path, query] = to.split('?')
+    if (!location.pathname.startsWith(path)) return false
+    const want = new URLSearchParams(query).get('dept') || ''
+    const have = new URLSearchParams(location.search).get('dept') || ''
+    if (path !== '/ikinci-el') return true
+    return want ? want === have : !['qadin', 'kisi', 'usaq'].includes(have)
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -35,9 +44,12 @@ export default function Navbar() {
 
         <nav className="nav-links" aria-label="Əsas menyu">
           {LINKS.map((l) => (
-            <Link key={l.label} to={l.to} className={`nav-link ${isActive(l.to) ? 'active' : ''}`}>
-              {l.label}
-            </Link>
+            <span key={l.label} className="nav-link-wrap">
+              <Link to={l.to} className={`nav-link ${isActive(l.to) ? 'active' : ''}`}>
+                {l.label}
+              </Link>
+              {l.sep && <span className="nav-sep" aria-hidden="true" />}
+            </span>
           ))}
         </nav>
 

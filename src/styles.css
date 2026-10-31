@@ -12352,3 +12352,146 @@ body {
   font-size: 13px;
   color: var(--muted);
 }
+
+/* v34 — Geyim yönümlü Relove */
+
+/* menyu: geyim bölmələri | digər bölmələr */
+.nav-link-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-sep {
+  width: 1px;
+  height: 16px;
+  margin: 0 8px;
+  background: var(--line-2);
+}
+
+@media (max-width: 1240px) {
+  .nav-link {
+    padding: 8px 8px;
+    font-size: 13.5px;
+  }
+
+  .nav-sep {
+    margin: 0 4px;
+  }
+}
+
+/* İkinci əl: bölməsiz seçim nişanı (məs. "Ayaqqabı ✕") */
+.browse-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 99px;
+  background: var(--forest);
+  color: var(--ivory);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Ana səhifə: Şkafa göz at */
+.wardrobe-head {
+  align-items: flex-end;
+}
+
+.wardrobe-depts {
+  display: flex;
+  gap: 8px;
+}
+
+.wardrobe-depts a {
+  padding: 8px 18px;
+  border: 1px solid var(--line-2);
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--forest);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.wardrobe-depts a:hover {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--ivory);
+}
+
+.wardrobe {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.wardrobe-tile {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--ink);
+}
+
+.wardrobe-photo {
+  display: block;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ivory-2);
+  box-shadow: inset 0 0 0 1px rgba(29, 34, 30, 0.06);
+}
+
+.wardrobe-photo .img {
+  transition: opacity 0.6s var(--ease), transform 1.2s var(--ease);
+}
+
+.wardrobe-tile:hover .wardrobe-photo .img {
+  transform: scale(1.04);
+}
+
+.wardrobe-tile strong {
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.wardrobe-tile small {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+@media (max-width: 1100px) {
+  .wardrobe {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .wardrobe-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .wardrobe {
+    display: flex;
+    gap: 12px;
+    margin: 0 -16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .wardrobe::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wardrobe-tile {
+    flex: 0 0 42%;
+    scroll-snap-align: start;
+  }
+}
