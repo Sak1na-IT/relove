@@ -132,3 +132,10 @@ Qaydalar: ən azı bir şəkil linki; satış elanında qiymət; İkinci şans (
    - `CLIENT_ORIGIN` = saytın ünvanı, məs. `https://relove.vercel.app` (bir neçə ünvan vergüllə: `https://relove.vercel.app,https://relove.netlify.app`)
 
 Bilmək lazımdır: pulsuz Render-də SQLite faylı daimi deyil, server yenidən başlayanda yeni qeydiyyatlar və elanlar silinə bilər (demo məlumat hər dəfə yenidən yaranır). Daimi saxlama üçün Render-in pullu diskinə və ya PostgreSQL-ə keçmək lazımdır.
+
+## Render-ə yerləşdirmək
+
+Kökdəki `render.yaml` hazırdır: Render-də **New → Blueprint** seç, `Sak1na-IT/relove` repo-sunu göstər və **Apply** düyməsini bas.
+
+- Pulsuz planda disk daimi deyil: server yatıb oyananda baza sıfırlanır və demo elanlar özü yenidən yazılır.
+- Server hazır olandan sonra Vercel-də `VITE_API_URL` dəyişənini `https://<render-ünvanı>/api` kimi təyin et və saytı yenidən deploy et.

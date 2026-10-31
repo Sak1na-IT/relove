@@ -1,0 +1,26 @@
+# Render ayarları: backend (server/) üçün.
+# Frontend Vercel-dədir: https://relove-alpha.vercel.app
+#
+# Qeyd: Render-in pulsuz planında disk daimi deyil. Server yatıb oyananda
+# baza sıfırlanır və demo elanlar (şəkilləri ilə) özü yenidən yazılır.
+services:
+  - type: web
+    name: relove-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    # Paket yoxdur, quraşdırmaq lazım deyil
+    buildCommand: node -v
+    startCommand: npm --prefix server start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: ./data/relove.db
+      - key: CLIENT_ORIGIN
+        value: https://relove-alpha.vercel.app,http://localhost:5173
