@@ -2,7 +2,7 @@
 
 **Əşyalar bir daha sevilsin.** — Bakı üçün ikinci əl alış-satış, dəyiş-düyüş və pulsuz paylaşım platforması.
 
-**Canlı versiya:** [relove.vercel.app](https://relove.vercel.app) (sayt, Vercel) · [relove-api-py9o.onrender.com](https://relove-api-py9o.onrender.com/api/health) (API, Render). Demo giriş: `sakina@relove.demo` / `parol123`.
+**Canlı versiya:** [relove-az.vercel.app](https://relove-az.vercel.app) (sayt, Vercel) · [relove-api-py9o.onrender.com](https://relove-api-py9o.onrender.com/api/health) (API, Render). Demo giriş: `sakina@relove.demo` / `parol123`.
 
 ## Bölmələr
 
@@ -52,7 +52,7 @@ npm run server:test   # API testləri
 
 | Hissə | Harada | Necə yenilənir |
 | --- | --- | --- |
-| Sayt | Vercel — [relove.vercel.app](https://relove.vercel.app) | `main`-ə hər `git push`-dan sonra özü (ayarlar: `vercel.json`) |
+| Sayt | Vercel — [relove-az.vercel.app](https://relove-az.vercel.app) | `main`-ə hər `git push`-dan sonra özü (ayarlar: `vercel.json`) |
 | API | Render — [relove-api-py9o.onrender.com](https://relove-api-py9o.onrender.com/api/health) | `main`-ə push-dan sonra özü (ayarlar: `render.yaml`) |
 
 - Render-in pulsuz planında disk daimi deyil: server yatıb oyananda və ya yenilənəndə baza sıfırlanır və demo elanlar özü yenidən yazılır. 15 dəqiqə istifadə olunmayanda server yatır, ilk açılış bir dəqiqəyə qədər çəkə bilər.
