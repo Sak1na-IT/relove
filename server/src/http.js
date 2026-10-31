@@ -95,10 +95,18 @@ export class Router {
   }
 }
 
+// "https://relove-*-sakina16.vercel.app" kimi ulduzlu nümunələri də qəbul edir (Vercel önizləmələri üçün)
+function originMatches(pattern, origin) {
+  if (pattern === '*' || pattern === origin) return true
+  if (!pattern.includes('*')) return false
+  const re = new RegExp('^' + pattern.split('*').map((s) => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('[a-z0-9-]+') + '$')
+  return re.test(origin)
+}
+
 export function corsHeaders(req, allowedOrigins) {
   const origin = req.headers.origin
   if (!origin) return {}
-  const ok = allowedOrigins.includes('*') || allowedOrigins.includes(origin)
+  const ok = allowedOrigins.some((p) => originMatches(p, origin))
   if (!ok) return {}
   return {
     'Access-Control-Allow-Origin': origin,

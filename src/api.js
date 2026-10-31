@@ -1,6 +1,10 @@
 // Backend ilə əlaqə: bütün sorğular buradan keçir.
-// Server ünvanı .env-dəki VITE_API_URL-dən gəlir, yoxdursa lokal server.
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api'
+// Server ünvanı .env-dəki VITE_API_URL-dən gəlir.
+// Yoxdursa: kompüterdə lokal server, internetdə (məs. Vercel önizləməsi) Render serveri.
+const LOCAL_API = 'http://localhost:4000/api'
+const LIVE_API = 'https://relove-api-py9o.onrender.com/api'
+const isLocal = typeof location !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+const BASE_URL = import.meta.env.VITE_API_URL ?? (isLocal ? LOCAL_API : LIVE_API)
 const TOKEN_KEY = 'relove-token'
 
 export class ApiError extends Error {
