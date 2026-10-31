@@ -6,7 +6,7 @@
 
 ## Bölmələr
 
-- **İkinci əl** — yaxşı vəziyyətdə əşyaların satışı, bölmə və alt kateqoriya üzrə axtarış, qiymət və ərazi filtrləri
+- **İkinci əl** — əsasən geyim: **Qadın, Kişi, Uşaq** bölmələri, hər birində alt kateqoriyalar (palto və gödəkçə, köynək və bluz, trikotaj, cins, ayaqqabı, çanta, aksesuar…); ev, texnika və hobbi əşyaları da var. Siyahılarda əvvəlcə geyim göstərilir
 - **Dəyiş-düyüş** — pul əvəzinə əşya ilə dəyişmək; "Sənə uyğun" bölməsi öz əşyalarına uyğun təklifləri göstərir
 - **İkinci şans** — qüsurlu, amma atılmağa qıyılmayan əşyalar (kiçik təmir, ciddi təmir, hissələr üçün)
 - **Kolleksiyalar** — mövzu üzrə seçilmiş toplular və istifadəçinin öz kolleksiyaları
