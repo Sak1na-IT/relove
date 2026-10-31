@@ -1,5 +1,7 @@
 // Demo məlumatlar: frontend-dəki src/data.js-dən götürülür ki, sayt eyni görünsün.
 // İşə salmaq: npm run seed  (bazanı sıfırlayıb yenidən doldurur)
+import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { openDb, transaction } from './db.js'
 import { hashPassword } from './auth.js'
 import { getConfig } from './env.js'
@@ -92,7 +94,7 @@ export function seed(db) {
 }
 
 // Birbaşa işə salınanda (npm run seed)
-if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop())) {
+if (process.argv[1] && resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1])) {
   const config = getConfig()
   const db = openDb(config.dbPath)
   seed(db)
