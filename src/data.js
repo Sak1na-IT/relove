@@ -128,7 +128,7 @@ export const LISTINGS = [
     images: ['/elanlar/fujifilm.jpg'],
     description: 'Gümüşü korpus, obyektivsiz. Ekranında cızıq yoxdur, batareya yaxşı saxlayır. Qutusu və şarj cihazı var.',
     story: 'İki il səyahətlərimdə yanımda olub. İndi telefonla çəkirəm, onun daha çox çəkiliş görməsini istəyirəm.',
-    wants: ['elektronika', 'kitab'], wantsText: ['Qulaqlıq', 'Planşet', 'Fotoaparat aksesuarları', 'Təklifə açıqdır'],
+    wants: ['elektronika', 'kitab', 'ev'], wantsText: ['Qulaqlıq', 'Planşet', 'Fotoaparat aksesuarları', 'Təklifə açıqdır'],
     delivery: ['meet', 'courier'],
   },
   {
@@ -144,14 +144,14 @@ export const LISTINGS = [
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
     images: ['/elanlar/keramika-vaza.jpg'],
     description: 'Əl işi, üzərində çiçək naxışı var. Heç bir çat və ya qırıq yoxdur.',
-    wants: ['ev', 'kitab', 'geyim'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
+    wants: ['ev', 'kitab', 'elektronika'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
   },
   {
     id: 'l4', title: 'Sony WH-1000XM4 qulaqlıq', category: 'elektronika', price: 170, condition: 'Çox yaxşı',
     district: 'Xətai', modes: ['sale', 'swap'], seller: 'u3', posted: '5 saat əvvəl', aspect: 'square',
     images: [img('1673056922463-8c4639755cab'), img('1484704849700-f032a568e944')],
     description: 'Səs-küy azaltma mükəmməl işləyir. Çantası və kabelləri ilə.',
-    wants: ['elektronika', 'idman'], wantsText: ['Ağıllı saat', 'Velosiped aksesuarları'], delivery: ['meet'],
+    wants: ['elektronika', 'idman', 'ev'], wantsText: ['Ağıllı saat', 'Velosiped aksesuarları'], delivery: ['meet'],
   },
   {
     id: 'l5', title: 'Taxta çərçivəli kreslo', category: 'ev', price: 150, condition: 'Yaxşı',
@@ -159,7 +159,7 @@ export const LISTINGS = [
     images: ['/elanlar/kreslo.jpg'],
     description: 'Rahat, dayanıqlı. Köçdüyümüz üçün yer qalmayıb.',
     story: 'Bütün qış axşamlarımın kitab küncü idi.',
-    wants: ['ev', 'kitab', 'geyim'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
+    wants: ['ev', 'kitab', 'elektronika'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
   },
   {
     id: 'l6', title: '12 kitablıq klassika kolleksiyası', category: 'kitab', price: 12, condition: 'Yaxşı',
@@ -167,7 +167,7 @@ export const LISTINGS = [
     images: [img('1495446815901-a7297e633e8d'), img('1532012197267-da84d127e765')],
     description: 'Dostoyevski, Tolstoy, Sabahattin Əli və başqaları. Simvolik qiymətə — sadəcə yaxşı oxucuya getsin.',
     story: 'Bu kitabları universitet illərində almışam. İndi kitabxanamı yeniləyirəm.',
-    wants: ['kitab', 'usaq'], wantsText: ['Başqa kitablar', 'Uşaq kitabları'], delivery: ['meet'],
+    wants: ['kitab', 'usaq', 'ev', 'elektronika'], wantsText: ['Başqa kitablar', 'Uşaq kitabları'], delivery: ['meet'],
   },
   {
     id: 'l7', title: 'Nike Air Max 90', category: 'ayaqqabi', price: 45, condition: 'Çox yaxşı',
@@ -181,28 +181,28 @@ export const LISTINGS = [
     district: 'Xəzər', modes: ['swap'], seller: 'u1', posted: '4 gün əvvəl', aspect: 'tall',
     images: [img('1608470639012-3b64ec3c61a2'), img('1525201548942-d8732f6617a0')],
     description: 'Simləri təzə dəyişilib. Futlyarı ilə birlikdə.',
-    wants: ['elektronika', 'kitab'], wantsText: ['Qulaqlıq', 'Musiqi kitabları'], delivery: ['meet'],
+    wants: ['elektronika', 'kitab', 'ev'], wantsText: ['Qulaqlıq', 'Musiqi kitabları'], delivery: ['meet'],
   },
   {
     id: 'l9', title: 'Kodak Ektar H35 plyonka fotoaparatı', category: 'kolleksiya', price: 70, condition: 'Yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
     images: ['/elanlar/kodak-plyonka.jpg'],
     description: 'Yarım kadrlı plyonka fotoaparatı, bir plyonkadan 72 kadr çıxır. İşlək vəziyyətdədir, yeni plyonka ilə yoxlanılıb.',
-    wants: ['kolleksiya', 'elektronika'], wantsText: ['Vinil plastinkalar', 'Köhnə saatlar'], delivery: ['meet', 'courier'],
+    wants: ['kolleksiya', 'elektronika', 'ev'], wantsText: ['Vinil plastinkalar', 'Köhnə saatlar'], delivery: ['meet', 'courier'],
   },
   {
     id: 'l10', title: 'Şəhər velosipedi', category: 'idman', price: 130, condition: 'Yaxşı',
     district: 'Nərimanov', modes: ['sale', 'swap'], seller: 'u5', posted: '2 gün əvvəl', aspect: 'wide',
     images: [img('1631443412966-2a2ab5e18c3b'), img('1507035895480-2b3156c31fc8')],
     description: '28 təkər, 7 sürət. Təkərlər yenidir.',
-    wants: ['elektronika', 'idman'], wantsText: ['Elektrik skuter', 'Qulaqlıq'], delivery: ['meet'],
+    wants: ['elektronika', 'idman', 'ev'], wantsText: ['Elektrik skuter', 'Qulaqlıq'], delivery: ['meet'],
   },
   {
     id: 'l11', title: 'Uşaq taxta oyuncaq dəsti', category: 'usaq', price: 12, condition: 'Çox yaxşı',
     district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'square',
     images: ['/elanlar/taxta-oyuncaq.jpg'],
     description: 'Taxta mətbəx dəsti: taxta lövhə, bıçaq, qaşıq, fincanlar və meyvələr. Uşaqlar böyüdü — başqa balaca əllərə getsin.',
-    wants: ['usaq', 'kitab'], wantsText: ['Uşaq kitabları', 'Konstruktor'], delivery: ['meet'],
+    wants: ['usaq', 'kitab', 'ev', 'elektronika'], wantsText: ['Uşaq kitabları', 'Konstruktor'], delivery: ['meet'],
   },
   {
     id: 'l12', title: 'MacBook Air M2', category: 'elektronika', price: 1350, condition: 'Çox yaxşı',
@@ -223,21 +223,21 @@ export const LISTINGS = [
     district: 'Nizami', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'tall',
     images: ['/elanlar/monstera.jpg'],
     description: 'Çox böyüdü, evə sığmır. Qayğı ilə baxacaq birini axtarır.',
-    wants: ['geyim'], wantsText: [], delivery: ['meet'],
+    wants: ['ev', 'elektronika'], wantsText: [], delivery: ['meet'],
   },
   {
     id: 'l15', title: 'Mid-century masa lampası', category: 'ev', price: 30, condition: 'Çox yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: '1 gün əvvəl', aspect: 'square',
     images: ['/elanlar/masa-lampasi.jpg'],
     description: 'Mis detallı, isti işıq. Lampası daxildir.',
-    wants: ['ev', 'kolleksiya', 'geyim'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
+    wants: ['ev', 'kolleksiya', 'elektronika'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
   },
   {
     id: 'l16', title: 'Ağıllı saat', category: 'elektronika', price: 80, condition: 'Yaxşı',
     district: 'Binəqədi', modes: ['sale', 'swap'], seller: 'u3', posted: '2 gün əvvəl', aspect: 'square',
     images: ['/elanlar/agilli-saat.jpg'],
     description: 'Qutusu ilə, dörd qayış və şarj kabeli daxildir. Ekran qoruyucusu var.',
-    wants: ['elektronika'], wantsText: ['Qulaqlıq', 'Planşet'], delivery: ['meet', 'courier'],
+    wants: ['elektronika', 'ev'], wantsText: ['Qulaqlıq', 'Planşet'], delivery: ['meet', 'courier'],
   },
 ]
 
@@ -813,7 +813,21 @@ export const MY_ITEMS = [
     district: 'Yasamal', modes: ['sale', 'swap'], seller: 'me', posted: '2 gün əvvəl', aspect: 'tall',
     images: ['/elanlar/qehveyi-zolaqli-sviter.jpg'],
     description: 'Ölçü: M–L. Qalın toxunma, krem zolaqlı. Tükləşməyib.',
-    wants: ['geyim', 'canta', 'ev'], wantsText: ['Kardiqan', 'Çanta', 'Lampa'], delivery: ['meet'],
+    wants: ['geyim', 'canta'], wantsText: ['Kardiqan', 'Çanta'], delivery: ['meet'],
+  },
+  {
+    id: 'm4', title: 'Rattan güzgü', category: 'ev', price: 30, condition: 'Yeni kimi',
+    district: 'Yasamal', modes: ['sale', 'swap'], seller: 'me', posted: '2 gün əvvəl', aspect: 'tall',
+    images: [img('1618220179428-22790b461013')],
+    description: '60 sm diametr. Divara asılmağa hazır.',
+    wants: ['ev', 'kitab', 'idman', 'kolleksiya', 'usaq'], wantsText: ['Lampa', 'Vaza', 'Bitki'], delivery: ['meet'],
+  },
+  {
+    id: 'm5', title: 'Bose QC35 qulaqlıq', category: 'elektronika', price: 110, condition: 'Çox yaxşı',
+    district: 'Yasamal', modes: ['sale', 'swap'], seller: 'me', posted: '1 həftə əvvəl', aspect: 'square',
+    images: [img('1583394838336-acd977736f90')],
+    description: 'Səs-küy azaltma ilə. Qutusu var.',
+    wants: ['elektronika', 'kolleksiya', 'idman'], wantsText: ['Fotoaparat', 'Planşet', 'Gitara'], delivery: ['meet'],
   },
 ]
 
@@ -929,7 +943,7 @@ const META = {
   l9: ['hobbi', 'Retro fotoaparat'], l10: ['hobbi', 'Velosiped'], l11: ['usaq', 'Taxta oyuncaq'],
   l12: ['elektronika', 'Noutbuk'], l13: ['qadin', 'Köynək və bluz'], l14: ['ev', 'Bitki'],
   l15: ['ev', 'Masa lampası'], l16: ['elektronika', 'Ağıllı saat'], l17: ['qadin', 'Bel çantası'],
-  l18: ['qadin', 'Palto və gödəkçə'], m1: ['kisi', 'Hudi'], m2: ['kisi', 'Palto və gödəkçə'], m3: ['kisi', 'Trikotaj'],
+  l18: ['qadin', 'Palto və gödəkçə'], m1: ['kisi', 'Hudi'], m2: ['kisi', 'Palto və gödəkçə'], m3: ['kisi', 'Trikotaj'], m4: ['ev', 'Güzgü'], m5: ['elektronika', 'Qulaqlıq'],
 }
 
 /* =========================================================

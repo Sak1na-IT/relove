@@ -55,6 +55,8 @@ export default function Swap() {
     const pairs = []
     mySwap.forEach((mine) =>
       open.forEach((theirs) => {
+        // paltar paltarla, ev əşyası ev əşyası ilə
+        if (isFashion(mine) !== isFashion(theirs)) return
         if (theirs.wants.includes(mine.category) && mine.wants.includes(theirs.category)) {
           const diff = Math.abs(theirs.price - mine.price) / Math.max(theirs.price, mine.price, 1)
           pairs.push({ mine, theirs, score: 100 - Math.min(40, Math.round(diff * 60)) })
@@ -63,15 +65,10 @@ export default function Swap() {
     )
     const seen = new Set()
     const uniq = pairs.sort((a, b) => b.score - a.score).filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
-    // ən çoxu 20: əsasən geyim, hər 3 geyimdən sonra bir ev/hobbi əşyası
-    const wear = uniq.filter((p) => isFashion(p.theirs))
-    const rest = uniq.filter((p) => !isFashion(p.theirs))
-    const out = []
-    wear.forEach((p, i) => {
-      out.push(p)
-      if ((i + 1) % 3 === 0 && rest.length) out.push(rest.shift())
-    })
-    return [...out, ...rest].slice(0, 20)
+    // 10 geyim + 10 ev/hobbi əşyası
+    const wear = uniq.filter((p) => isFashion(p.theirs)).slice(0, 10)
+    const rest = uniq.filter((p) => !isFashion(p.theirs)).slice(0, 10)
+    return [...wear, ...rest]
   }, [mySwap, open])
 
   const newIncoming = incoming.filter((o) => o.status === 'pending').length
