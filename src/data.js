@@ -144,7 +144,7 @@ export const LISTINGS = [
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
     images: ['/elanlar/keramika-vaza.jpg'],
     description: 'Əl işi, üzərində çiçək naxışı var. Heç bir çat və ya qırıq yoxdur.',
-    wants: ['ev', 'kitab'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
+    wants: ['ev', 'kitab', 'geyim'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
   },
   {
     id: 'l4', title: 'Sony WH-1000XM4 qulaqlıq', category: 'elektronika', price: 170, condition: 'Çox yaxşı',
@@ -159,7 +159,7 @@ export const LISTINGS = [
     images: ['/elanlar/kreslo.jpg'],
     description: 'Rahat, dayanıqlı. Köçdüyümüz üçün yer qalmayıb.',
     story: 'Bütün qış axşamlarımın kitab küncü idi.',
-    wants: ['ev', 'kitab'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
+    wants: ['ev', 'kitab', 'geyim'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
   },
   {
     id: 'l6', title: '12 kitablıq klassika kolleksiyası', category: 'kitab', price: 12, condition: 'Yaxşı',
@@ -223,14 +223,14 @@ export const LISTINGS = [
     district: 'Nizami', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'tall',
     images: ['/elanlar/monstera.jpg'],
     description: 'Çox böyüdü, evə sığmır. Qayğı ilə baxacaq birini axtarır.',
-    wants: [], wantsText: [], delivery: ['meet'],
+    wants: ['geyim'], wantsText: [], delivery: ['meet'],
   },
   {
     id: 'l15', title: 'Mid-century masa lampası', category: 'ev', price: 30, condition: 'Çox yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: '1 gün əvvəl', aspect: 'square',
     images: ['/elanlar/masa-lampasi.jpg'],
     description: 'Mis detallı, isti işıq. Lampası daxildir.',
-    wants: ['ev', 'kolleksiya'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
+    wants: ['ev', 'kolleksiya', 'geyim'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
   },
   {
     id: 'l16', title: 'Ağıllı saat', category: 'elektronika', price: 80, condition: 'Yaxşı',
@@ -813,7 +813,7 @@ export const MY_ITEMS = [
     district: 'Yasamal', modes: ['sale', 'swap'], seller: 'me', posted: '2 gün əvvəl', aspect: 'tall',
     images: ['/elanlar/qehveyi-zolaqli-sviter.jpg'],
     description: 'Ölçü: M–L. Qalın toxunma, krem zolaqlı. Tükləşməyib.',
-    wants: ['geyim', 'canta'], wantsText: ['Kardiqan', 'Çanta'], delivery: ['meet'],
+    wants: ['geyim', 'canta', 'ev'], wantsText: ['Kardiqan', 'Çanta', 'Lampa'], delivery: ['meet'],
   },
 ]
 

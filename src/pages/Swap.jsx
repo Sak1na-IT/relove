@@ -4,7 +4,7 @@ import { Repeat, Plus, Clock, MapPin, Heart, Check, X } from 'lucide-react'
 import Img from '../components/Img'
 import CollectButton from '../components/CollectButton'
 import SwapModal from '../components/SwapModal'
-import { formatPrice } from '../data'
+import { formatPrice, isFashion } from '../data'
 import CategoryBrowser from '../components/CategoryBrowser'
 import { useApp } from '../store'
 
@@ -62,7 +62,16 @@ export default function Swap() {
       }),
     )
     const seen = new Set()
-    return pairs.sort((a, b) => b.score - a.score).filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
+    const uniq = pairs.sort((a, b) => b.score - a.score).filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
+    // ən çoxu 20: əsasən geyim, hər 3 geyimdən sonra bir ev/hobbi əşyası
+    const wear = uniq.filter((p) => isFashion(p.theirs))
+    const rest = uniq.filter((p) => !isFashion(p.theirs))
+    const out = []
+    wear.forEach((p, i) => {
+      out.push(p)
+      if ((i + 1) % 3 === 0 && rest.length) out.push(rest.shift())
+    })
+    return [...out, ...rest].slice(0, 20)
   }, [mySwap, open])
 
   const newIncoming = incoming.filter((o) => o.status === 'pending').length
