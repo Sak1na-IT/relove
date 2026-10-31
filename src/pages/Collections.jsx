@@ -124,27 +124,36 @@ function CreateCollection({ onClose }) {
   )
 }
 
-function CollectionCard({ c, items, cover }) {
+function CollectionCard({ c, items, cover, index }) {
   const prices = items.map((l) => l.price).filter((n) => n > 0)
   const min = prices.length ? Math.min(...prices) : 0
   const max = prices.length ? Math.max(...prices) : 0
+  // üz şəkli birinci, sonra fərqli şəkilli iki əşya — kiçik mozaika
+  const pics = []
+  for (const l of [cover, ...items]) {
+    if (l && !pics.includes(l.images[0])) pics.push(l.images[0])
+    if (pics.length === 3) break
+  }
+  const href = `/kolleksiyalar/${c.id}`
   return (
-    <article className="swapcard collcard">
-      <div className="swapcard-media">
-        <Link to={`/kolleksiyalar/${c.id}`} className="card-media-link" aria-label={c.title}>
-          {cover ? <Img src={cover.images[0]} alt={c.title} /> : <div className="cover-empty" />}
-        </Link>
-        {c.mine && <span className="collcard-mine">{c.isPublic ? 'Mənim' : 'Mənim · gizli'}</span>}
-      </div>
-      <div className="swapcard-body">
-        <Link to={`/kolleksiyalar/${c.id}`} className="swapcard-title">{c.title}</Link>
-        <div className="swapcard-meta">
-          <span>{items.length} əşya</span>
-          {prices.length > 0 && <span>{min === max ? `${min} AZN` : `${min}–${max} AZN`}</span>}
+    <article className="coll3">
+      <Link to={href} className={`coll3-media coll3-media-${Math.max(pics.length, 1)}`} aria-label={c.title}>
+        {pics.length ? pics.map((src) => <Img key={src} src={src} alt="" />) : <div className="cover-empty" />}
+        {c.mine && <span className="coll3-tag">{c.isPublic ? 'Mənim' : 'Mənim · gizli'}</span>}
+      </Link>
+      <div className="coll3-body">
+        <span className="coll3-index">{String(index + 1).padStart(2, '0')}</span>
+        <Link to={href} className="coll3-title">{c.title}</Link>
+        {c.text && <p className="coll3-text">{c.text}</p>}
+        <div className="coll3-foot">
+          <span>
+            {items.length} əşya
+            {prices.length > 0 && <> · {min === max ? `${min} AZN` : `${min}–${max} AZN`}</>}
+          </span>
+          <Link to={href} className="coll3-link">
+            Bax <ArrowRight size={14} />
+          </Link>
         </div>
-        <Link to={`/kolleksiyalar/${c.id}`} className="btn btn-ghost btn-sm swapcard-btn">
-          Kolleksiyaya bax <ArrowRight size={14} />
-        </Link>
       </div>
     </article>
   )
@@ -159,22 +168,24 @@ export default function Collections() {
     <div className="container section-page collections-page">
       <header className="section-page-head">
         <div>
+          <span className="coll3-eyebrow">Seçilmiş toplular</span>
           <h1 className="page-title">Kolleksiyalar</h1>
+          <p className="coll3-lead">Mövzu üzrə seçilmiş tapıntılar — evin, qarderobun və hobbilərin üçün.</p>
         </div>
         <button className="btn btn-primary" onClick={() => requireAuth() && setCreating(true)}>
           <Plus size={16} /> Kolleksiya yarat
         </button>
       </header>
 
-      <div className="browse-grid">
+      <div className="coll3-grid">
         {(() => {
           // hər kolleksiya fərqli üz şəkli ilə görünsün
           const used = new Set()
-          return all.map((c) => {
+          return all.map((c, i) => {
             const items = listings.filter(c.match)
             const cover = items.find((l) => !used.has(l.images[0])) || items[0]
             if (cover) used.add(cover.images[0])
-            return <CollectionCard key={c.id} c={c} items={items} cover={cover} />
+            return <CollectionCard key={c.id} c={c} items={items} cover={cover} index={i} />
           })
         })()}
       </div>

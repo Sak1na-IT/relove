@@ -11733,3 +11733,188 @@ body {
     padding: 30px 22px 26px;
   }
 }
+
+/* v30 — Kolleksiyalar: daha kiçik, redaksiya üslubunda kartlar */
+.collections-page .section-page-head {
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.coll3-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.coll3-lead {
+  margin: 10px 0 0;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.coll3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px 36px;
+  padding-bottom: 72px;
+}
+
+.coll3 {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* mozaika: bir böyük + iki kiçik şəkil, alçaq 16:10 çərçivə */
+.coll3-media {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--ivory-2);
+}
+
+.coll3-media > :first-child {
+  grid-row: 1 / 3;
+}
+
+.coll3-media-1 > :first-child {
+  grid-column: 1 / 3;
+}
+
+.coll3-media-2 > :last-child {
+  grid-row: 1 / 3;
+}
+
+.coll3-media .img,
+.coll3-media .img-fallback,
+.coll3-media .cover-empty {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: var(--ivory-2);
+}
+
+.coll3-media .img {
+  transition: opacity 0.6s var(--ease), transform 1.2s var(--ease), filter 0.6s var(--ease);
+  filter: saturate(0.92);
+}
+
+.coll3:hover .coll3-media .img {
+  transform: scale(1.035);
+  filter: saturate(1);
+}
+
+.coll3-tag {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: rgba(246, 243, 236, 0.92);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--forest);
+}
+
+.coll3-body {
+  display: flex;
+  flex-direction: column;
+  padding-top: 18px;
+}
+
+.coll3-index {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--brass);
+}
+
+.coll3-title {
+  margin-top: 2px;
+  font-family: var(--serif);
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.coll3-title:hover {
+  color: var(--forest);
+}
+
+.coll3-text {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.coll3-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.coll3-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--forest);
+  text-decoration: none;
+}
+
+.coll3-link svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.coll3:hover .coll3-link svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 1024px) {
+  .coll3-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 44px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .coll3-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .coll3-title {
+    font-size: 24px;
+  }
+}
