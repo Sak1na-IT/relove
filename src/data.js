@@ -76,7 +76,7 @@ export const LISTINGS = [
   {
     id: 'l2', title: 'Vintage dəri gödəkçə', category: 'geyim', price: 60, condition: 'Yaxşı',
     district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u2', posted: 'Bu gün', aspect: 'tall',
-    images: [img('1551028719-00167b16eac5'), img('1521223890158-f9f7c3d5d504')],
+    images: [img('1702026672242-c79a52996dd4'), img('1521223890158-f9f7c3d5d504')],
     description: 'M ölçü, əsl dəri. Klassik kəsim, astarı təzə kimidir.',
     story: 'Nənəmin şkafından tapdığım ilk vintage parça idi.',
     wants: ['geyim', 'ev'], wantsText: ['Vintage çanta', 'Ev dekoru'], delivery: ['meet'],
@@ -84,7 +84,7 @@ export const LISTINGS = [
   {
     id: 'l3', title: 'Keramika vaza dəsti', category: 'ev', price: 20, condition: 'Yeni kimi',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
-    images: [img('1578500494198-246f612d3b3d'), img('1612196808214-b8e1d6145a8c')],
+    images: [img('1727684812941-0c8c1e4b3395'), img('1612196808214-b8e1d6145a8c')],
     description: 'Əl işi, üç ölçüdə. Heç bir çat və ya qırıq yoxdur.',
     wants: ['ev', 'kitab'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
   },
