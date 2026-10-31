@@ -4,7 +4,7 @@ Relove-un backend hissəsi. Heç bir paket yükləmək lazım deyil: yalnız Nod
 
 - Baza: SQLite (`server/data/relove.db`, ilk açılışda özü yaranır və demo məlumatla dolur)
 - Giriş: e-poçt + parol, parol `scrypt` ilə saxlanılır, giriş tokeni JWT (7 gün)
-- Şəkillər: hələlik **link** kimi saxlanılır (`https://...`)
+- Şəkillər: cihazdan seçilən şəkillər brauzerdə sıxılıb `data:image/...` kimi, demo şəkillər isə link və ya `/elanlar/...` yolu kimi saxlanılır
 
 ## İşə salmaq
 
