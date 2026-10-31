@@ -33,24 +33,54 @@ export default function Share() {
 
   const toggleMode = (id) => setForm((f) => ({ ...f, modes: [id] }))
 
-  // Şəkillər hələlik link kimi əlavə olunur (https://...)
-  const [link, setLink] = useState('')
-  const [linkError, setLinkError] = useState('')
-  const addLink = (e) => {
-    e?.preventDefault()
-    const url = link.trim()
+  // Şəkillər cihazdan seçilir: brauzerdə kiçildilib sıxılır (ən uzun tərəf 1280px, JPEG)
+  const [photoError, setPhotoError] = useState('')
+  const [loadingPhotos, setLoadingPhotos] = useState(false)
+  const [dragging, setDragging] = useState(false)
+
+  const compress = (file) =>
+    new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file)
+      const im = new Image()
+      im.onload = () => {
+        const max = 1280
+        const scale = Math.min(1, max / Math.max(im.width, im.height))
+        const canvas = document.createElement('canvas')
+        canvas.width = Math.round(im.width * scale)
+        canvas.height = Math.round(im.height * scale)
+        canvas.getContext('2d').drawImage(im, 0, 0, canvas.width, canvas.height)
+        URL.revokeObjectURL(url)
+        let q = 0.82
+        let out = canvas.toDataURL('image/jpeg', q)
+        while (out.length > 850_000 && q > 0.4) {
+          q -= 0.1
+          out = canvas.toDataURL('image/jpeg', q)
+        }
+        resolve(out)
+      }
+      im.onerror = () => {
+        URL.revokeObjectURL(url)
+        reject(new Error('Şəkil oxunmadı'))
+      }
+      im.src = url
+    })
+
+  const addFiles = async (fileList) => {
+    const files = [...fileList].filter((f) => f.type.startsWith('image/'))
+    if (!files.length) return setPhotoError('Yalnız şəkil faylı seçə bilərsən')
+    const room = 8 - photos.length
+    if (room <= 0) return setPhotoError('Ən çoxu 8 şəkil')
+    setPhotoError(files.length > room ? `Yalnız ilk ${room} şəkil əlavə olundu (ən çoxu 8)` : '')
+    setLoadingPhotos(true)
     try {
-      const u = new URL(url)
-      if (!['http:', 'https:'].includes(u.protocol)) throw new Error()
-    } catch {
-      setLinkError('Link https:// ilə başlamalıdır')
-      return
+      const done = []
+      for (const f of files.slice(0, room)) done.push(await compress(f))
+      setPhotos((p) => [...p, ...done.filter((d) => !p.includes(d))].slice(0, 8))
+    } catch (err) {
+      setPhotoError(err.message)
+    } finally {
+      setLoadingPhotos(false)
     }
-    if (photos.includes(url)) return setLinkError('Bu şəkil artıq əlavə olunub')
-    if (photos.length >= 8) return setLinkError('Ən çoxu 8 şəkil')
-    setPhotos((p) => [...p, url])
-    setLink('')
-    setLinkError('')
   }
 
   const makeCover = (i) => setPhotos((p) => [p[i], ...p.filter((_, j) => j !== i)])
@@ -128,28 +158,39 @@ export default function Share() {
       <div className="share-body">
         {step === 0 && (
           <div className="fade-in">
-            <form className="link-add" onSubmit={addLink}>
-              <ImagePlus size={22} strokeWidth={1.5} />
+            <label
+              className={`upload-drop ${dragging ? 'is-drag' : ''} ${photos.length >= 8 ? 'is-full' : ''}`}
+              onDragOver={(e) => {
+                e.preventDefault()
+                setDragging(true)
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={(e) => {
+                e.preventDefault()
+                setDragging(false)
+                addFiles(e.dataTransfer.files)
+              }}
+            >
               <input
-                value={link}
+                type="file"
+                accept="image/*"
+                multiple
+                disabled={photos.length >= 8 || loadingPhotos}
                 onChange={(e) => {
-                  setLink(e.target.value)
-                  setLinkError('')
+                  addFiles(e.target.files)
+                  e.target.value = ''
                 }}
-                placeholder="Şəklin linkini yapışdır — https://..."
-                aria-label="Şəkil linki"
-                inputMode="url"
               />
-              <button className="btn btn-primary btn-sm" type="submit" disabled={!link.trim()}>
-                Əlavə et
-              </button>
-            </form>
-            {linkError && <p className="link-add-error">{linkError}</p>}
-            <p className="hint">Şəkil yükləmə tezliklə əlavə olunacaq. Hələlik internetdəki şəklin linkini yapışdır: şəklə sağ klik → “Şəkil ünvanını kopyala”. Ən çoxu 8 şəkil.</p>
+              <span className="upload-icon"><ImagePlus size={26} strokeWidth={1.5} /></span>
+              <strong>{loadingPhotos ? 'Şəkillər hazırlanır…' : photos.length ? 'Daha şəkil əlavə et' : 'Şəkilləri seç'}</strong>
+              <small>Kompüterdən və ya telefondan seç, ya da bura sürüklə · {photos.length}/8</small>
+            </label>
+            {photoError && <p className="link-add-error">{photoError}</p>}
+            <p className="hint">Gündüz işığında, sadə fonda çək. İlk şəkil elanın əsas şəkli olacaq — ulduzla dəyişə bilərsən.</p>
             {photos.length > 0 && (
               <div className="photo-grid">
                 {photos.map((src, i) => (
-                  <div key={src} className={`photo ${i === 0 ? 'is-cover' : ''}`}>
+                  <div key={i + src.slice(-24)} className={`photo ${i === 0 ? 'is-cover' : ''}`}>
                     <img src={src} alt={`Şəkil ${i + 1}`} />
                     {i === 0 ? (
                       <span className="photo-cover">Əsas şəkil</span>

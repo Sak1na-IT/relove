@@ -12202,3 +12202,153 @@ body {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* v33 — Yığcam footer */
+.footer2 {
+  padding: 48px 0 22px;
+}
+
+.f2-top {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.f2-brand .footer-claim {
+  margin: 6px 0 0;
+  font-size: 18px;
+}
+
+.f2-news {
+  width: min(420px, 100%);
+}
+
+.f2-news p {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+
+.f2-news .footer-form {
+  height: 44px;
+}
+
+.f2-news .footer-form button {
+  width: 34px;
+  height: 34px;
+}
+
+.f2-links {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 26px;
+  margin-top: 32px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(246, 243, 236, 0.14);
+  font-size: 14px;
+}
+
+.f2-links a,
+.f2-links span {
+  color: rgba(246, 243, 236, 0.72);
+  transition: color 0.2s;
+}
+
+.f2-links a:hover {
+  color: var(--ivory);
+}
+
+.f2-sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(246, 243, 236, 0.22);
+}
+
+.footer-bottom.f2-bottom {
+  margin-top: 18px;
+  padding-top: 0;
+  border-top: 0;
+  font-size: 12.5px;
+  color: rgba(246, 243, 236, 0.55);
+}
+
+.f2-bottom svg {
+  vertical-align: -2px;
+}
+
+@media (max-width: 600px) {
+  .f2-sep {
+    display: none;
+  }
+
+  .f2-links {
+    gap: 10px 20px;
+  }
+
+  .footer-bottom.f2-bottom {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* v33 — Cihazdan şəkil seçmə */
+.upload-drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 190px;
+  padding: 28px 20px;
+  border: 1.5px dashed var(--line-2);
+  border-radius: 14px;
+  background: var(--white);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.upload-drop:hover,
+.upload-drop.is-drag {
+  border-color: var(--forest);
+  background: var(--mint);
+}
+
+.upload-drop.is-full {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.upload-drop input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--forest);
+}
+
+.upload-drop strong {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.upload-drop small {
+  font-size: 13px;
+  color: var(--muted);
+}

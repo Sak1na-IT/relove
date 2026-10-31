@@ -10,34 +10,15 @@ export default function Footer() {
   const [email, setEmail] = useState('')
 
   return (
-    <footer className="footer">
+    <footer className="footer footer2">
       <Leaves className="footer-leaves" />
       <div className="container">
-        <div className="footer-top">
-          <div className="footer-brand">
+        <div className="f2-top">
+          <div className="f2-brand">
             <Wordmark light />
             <p className="footer-claim">Əşyaların ikinci həyatı</p>
-            <p className="footer-place with-icon"><MapPin size={14} /> Bakı, Azərbaycan</p>
           </div>
-          <div className="footer-cols">
-            <div>
-              <h4>Sürətli keçid</h4>
-              <Link to="/">Ana səhifə</Link>
-              <Link to="/ikinci-el">İkinci əl</Link>
-              <Link to="/deyis">Dəyiş-düyüş</Link>
-              <Link to="/ikinci-sans">İkinci şans</Link>
-              <Link to="/kolleksiyalar">Kolleksiyalar</Link>
-            </div>
-            <div>
-              <h4>İstifadəçi üçün</h4>
-              <Link to="/paylasdiqlarim">Paylaşdıqlarım</Link>
-              <Link to="/profil">Profilim</Link>
-              <span>Təhlükəsiz görüş qaydaları</span>
-              <span>Şərtlər və məxfilik</span>
-            </div>
-          </div>
-          <div className="footer-news">
-            <h4>Yeniliklərdən xəbərdar ol</h4>
+          <div className="f2-news">
             <p>Həftənin ən maraqlı tapıntıları, ayda iki dəfə.</p>
             <form
               className="footer-form"
@@ -55,8 +36,20 @@ export default function Footer() {
             </form>
           </div>
         </div>
-        <div className="footer-bottom">
-          <span>© 2026 Relove. Bütün hüquqlar qorunur.</span>
+        <nav className="f2-links" aria-label="Sayt xəritəsi">
+          <Link to="/">Ana səhifə</Link>
+          <Link to="/ikinci-el">İkinci əl</Link>
+          <Link to="/deyis">Dəyiş-düyüş</Link>
+          <Link to="/ikinci-sans">İkinci şans</Link>
+          <Link to="/kolleksiyalar">Kolleksiyalar</Link>
+          <span className="f2-sep" aria-hidden="true" />
+          <Link to="/paylasdiqlarim">Paylaşdıqlarım</Link>
+          <Link to="/profil">Profilim</Link>
+          <span>Təhlükəsiz görüş qaydaları</span>
+          <span>Şərtlər və məxfilik</span>
+        </nav>
+        <div className="footer-bottom f2-bottom">
+          <span>© 2026 Relove · <MapPin size={13} /> Bakı, Azərbaycan</span>
           <span>Az al. Daha çox paylaş.</span>
         </div>
       </div>
