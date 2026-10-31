@@ -65,10 +65,10 @@ export const USERS = {
 
 export const LISTINGS = [
   {
-    id: 'l1', title: 'Fujifilm X-T20 fotoaparat', category: 'elektronika', price: 520, condition: 'Çox yaxşı',
+    id: 'l1', title: 'Fujifilm X-T5 fotoaparat', category: 'elektronika', price: 1900, condition: 'Çox yaxşı',
     district: 'Nərimanov', modes: ['sale', 'swap'], seller: 'u1', posted: '2 saat əvvəl', aspect: 'tall',
-    images: [img('1620288731039-5584e277e11f'), img('1502920917128-1aa500764cbd'), img('1510127034890-ba27508e9f1c')],
-    description: '15-45mm obyektivlə birlikdə. Ekranında cızıq yoxdur, batareya yaxşı saxlayır. Qutusu və şarj cihazı var.',
+    images: ['/elanlar/fujifilm.jpg'],
+    description: 'Gümüşü korpus, obyektivsiz. Ekranında cızıq yoxdur, batareya yaxşı saxlayır. Qutusu və şarj cihazı var.',
     story: 'İki il səyahətlərimdə yanımda olub. İndi telefonla çəkirəm, onun daha çox çəkiliş görməsini istəyirəm.',
     wants: ['elektronika', 'kitab'], wantsText: ['Qulaqlıq', 'Planşet', 'Fotoaparat aksesuarları', 'Təklifə açıqdır'],
     delivery: ['meet', 'courier'],
@@ -76,16 +76,16 @@ export const LISTINGS = [
   {
     id: 'l2', title: 'Vintage dəri gödəkçə', category: 'geyim', price: 60, condition: 'Yaxşı',
     district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u2', posted: 'Bu gün', aspect: 'tall',
-    images: [img('1702026672242-c79a52996dd4'), img('1521223890158-f9f7c3d5d504')],
-    description: 'M ölçü, əsl dəri. Klassik kəsim, astarı təzə kimidir.',
+    images: ['/elanlar/deri-godekce.jpg'],
+    description: 'M ölçü, əsl dəri, bomber kəsimi. Dərisi vaxtla yumşalıb, fermuarları işləyir.',
     story: 'Nənəmin şkafından tapdığım ilk vintage parça idi.',
     wants: ['geyim', 'ev'], wantsText: ['Vintage çanta', 'Ev dekoru'], delivery: ['meet'],
   },
   {
-    id: 'l3', title: 'Keramika vaza dəsti', category: 'ev', price: 20, condition: 'Yeni kimi',
+    id: 'l3', title: 'Keramika vaza', category: 'ev', price: 20, condition: 'Yeni kimi',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
-    images: [img('1727684812941-0c8c1e4b3395'), img('1612196808214-b8e1d6145a8c')],
-    description: 'Əl işi, üç ölçüdə. Heç bir çat və ya qırıq yoxdur.',
+    images: ['/elanlar/keramika-vaza.jpg'],
+    description: 'Əl işi, üzərində çiçək naxışı var. Heç bir çat və ya qırıq yoxdur.',
     wants: ['ev', 'kitab'], wantsText: ['Kitab', 'Bitki', 'Təklifə açığam'], delivery: ['meet', 'courier'],
   },
   {
@@ -156,7 +156,7 @@ export const LISTINGS = [
   {
     id: 'l13', title: 'Damalı köynək', category: 'geyim', price: 15, condition: 'Yaxşı',
     district: 'Xətai', modes: ['sale', 'swap'], seller: 'u2', posted: '3 saat əvvəl', aspect: 'tall',
-    images: [img('1600247354058-a55b0f6fb720'), img('1434389677669-e08b4cac3105')],
+    images: ['/elanlar/damali-koynek.jpg'],
     description: 'M ölçü, bir neçə dəfə geyinilib, yuyulub ütülənib.',
     wants: ['geyim'], wantsText: ['Aksesuarlar'], delivery: ['meet', 'courier'],
   },
@@ -170,7 +170,7 @@ export const LISTINGS = [
   {
     id: 'l15', title: 'Mid-century masa lampası', category: 'ev', price: 30, condition: 'Çox yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: '1 gün əvvəl', aspect: 'square',
-    images: [img('1601578318413-af2284f10486'), img('1513506003901-1e6a229e2d15')],
+    images: ['/elanlar/masa-lampasi.jpg'],
     description: 'Mis detallı, isti işıq. Lampası daxildir.',
     wants: ['ev', 'kolleksiya'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
   },
@@ -195,7 +195,7 @@ LISTINGS.splice(1, 0,
   {
     id: 'l18', title: 'Yun palto — bej', category: 'geyim', price: 45, condition: 'Yaxşı',
     district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u2', posted: 'Bu gün', aspect: 'tall',
-    images: [img('1539533018447-63fcce2678e3'), img('1591047139829-d91aecb6caea')],
+    images: ['/elanlar/yun-palto.jpg'],
     description: 'M ölçü, isti və yüngül. Payız üçün ideal.',
     wants: ['geyim', 'canta'], wantsText: ['Çanta', 'Şərf', 'Çəkmə'], delivery: ['meet'],
   },
@@ -403,7 +403,7 @@ export const SECOND_CHANCE = [
     id: 's8', title: 'Dəri gödəkçə — astarı cırılıb', category: 'geyim', price: 0, condition: 'Təmir tələb edir',
     district: 'Yasamal', modes: ['free'], seller: 'u2', posted: '5 saat əvvəl', aspect: 'square', repair: 'Kiçik təmir',
     defect: 'İç astarı qolun altında cırılıb, dəri hissəsi salamatdır. Dərzi 1 saata düzəldər.',
-    images: [img('1559551409-dadc959f76b8')],
+    images: ['/elanlar/deri-godekce-2.jpg'],
     description: 'M ölçü. Mənə artıq kiçikdir, amma atmaq olmaz.',
     wants: [], wantsText: [], delivery: ['meet'],
   },
