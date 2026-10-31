@@ -121,7 +121,6 @@ export default function Home() {
       <section className="container block">
         <SectionHead
           title="Ən çox bəyənilənlər"
-          text="İnsanların ən çox seçilmişlərə əlavə etdiyi əşyalar."
           to="/ikinci-el?sort=likes"
           label="Hamısına bax"
         />
@@ -148,7 +147,7 @@ export default function Home() {
 
       {/* İKİNCİ ƏL */}
       <section className="container block">
-        <SectionHead title="İkinci əl" text="Yaxşı vəziyyətdə əşyalar — birbaşa sahibindən." to="/ikinci-el" label="Bütün satış elanları" />
+        <SectionHead title="İkinci əl" to="/ikinci-el" label="Bütün satış elanları" />
         <Rail>
           {sale.slice(0, 12).map((item) => (
             <div className="rail2-item" key={item.id}>
@@ -218,7 +217,7 @@ export default function Home() {
 
       {/* KOLLEKSİYALAR */}
       <section className="container block">
-        <SectionHead title="Kolleksiyalar" text="Mövzu ilə seçilmiş tapıntılar." to="/kolleksiyalar" label="Bütün kolleksiyalar" />
+        <SectionHead title="Kolleksiyalar" to="/kolleksiyalar" label="Bütün kolleksiyalar" />
         <div className="col-grid">
           {CURATED.slice(0, 6).map((c) => {
             const items = listings.filter(c.match)

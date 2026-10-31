@@ -170,7 +170,6 @@ export default function Collections() {
         <div>
           <span className="coll3-eyebrow">Seçilmiş toplular</span>
           <h1 className="page-title">Kolleksiyalar</h1>
-          <p className="coll3-lead">Mövzu üzrə seçilmiş tapıntılar — evin, qarderobun və hobbilərin üçün.</p>
         </div>
         <button className="btn btn-primary" onClick={() => requireAuth() && setCreating(true)}>
           <Plus size={16} /> Kolleksiya yarat
