@@ -108,7 +108,6 @@ export default function MyListings() {
             <span className="mine-add-icon"><s.icon size={20} strokeWidth={1.6} /></span>
             <span>
               <strong>+ {s.add}</strong>
-              <small>{s.text}</small>
             </span>
           </Link>
         ))}
