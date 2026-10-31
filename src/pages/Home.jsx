@@ -40,10 +40,6 @@ function Hero() {
             <br />
             ikinci həyat ver.
           </h1>
-          <p className="hero4-text">
-            Evində istifadə etmədiyin əşyanı sat, dəyiş və ya düzəldə bilən birinə ver. Başqasının əşyası isə sənin
-            yeni sevimlin ola bilər.
-          </p>
           <div className="hero4-ctas">
             <Link to="/ikinci-el" className="btn btn-primary btn-lg">
               Kəşfə başla
