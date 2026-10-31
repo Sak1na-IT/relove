@@ -98,7 +98,7 @@ export const LISTINGS = [
   {
     id: 'l5', title: 'Taxta çərçivəli kreslo', category: 'ev', price: 150, condition: 'Yaxşı',
     district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u4', posted: '3 gün əvvəl', aspect: 'wide',
-    images: [img('1515694207715-2046efc1968d'), img('1555041469-a586c61ea9bc')],
+    images: ['/elanlar/kreslo.jpg'],
     description: 'Rahat, dayanıqlı. Köçdüyümüz üçün yer qalmayıb.',
     story: 'Bütün qış axşamlarımın kitab küncü idi.',
     wants: ['ev', 'kitab'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
@@ -114,8 +114,8 @@ export const LISTINGS = [
   {
     id: 'l7', title: 'Nike Air Max 90', category: 'ayaqqabi', price: 45, condition: 'Çox yaxşı',
     district: 'Binəqədi', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'square',
-    images: [img('1650012897087-72dc44c28cb3'), img('1600185365483-26d7a4cc7519')],
-    description: '42 ölçü, cəmi bir neçə dəfə geyinilib.',
+    images: ['/elanlar/nike-air-max.jpg'],
+    description: '38 ölçü, cəmi bir neçə dəfə geyinilib. Qutusu ilə.',
     wants: ['ayaqqabi', 'idman'], wantsText: ['Başqa ölçü krossovka', 'Fitnes əşyaları'], delivery: ['meet', 'courier'],
   },
   {
@@ -126,10 +126,10 @@ export const LISTINGS = [
     wants: ['elektronika', 'kitab'], wantsText: ['Qulaqlıq', 'Musiqi kitabları'], delivery: ['meet'],
   },
   {
-    id: 'l9', title: 'Retro plyonka fotoaparatı', category: 'kolleksiya', price: 70, condition: 'Yaxşı',
+    id: 'l9', title: 'Kodak Ektar H35 plyonka fotoaparatı', category: 'kolleksiya', price: 70, condition: 'Yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
-    images: [img('1686773564048-9cf6a6608f12'), img('1495121553079-4c61bcce1894')],
-    description: '1970-ci illər. İşlək vəziyyətdədir, yeni plyonka ilə yoxlanılıb.',
+    images: ['/elanlar/kodak-plyonka.jpg'],
+    description: 'Yarım kadrlı plyonka fotoaparatı, bir plyonkadan 72 kadr çıxır. İşlək vəziyyətdədir, yeni plyonka ilə yoxlanılıb.',
     wants: ['kolleksiya', 'elektronika'], wantsText: ['Vinil plastinkalar', 'Köhnə saatlar'], delivery: ['meet', 'courier'],
   },
   {
@@ -142,15 +142,15 @@ export const LISTINGS = [
   {
     id: 'l11', title: 'Uşaq taxta oyuncaq dəsti', category: 'usaq', price: 12, condition: 'Çox yaxşı',
     district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u3', posted: '6 saat əvvəl', aspect: 'square',
-    images: [img('1515488042361-ee00e0ddd4e4'), img('1558060370-d644479cb6f7')],
-    description: 'Ekoloji taxtadan, 20+ hissə. Uşaqlar böyüdü — başqa balaca əllərə getsin.',
+    images: ['/elanlar/taxta-oyuncaq.jpg'],
+    description: 'Taxta mətbəx dəsti: taxta lövhə, bıçaq, qaşıq, fincanlar və meyvələr. Uşaqlar böyüdü — başqa balaca əllərə getsin.',
     wants: ['usaq', 'kitab'], wantsText: ['Uşaq kitabları', 'Konstruktor'], delivery: ['meet'],
   },
   {
-    id: 'l12', title: 'MacBook Air M1', category: 'elektronika', price: 850, condition: 'Çox yaxşı',
+    id: 'l12', title: 'MacBook Air M2', category: 'elektronika', price: 1350, condition: 'Çox yaxşı',
     district: 'Nəsimi', modes: ['sale'], seller: 'u1', posted: 'Bu gün', aspect: 'wide',
-    images: [img('1517336714731-489689fd1ca8'), img('1611186871348-b1ce696e52c9')],
-    description: '8GB / 256GB, batareya 91%. Qutusu ilə.',
+    images: ['/elanlar/macbook-air.jpg'],
+    description: 'Midnight rəngi, 8GB / 256GB, batareya 94%. Qutusu və şarj cihazı ilə.',
     wants: [], wantsText: [], delivery: ['meet'],
   },
   {
@@ -163,7 +163,7 @@ export const LISTINGS = [
   {
     id: 'l14', title: 'Monstera bitkisi və saksı', category: 'ev', price: 15, condition: 'Yeni kimi',
     district: 'Nizami', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'tall',
-    images: [img('1614594975525-e45190c55d0b'), img('1485955900006-10f4d324d411')],
+    images: ['/elanlar/monstera.jpg'],
     description: 'Çox böyüdü, evə sığmır. Qayğı ilə baxacaq birini axtarır.',
     wants: [], wantsText: [], delivery: ['meet'],
   },
@@ -177,8 +177,8 @@ export const LISTINGS = [
   {
     id: 'l16', title: 'Ağıllı saat', category: 'elektronika', price: 80, condition: 'Yaxşı',
     district: 'Binəqədi', modes: ['sale', 'swap'], seller: 'u3', posted: '2 gün əvvəl', aspect: 'square',
-    images: [img('1677515238008-8a013fcf577b'), img('1546868871-7041f2a55e12')],
-    description: 'İki qayışla birlikdə. Ekran qoruyucusu var.',
+    images: ['/elanlar/agilli-saat.jpg'],
+    description: 'Qutusu ilə, dörd qayış və şarj kabeli daxildir. Ekran qoruyucusu var.',
     wants: ['elektronika'], wantsText: ['Qulaqlıq', 'Planşet'], delivery: ['meet', 'courier'],
   },
 ]
