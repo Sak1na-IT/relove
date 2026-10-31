@@ -55,20 +55,46 @@ export default function Swap() {
     const pairs = []
     mySwap.forEach((mine) =>
       open.forEach((theirs) => {
-        // paltar paltarla, ev əşyası ev əşyası ilə
+        // paltar paltarla, ev əşyası ev əşyası ilə; eyni növ əşya (hudi↔hudi) cütləşmir
         if (isFashion(mine) !== isFashion(theirs)) return
+        if (mine.sub && mine.sub === theirs.sub) return
+        if (mine.category === 'kitab' && theirs.category === 'kitab') return
+        if (isFashion(mine) && (mine.dept === 'usaq') !== (theirs.dept === 'usaq')) return
         if (theirs.wants.includes(mine.category) && mine.wants.includes(theirs.category)) {
           const diff = Math.abs(theirs.price - mine.price) / Math.max(theirs.price, mine.price, 1)
           pairs.push({ mine, theirs, score: 100 - Math.min(40, Math.round(diff * 60)) })
         }
       }),
     )
-    const seen = new Set()
-    const uniq = pairs.sort((a, b) => b.score - a.score).filter((p) => !seen.has(p.theirs.id) && seen.add(p.theirs.id))
-    // 10 geyim + 10 ev/hobbi əşyası
-    const wear = uniq.filter((p) => isFashion(p.theirs)).slice(0, 10)
-    const rest = uniq.filter((p) => !isFashion(p.theirs)).slice(0, 10)
-    return [...wear, ...rest]
+    // hər qrupdan 10 cüt; öz əşyaların növbə ilə paylanır ki, eyni əşya təkrarlanmasın
+    const taken = new Set()
+    const used = new Map()
+    const pick = (group) => {
+      const out = []
+      const cands = pairs.filter((p) => group(p.theirs))
+      while (out.length < 10) {
+        let best = null
+        for (const p of cands) {
+          if (taken.has(p.theirs.id)) continue
+          const u = used.get(p.mine.id) || 0
+          if (!best || u < best.u || (u === best.u && p.score > best.p.score)) best = { p, u }
+        }
+        if (!best) break
+        out.push(best.p)
+        taken.add(best.p.theirs.id)
+        used.set(best.p.mine.id, best.u + 1)
+      }
+      return out
+    }
+    const wear = pick(isFashion)
+    const rest = pick((l) => !isFashion(l))
+    // geyim və ev əşyaları növbə ilə
+    const mixed = []
+    for (let i = 0; i < Math.max(wear.length, rest.length); i++) {
+      if (wear[i]) mixed.push(wear[i])
+      if (rest[i]) mixed.push(rest[i])
+    }
+    return mixed
   }, [mySwap, open])
 
   const newIncoming = incoming.filter((o) => o.status === 'pending').length

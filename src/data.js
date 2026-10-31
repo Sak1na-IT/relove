@@ -151,7 +151,7 @@ export const LISTINGS = [
     district: 'Xətai', modes: ['sale', 'swap'], seller: 'u3', posted: '5 saat əvvəl', aspect: 'square',
     images: [img('1673056922463-8c4639755cab'), img('1484704849700-f032a568e944')],
     description: 'Səs-küy azaltma mükəmməl işləyir. Çantası və kabelləri ilə.',
-    wants: ['elektronika', 'idman', 'ev'], wantsText: ['Ağıllı saat', 'Velosiped aksesuarları'], delivery: ['meet'],
+    wants: ['elektronika', 'idman', 'ev', 'kitab'], wantsText: ['Ağıllı saat', 'Velosiped aksesuarları'], delivery: ['meet'],
   },
   {
     id: 'l5', title: 'Taxta çərçivəli kreslo', category: 'ev', price: 150, condition: 'Yaxşı',
@@ -188,14 +188,14 @@ export const LISTINGS = [
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: 'Dünən', aspect: 'square',
     images: ['/elanlar/kodak-plyonka.jpg'],
     description: 'Yarım kadrlı plyonka fotoaparatı, bir plyonkadan 72 kadr çıxır. İşlək vəziyyətdədir, yeni plyonka ilə yoxlanılıb.',
-    wants: ['kolleksiya', 'elektronika', 'ev'], wantsText: ['Vinil plastinkalar', 'Köhnə saatlar'], delivery: ['meet', 'courier'],
+    wants: ['kolleksiya', 'elektronika', 'ev', 'kitab'], wantsText: ['Vinil plastinkalar', 'Köhnə saatlar'], delivery: ['meet', 'courier'],
   },
   {
     id: 'l10', title: 'Şəhər velosipedi', category: 'idman', price: 130, condition: 'Yaxşı',
     district: 'Nərimanov', modes: ['sale', 'swap'], seller: 'u5', posted: '2 gün əvvəl', aspect: 'wide',
     images: [img('1631443412966-2a2ab5e18c3b'), img('1507035895480-2b3156c31fc8')],
     description: '28 təkər, 7 sürət. Təkərlər yenidir.',
-    wants: ['elektronika', 'idman', 'ev'], wantsText: ['Elektrik skuter', 'Qulaqlıq'], delivery: ['meet'],
+    wants: ['elektronika', 'idman', 'ev', 'kitab'], wantsText: ['Elektrik skuter', 'Qulaqlıq'], delivery: ['meet'],
   },
   {
     id: 'l11', title: 'Uşaq taxta oyuncaq dəsti', category: 'usaq', price: 12, condition: 'Çox yaxşı',
@@ -223,21 +223,21 @@ export const LISTINGS = [
     district: 'Nizami', modes: ['sale', 'swap'], seller: 'u5', posted: 'Bu gün', aspect: 'tall',
     images: ['/elanlar/monstera.jpg'],
     description: 'Çox böyüdü, evə sığmır. Qayğı ilə baxacaq birini axtarır.',
-    wants: ['ev', 'elektronika'], wantsText: [], delivery: ['meet'],
+    wants: ['ev', 'elektronika', 'kitab'], wantsText: [], delivery: ['meet'],
   },
   {
     id: 'l15', title: 'Mid-century masa lampası', category: 'ev', price: 30, condition: 'Çox yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: '1 gün əvvəl', aspect: 'square',
     images: ['/elanlar/masa-lampasi.jpg'],
     description: 'Mis detallı, isti işıq. Lampası daxildir.',
-    wants: ['ev', 'kolleksiya', 'elektronika'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
+    wants: ['ev', 'kolleksiya', 'elektronika', 'kitab'], wantsText: ['Vinil', 'Keramika'], delivery: ['meet'],
   },
   {
     id: 'l16', title: 'Ağıllı saat', category: 'elektronika', price: 80, condition: 'Yaxşı',
     district: 'Binəqədi', modes: ['sale', 'swap'], seller: 'u3', posted: '2 gün əvvəl', aspect: 'square',
     images: ['/elanlar/agilli-saat.jpg'],
     description: 'Qutusu ilə, dörd qayış və şarj kabeli daxildir. Ekran qoruyucusu var.',
-    wants: ['elektronika', 'ev'], wantsText: ['Qulaqlıq', 'Planşet'], delivery: ['meet', 'courier'],
+    wants: ['elektronika', 'ev', 'kitab'], wantsText: ['Qulaqlıq', 'Planşet'], delivery: ['meet', 'courier'],
   },
 ]
 
@@ -829,6 +829,41 @@ export const MY_ITEMS = [
     description: 'Səs-küy azaltma ilə. Qutusu var.',
     wants: ['elektronika', 'kolleksiya', 'idman'], wantsText: ['Fotoaparat', 'Planşet', 'Gitara'], delivery: ['meet'],
   },
+  {
+    id: 'm6', title: 'Krem rəngli bluz', category: 'geyim', price: 18, condition: 'Çox yaxşı',
+    district: 'Yasamal', modes: ['sale', 'swap'], seller: 'me', posted: '4 gün əvvəl', aspect: 'tall',
+    images: [img('1558769132-cb1aea458c5e')],
+    description: 'Ölçü: S. Yüngül pambıq, ütülənmiş vəziyyətdə.',
+    wants: ['geyim', 'ayaqqabi'], wantsText: ['Şalvar', 'Loafer'], delivery: ['meet'],
+  },
+  {
+    id: 'm7', title: 'Qara-ağ fermuarlı gödəkçə', category: 'geyim', price: 35, condition: 'Yaxşı',
+    district: 'Yasamal', modes: ['swap'], seller: 'me', posted: '5 gün əvvəl', aspect: 'tall',
+    images: [img('1596832772762-78e213deff5f')],
+    description: 'Ölçü: M. Yüngül, idman üslubu. Fermuarı işləyir.',
+    wants: ['geyim', 'canta'], wantsText: ['Sviter', 'Çanta'], delivery: ['meet'],
+  },
+  {
+    id: 'm8', title: 'Kətan abajurlu masa lampası', category: 'ev', price: 30, condition: 'Çox yaxşı',
+    district: 'Yasamal', modes: ['swap'], seller: 'me', posted: '1 həftə əvvəl', aspect: 'tall',
+    images: [img('1630012974522-7e683def2ae5')],
+    description: 'Taxta ayaqlı, isti işıq. Lampası daxildir.',
+    wants: ['ev', 'kitab', 'usaq', 'idman'], wantsText: ['Vaza', 'Kitab', 'Bitki'], delivery: ['meet'],
+  },
+  {
+    id: 'm9', title: 'Plyonka SLR fotoaparatı', category: 'elektronika', price: 95, condition: 'Yaxşı',
+    district: 'Yasamal', modes: ['swap'], seller: 'me', posted: '6 gün əvvəl', aspect: 'tall',
+    images: [img('1520549233664-03f65c1d1327')],
+    description: 'Mexaniki, obyektivi təmizdir. Yoxlanılıb, işləyir.',
+    wants: ['elektronika', 'idman', 'ev'], wantsText: ['Qulaqlıq', 'Gitara', 'Kreslo'], delivery: ['meet'],
+  },
+  {
+    id: 'm10', title: 'Bədii kitab dəsti — 8 kitab', category: 'kitab', price: 20, condition: 'Yaxşı',
+    district: 'Yasamal', modes: ['swap'], seller: 'me', posted: '3 gün əvvəl', aspect: 'tall',
+    images: [img('1495446815901-a7297e633e8d')],
+    description: 'Roman və hekayələr, hamısı oxunub, səhifələri tamdır.',
+    wants: ['ev', 'usaq', 'kolleksiya', 'kitab'], wantsText: ['Lampa', 'Oyuncaq', 'Vinil'], delivery: ['meet'],
+  },
 ]
 
 export const CONVERSATIONS = [
@@ -943,7 +978,7 @@ const META = {
   l9: ['hobbi', 'Retro fotoaparat'], l10: ['hobbi', 'Velosiped'], l11: ['usaq', 'Taxta oyuncaq'],
   l12: ['elektronika', 'Noutbuk'], l13: ['qadin', 'Köynək və bluz'], l14: ['ev', 'Bitki'],
   l15: ['ev', 'Masa lampası'], l16: ['elektronika', 'Ağıllı saat'], l17: ['qadin', 'Bel çantası'],
-  l18: ['qadin', 'Palto və gödəkçə'], m1: ['kisi', 'Hudi'], m2: ['kisi', 'Palto və gödəkçə'], m3: ['kisi', 'Trikotaj'], m4: ['ev', 'Güzgü'], m5: ['elektronika', 'Qulaqlıq'],
+  l18: ['qadin', 'Palto və gödəkçə'], m1: ['kisi', 'Hudi'], m2: ['kisi', 'Palto və gödəkçə'], m3: ['kisi', 'Trikotaj'], m4: ['ev', 'Güzgü'], m5: ['elektronika', 'Qulaqlıq'], m6: ['qadin', 'Köynək və bluz'], m7: ['qadin', 'Palto və gödəkçə'], m8: ['ev', 'Masa lampası'], m9: ['hobbi', 'Retro fotoaparat'], m10: ['kitab', 'Roman'],
 }
 
 /* =========================================================
