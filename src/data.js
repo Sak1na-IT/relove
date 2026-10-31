@@ -185,11 +185,11 @@ export const LISTINGS = [
 
 LISTINGS.splice(1, 0,
   {
-    id: 'l17', title: 'Coach dəri çanta', category: 'canta', price: 70, condition: 'Çox yaxşı',
+    id: 'l17', title: 'Dəri bel çantası', category: 'canta', price: 70, condition: 'Yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: '1 saat əvvəl', aspect: 'square',
-    images: [img('1596100617872-e8239bfee5f8'), img('1584917865442-de89df76afd3')],
-    description: 'Orijinal, qəhvəyi dəri. Qoruyucu tozluğu ilə birlikdə.',
-    story: 'Ad günümdə hədiyyə almışdım, indi daha kiçik çantalara keçmişəm.',
+    images: [img('1596100617872-e8239bfee5f8')],
+    description: 'Təbii qəhvəyi dəri, iki ön cibi var. Bir az işlənib, kəmərləri möhkəmdir.',
+    story: 'Bir neçə səyahətə yoldaşlıq edib, indi daha kiçik çantaya keçmişəm.',
     wants: ['geyim', 'ayaqqabi'], wantsText: ['Palto', 'Çəkmə'], delivery: ['meet', 'courier'],
   },
   {
