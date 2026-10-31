@@ -67,7 +67,7 @@ export const LISTINGS = [
   {
     id: 'l1', title: 'Fujifilm X-T20 fotoaparat', category: 'elektronika', price: 520, condition: 'Çox yaxşı',
     district: 'Nərimanov', modes: ['sale', 'swap'], seller: 'u1', posted: '2 saat əvvəl', aspect: 'tall',
-    images: [img('1649023000556-f9c784ee48b1'), img('1502920917128-1aa500764cbd'), img('1510127034890-ba27508e9f1c')],
+    images: [img('1620288731039-5584e277e11f'), img('1502920917128-1aa500764cbd'), img('1510127034890-ba27508e9f1c')],
     description: '15-45mm obyektivlə birlikdə. Ekranında cızıq yoxdur, batareya yaxşı saxlayır. Qutusu və şarj cihazı var.',
     story: 'İki il səyahətlərimdə yanımda olub. İndi telefonla çəkirəm, onun daha çox çəkiliş görməsini istəyirəm.',
     wants: ['elektronika', 'kitab'], wantsText: ['Qulaqlıq', 'Planşet', 'Fotoaparat aksesuarları', 'Təklifə açıqdır'],
@@ -96,9 +96,9 @@ export const LISTINGS = [
     wants: ['elektronika', 'idman'], wantsText: ['Ağıllı saat', 'Velosiped aksesuarları'], delivery: ['meet'],
   },
   {
-    id: 'l5', title: 'Velur kreslo — zeytun yaşılı', category: 'ev', price: 150, condition: 'Yaxşı',
+    id: 'l5', title: 'Taxta çərçivəli kreslo', category: 'ev', price: 150, condition: 'Yaxşı',
     district: 'Yasamal', modes: ['sale', 'swap'], seller: 'u4', posted: '3 gün əvvəl', aspect: 'wide',
-    images: [img('1567538096630-e0c55bd6374c'), img('1555041469-a586c61ea9bc')],
+    images: [img('1515694207715-2046efc1968d'), img('1555041469-a586c61ea9bc')],
     description: 'Rahat, dayanıqlı. Köçdüyümüz üçün yer qalmayıb.',
     story: 'Bütün qış axşamlarımın kitab küncü idi.',
     wants: ['ev', 'kitab'], wantsText: ['Kitab rəfi', 'Döşəmə lampası'], delivery: ['meet'],
@@ -106,7 +106,7 @@ export const LISTINGS = [
   {
     id: 'l6', title: '12 kitablıq klassika kolleksiyası', category: 'kitab', price: 12, condition: 'Yaxşı',
     district: 'Nəsimi', modes: ['sale', 'swap'], seller: 'u2', posted: '1 saat əvvəl', aspect: 'tall',
-    images: [img('1544947950-fa07a98d237f'), img('1532012197267-da84d127e765')],
+    images: [img('1495446815901-a7297e633e8d'), img('1532012197267-da84d127e765')],
     description: 'Dostoyevski, Tolstoy, Sabahattin Əli və başqaları. Simvolik qiymətə — sadəcə yaxşı oxucuya getsin.',
     story: 'Bu kitabları universitet illərində almışam. İndi kitabxanamı yeniləyirəm.',
     wants: ['kitab', 'usaq'], wantsText: ['Başqa kitablar', 'Uşaq kitabları'], delivery: ['meet'],
@@ -121,7 +121,7 @@ export const LISTINGS = [
   {
     id: 'l8', title: 'Akustik gitara Yamaha', category: 'idman', price: 110, condition: 'Yaxşı',
     district: 'Xəzər', modes: ['swap'], seller: 'u1', posted: '4 gün əvvəl', aspect: 'tall',
-    images: [img('1510915361894-db8b60106cb1'), img('1525201548942-d8732f6617a0')],
+    images: [img('1608470639012-3b64ec3c61a2'), img('1525201548942-d8732f6617a0')],
     description: 'Simləri təzə dəyişilib. Futlyarı ilə birlikdə.',
     wants: ['elektronika', 'kitab'], wantsText: ['Qulaqlıq', 'Musiqi kitabları'], delivery: ['meet'],
   },
@@ -135,7 +135,7 @@ export const LISTINGS = [
   {
     id: 'l10', title: 'Şəhər velosipedi', category: 'idman', price: 130, condition: 'Yaxşı',
     district: 'Nərimanov', modes: ['sale', 'swap'], seller: 'u5', posted: '2 gün əvvəl', aspect: 'wide',
-    images: [img('1485965120184-e220f721d03e'), img('1507035895480-2b3156c31fc8')],
+    images: [img('1631443412966-2a2ab5e18c3b'), img('1507035895480-2b3156c31fc8')],
     description: '28 təkər, 7 sürət. Təkərlər yenidir.',
     wants: ['elektronika', 'idman'], wantsText: ['Elektrik skuter', 'Qulaqlıq'], delivery: ['meet'],
   },
@@ -154,10 +154,10 @@ export const LISTINGS = [
     wants: [], wantsText: [], delivery: ['meet'],
   },
   {
-    id: 'l13', title: 'Kətan yay köynəyi', category: 'geyim', price: 15, condition: 'Yeni kimi',
+    id: 'l13', title: 'Damalı köynək', category: 'geyim', price: 15, condition: 'Yaxşı',
     district: 'Xətai', modes: ['sale', 'swap'], seller: 'u2', posted: '3 saat əvvəl', aspect: 'tall',
-    images: [img('1591047139829-d91aecb6caea'), img('1434389677669-e08b4cac3105')],
-    description: 'S ölçü, etiketi üstündədir.',
+    images: [img('1600247354058-a55b0f6fb720'), img('1434389677669-e08b4cac3105')],
+    description: 'M ölçü, bir neçə dəfə geyinilib, yuyulub ütülənib.',
     wants: ['geyim'], wantsText: ['Aksesuarlar'], delivery: ['meet', 'courier'],
   },
   {
@@ -187,7 +187,7 @@ LISTINGS.splice(1, 0,
   {
     id: 'l17', title: 'Coach dəri çanta', category: 'canta', price: 70, condition: 'Çox yaxşı',
     district: 'Səbail', modes: ['sale', 'swap'], seller: 'u4', posted: '1 saat əvvəl', aspect: 'square',
-    images: [img('1614179689702-355944cd0918'), img('1584917865442-de89df76afd3')],
+    images: [img('1596100617872-e8239bfee5f8'), img('1584917865442-de89df76afd3')],
     description: 'Orijinal, qəhvəyi dəri. Qoruyucu tozluğu ilə birlikdə.',
     story: 'Ad günümdə hədiyyə almışdım, indi daha kiçik çantalara keçmişəm.',
     wants: ['geyim', 'ayaqqabi'], wantsText: ['Palto', 'Çəkmə'], delivery: ['meet', 'courier'],
