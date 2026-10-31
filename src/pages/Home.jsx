@@ -193,8 +193,7 @@ export default function Home() {
           <div className="sc-teaser-copy">
             <h2 className="h2">İkinci şans</h2>
             <p>
-              Sökülmüş şərf, laxlayan stul, bir tərəfi işləməyən qulaqlıq. Atma — paylaş. Kimsə onu düzəldib yenidən
-              istifadə edəcək.
+              Qüsurlu əşyanı atma — paylaş, kimsə onu düzəldəcək.
             </p>
             <div className="sc-teaser-ctas">
               <Link to="/ikinci-sans" className="btn btn-primary">İkinci şans əşyalarına bax</Link>
