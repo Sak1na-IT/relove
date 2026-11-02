@@ -100,10 +100,10 @@ export default function Swap() {
   const newIncoming = incoming.filter((o) => o.status === 'pending').length
 
   const TABS = [
-    { id: 'all', label: 'Dəyiş elanları', count: open.length },
-    { id: 'match', label: 'Sənə uyğun', count: matches.length },
-    { id: 'mine', label: 'Mənim dəyiş elanlarım', count: mySwap.length },
-    { id: 'offers', label: 'Təkliflər', count: offers.length + incoming.length, dot: newIncoming > 0 },
+    { id: 'all', label: 'Dəyiş elanları', short: 'Hamısı', count: open.length },
+    { id: 'match', label: 'Sənə uyğun', short: 'Uyğun', count: matches.length },
+    { id: 'mine', label: 'Mənim dəyiş elanlarım', short: 'Mənim', count: mySwap.length },
+    { id: 'offers', label: 'Təkliflər', short: 'Təkliflər', count: offers.length + incoming.length, dot: newIncoming > 0 },
   ]
 
   const go = (id) => {
@@ -139,7 +139,9 @@ export default function Swap() {
         <div className="tabs2 tabs2-big" role="tablist">
           {TABS.map((t) => (
             <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'is-on' : ''} onClick={() => setTab(t.id)}>
-              {t.label} <em>{t.count}</em>
+              <span className="tab-long">{t.label}</span>
+              <span className="tab-short">{t.short}</span>
+              <em>{t.count}</em>
               {t.dot && <span className="tab-dot" aria-label="Yeni təklif" />}
             </button>
           ))}

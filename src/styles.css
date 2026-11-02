@@ -13489,3 +13489,82 @@ body {
     overscroll-behavior: contain;
   }
 }
+
+/* Dəyiş-düyüş bölmələri: qısa ad yalnız telefonda */
+.tab-short {
+  display: none;
+}
+
+/*
+ * TELEFON: Dəyiş-düyüş bölmələri seçici (segment) kimi:
+ * yumşaq yaşıl qutuda dörd bərabər hissə, seçilən ağ
+ */
+@media (max-width: 640px) {
+  html body .tabs2-big .tab-long {
+    display: none;
+  }
+
+  html body .tabs2-big .tab-short {
+    display: inline;
+  }
+
+  html body .tabs2-big {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    margin: 0 0 14px;
+    padding: 4px;
+    overflow: visible;
+    border: 0;
+    border-radius: 14px;
+    background: var(--lime);
+  }
+
+  html body .tabs2-big button {
+    position: relative;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    height: 36px;
+    padding: 0 4px;
+    border-radius: 10px;
+    color: var(--ink-2);
+    font-size: 12.5px;
+    font-weight: 600;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+
+  html body .tabs2-big button::after {
+    display: none;
+  }
+
+  html body .tabs2-big button em {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  html body .tabs2-big button.is-on {
+    background: var(--white);
+    color: var(--forest);
+    box-shadow: 0 3px 10px -4px rgba(31, 61, 51, 0.35);
+  }
+
+  html body .tabs2-big button.is-on em {
+    color: var(--forest);
+  }
+
+  html body .tabs2-big .tab-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+  }
+
+  html body .tab-intro {
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
