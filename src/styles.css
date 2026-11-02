@@ -12428,34 +12428,65 @@ body {
     font-size: 13.5px;
   }
 
-  /* Ana səhifə: başlıq → şəkil → düymələr → üstünlüklər */
+  /* Ana səhifə: kompüterdəki kimi şəkil arxa fonda, yazı üstündə */
   html body .hero4 {
-    padding: 22px 0 4px;
+    position: relative;
+    display: block;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    isolation: isolate;
   }
 
   html body .hero4-inner,
   html body .hero4-copy {
-    display: contents;
+    display: block;
   }
 
-  html body .hero4-title {
-    order: 1;
-    margin: 0 var(--m-gutter);
-    font-size: 38px;
-    line-height: 1.02;
+  html body .hero4-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px var(--m-gutter) 30px;
   }
 
   html body .hero4-media {
-    order: 2;
-    height: 170px;
-    margin: 16px var(--m-gutter) 0;
-    border-radius: 18px;
-    overflow: hidden;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
   }
 
-  html body .hero4-ctas {
-    order: 3;
-    margin: 16px var(--m-gutter) 0;
+  html body .hero4-media .img {
+    object-position: 68% center;
+  }
+
+  /* Başlıq və düymələr oxunsun, ortada geyimlər aydın görünsün */
+  html body .hero4-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    background: linear-gradient(
+      180deg,
+      rgba(246, 243, 236, 0.93) 0%,
+      rgba(246, 243, 236, 0.72) 26%,
+      rgba(246, 243, 236, 0.08) 50%,
+      rgba(246, 243, 236, 0.25) 72%,
+      rgba(246, 243, 236, 0.85) 100%
+    );
+  }
+
+  html body .hero4-title {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.02;
+  }
+
+  html body .hero4-ctas,
+  html body .hero4-title + .hero4-ctas {
+    margin: 150px 0 0;
     gap: 8px;
   }
 
@@ -12464,9 +12495,12 @@ body {
     font-size: 14.5px;
   }
 
+  html body .hero4-ctas .btn-ghost {
+    background: rgba(246, 243, 236, 0.92);
+  }
+
   html body .hero4-features {
-    order: 4;
-    margin: 14px var(--m-gutter) 0;
+    margin: 14px 0 0;
     justify-content: space-between;
     gap: 6px 10px;
   }
