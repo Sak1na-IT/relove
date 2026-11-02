@@ -13599,3 +13599,152 @@ body {
     font-size: 13px;
   }
 }
+
+/*
+ * TELEFON: kateqoriya düyməsində yazı kənara çıxmasın,
+ * İkinci şans bannerı yığcam, giriş səhifəsi telefona uyğun
+ */
+@media (max-width: 640px) {
+  /* "Hamısı" birinci düymədir: hər iki tərəfdə eyni boşluq */
+  html body .topcat-bar .topcat-tab {
+    padding: 0 14px;
+  }
+
+  /* ----- İkinci şans: yaşıl hissə qısa ----- */
+  html body .sc-hero {
+    margin-bottom: 16px;
+    padding: 20px 0 18px;
+  }
+
+  html body .sc-hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  html body .sc-title {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+
+  html body .sc-lead {
+    display: -webkit-box;
+    margin: 8px 0 14px;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  html body .sc-hero-ctas {
+    gap: 14px;
+  }
+
+  html body .sc-hero-ctas .btn {
+    height: 38px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  html body .sc-hero-link {
+    font-size: 13px;
+  }
+
+  /* Üç addım: yalnız ikon və başlıq, bir blokda */
+  html body .sc-steps {
+    width: 100%;
+    gap: 0;
+    padding: 4px 12px;
+    border: 1px solid rgba(246, 243, 236, 0.12);
+    border-radius: 16px;
+    background: rgba(246, 243, 236, 0.06);
+  }
+
+  html body .sc-steps li {
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  html body .sc-steps li + li {
+    border-top: 1px solid rgba(246, 243, 236, 0.1);
+  }
+
+  html body .sc-steps svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  html body .sc-steps strong {
+    font-size: 13.5px;
+  }
+
+  html body .sc-steps p {
+    display: none;
+  }
+
+  /* ----- Giriş və qeydiyyat ----- */
+  html body .auth {
+    display: block;
+    min-height: 0;
+    padding-top: 18px;
+    padding-bottom: 24px;
+  }
+
+  html body .auth-card {
+    width: 100%;
+    padding: 22px 18px 20px;
+    border-radius: 20px;
+  }
+
+  html body .auth-eyebrow {
+    margin-bottom: 4px;
+    font-size: 10.5px;
+  }
+
+  html body .auth-title {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+
+  html body .auth-lead {
+    margin: 6px 0 18px;
+    font-size: 13px;
+  }
+
+  html body .auth-form {
+    gap: 12px;
+  }
+
+  html body .auth-form .field > span {
+    margin-bottom: 6px;
+    font-size: 12.5px;
+  }
+
+  html body .auth-form input {
+    height: 46px;
+    font-size: 15px;
+  }
+
+  html body .auth-form .btn {
+    height: 46px;
+    margin-top: 4px;
+    font-size: 14.5px;
+  }
+
+  html body .auth-demo {
+    margin-top: 12px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  html body .auth-switch {
+    margin-top: 14px;
+    font-size: 13px;
+  }
+}
