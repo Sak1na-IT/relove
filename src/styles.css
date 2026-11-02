@@ -12446,7 +12446,7 @@ body {
   html body .hero4-inner {
     position: relative;
     z-index: 1;
-    padding: 40px var(--m-gutter) 30px;
+    padding: 56px var(--m-gutter) 20px;
   }
 
   html body .hero4-media {
@@ -12470,29 +12470,29 @@ body {
     display: block;
     background: linear-gradient(
       180deg,
-      rgba(246, 243, 236, 0.93) 0%,
-      rgba(246, 243, 236, 0.72) 26%,
-      rgba(246, 243, 236, 0.08) 50%,
-      rgba(246, 243, 236, 0.25) 72%,
-      rgba(246, 243, 236, 0.85) 100%
+      rgba(246, 243, 236, 0.94) 0%,
+      rgba(246, 243, 236, 0.84) 40%,
+      rgba(246, 243, 236, 0.12) 62%,
+      rgba(246, 243, 236, 0.3) 78%,
+      rgba(246, 243, 236, 0.86) 100%
     );
   }
 
   html body .hero4-title {
     margin: 0;
-    font-size: 40px;
-    line-height: 1.02;
+    font-size: 34px;
+    line-height: 1.04;
   }
 
   html body .hero4-ctas,
   html body .hero4-title + .hero4-ctas {
-    margin: 150px 0 0;
+    margin: 84px 0 0;
     gap: 8px;
   }
 
   html body .hero4-ctas .btn {
-    height: 46px;
-    font-size: 14.5px;
+    height: 42px;
+    font-size: 14px;
   }
 
   html body .hero4-ctas .btn-ghost {
@@ -12500,7 +12500,7 @@ body {
   }
 
   html body .hero4-features {
-    margin: 14px 0 0;
+    margin: 12px 0 0;
     justify-content: space-between;
     gap: 6px 10px;
   }
