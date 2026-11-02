@@ -13568,3 +13568,34 @@ body {
     line-height: 1.5;
   }
 }
+
+/* "Sənə uyğun" boş olanda izah və düymə */
+.match2-empty {
+  padding: 40px 20px;
+  border-radius: 20px;
+  background: var(--mint);
+}
+
+.match2-empty p {
+  max-width: 360px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.match2-empty .btn {
+  margin-top: 6px;
+}
+
+@media (max-width: 640px) {
+  html body .match2-empty {
+    padding: 26px 18px;
+  }
+
+  html body .match2-empty h3 {
+    font-size: 22px;
+  }
+
+  html body .match2-empty p {
+    font-size: 13px;
+  }
+}

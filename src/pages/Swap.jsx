@@ -162,6 +162,15 @@ export default function Swap() {
         {tab === 'match' && (
           <>
             <p className="tab-intro">Sənin dəyiş elanlarınla qarşılıqlı maraq olan əşyalar. Hər iki tərəf bir-birinin əşyasını axtarır.</p>
+            {matches.length === 0 && (
+              <div className="empty match2-empty">
+                <h3>Hələ uyğun əşya yoxdur</h3>
+                <p>Dəyiş elanı yerləşdir, əvəzində nə istədiyini yaz. Səninlə qarşılıqlı maraqlı əşyalar burada çıxacaq.</p>
+                <Link to="/paylas?mode=swap" className="btn btn-primary btn-sm">
+                  <Plus size={16} /> Dəyiş elanı yerləşdir
+                </Link>
+              </div>
+            )}
             <div className="match2-grid">
               {matches.map(({ mine, theirs, score }) => (
                 <article key={theirs.id} className="match2">
