@@ -13060,3 +13060,195 @@ body {
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
+
+/*
+ * TELEFON: elan siyahıları (İkinci əl, Dəyiş-düyüş, İkinci şans)
+ * Başlıq və düymə bir sırada, filtrlər bir sırada,
+ * kartlar sadə: şəkil, ad, qiymət, ərazi.
+ */
+@media (max-width: 640px) {
+  /* Başlıq solda, "elan yerləşdir" sağda kiçik düymə */
+  html body .section-page {
+    padding-top: 14px;
+  }
+
+  html body .section-page-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+    text-align: left;
+  }
+
+  html body .section-page-head > div {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  html body .section-page-head .page-title {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.05;
+  }
+
+  html body .section-page-head .page-lead {
+    display: none;
+  }
+
+  html body .section-page-head > .btn {
+    flex: 0 0 auto;
+    height: 36px;
+    margin: 0;
+    padding: 0 12px;
+    gap: 6px;
+    font-size: 12.5px;
+  }
+
+  html body .section-page-head > .btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Axtarış */
+  html body .browse4-search {
+    margin-bottom: 10px;
+  }
+
+  html body .browse4-search .browse-search {
+    height: 44px;
+    margin-bottom: 0;
+    padding: 0 14px;
+    border-radius: 14px;
+  }
+
+  html body .browse4-search .browse-search input {
+    font-size: 14px;
+  }
+
+  /* Kateqoriyalar: kiçik, yana sürüşən */
+  html body .topcat {
+    margin-bottom: 4px;
+  }
+
+  html body .topcat-tab {
+    height: 40px;
+    padding: 0 10px;
+    font-size: 14.5px;
+  }
+
+  /* Say, Qiymət, Ərazi, Sıralama: hamısı bir sırada */
+  html body .browse-toolbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 6px;
+    margin: 10px 0 14px;
+    padding: 0;
+    border: 0;
+  }
+
+  html body .browse-toolbar .browse-filters {
+    display: flex;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 6px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  html body .browse-count {
+    margin-right: 2px;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  html body .browse-toolbar .filter-sort-wrap {
+    flex: 0 0 auto;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+  }
+
+  html body .browse-toolbar .filter-sort-wrap > span {
+    display: none;
+  }
+
+  html body .browse-toolbar .dd-btn {
+    height: 34px;
+    padding: 0 10px;
+    gap: 4px;
+    font-size: 12.5px;
+  }
+
+  html body .browse-toolbar .dd-chev {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* Sıralama sağdadır: menyusu ekrandan çıxmasın */
+  html body .browse-toolbar .filter-sort-wrap .dd-menu {
+    right: 0;
+    left: auto;
+  }
+
+  html body .browse-toolbar .dd-menu {
+    min-width: 190px;
+  }
+
+  /* Kartlar */
+  html body .browse-grid {
+    gap: 18px 10px;
+  }
+
+  html body .browse-grid .card-media {
+    border-radius: 14px;
+  }
+
+  html body .browse-grid .card-heart {
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Kolleksiya düyməsi elan səhifəsində var, kartda qarışıqlıq yaratmasın */
+  html body .browse-grid .card-collect {
+    display: none;
+  }
+
+  html body .browse-grid .card-badges {
+    left: 8px;
+    bottom: 8px;
+    gap: 4px;
+  }
+
+  html body .browse-grid .tag {
+    padding: 3px 7px;
+    font-size: 10px;
+  }
+
+  html body .browse-grid .card-body {
+    gap: 2px;
+    padding-top: 8px;
+  }
+
+  html body .browse-grid .card-title {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  html body .browse-grid .card-price {
+    font-size: 15px;
+  }
+
+  html body .browse-grid .card-meta {
+    gap: 8px;
+    font-size: 11.5px;
+  }
+}
