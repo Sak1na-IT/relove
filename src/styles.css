@@ -13256,7 +13256,8 @@ body {
 /* TELEFON: siyahılarda şəkillər Trendyol kimi şaquli düzbucaqlı (3:4) */
 @media (max-width: 640px) {
   html body .browse-grid .card-media,
-  html body .browse-grid .swapcard-media {
+  html body .swap2-grid .swapcard-media,
+  html body .sc-grid .sc-card-media {
     aspect-ratio: 3 / 4;
   }
 }
