@@ -12399,3 +12399,185 @@ body {
     scroll-padding-inline: var(--m-gutter);
   }
 }
+
+/*
+ * TELEFON GÖRÜNÜŞÜ: yığcam və rahat
+ * - yuxarı panel: "Daxil ol" sağ kənarda
+ * - ana səhifə: başlığın altında şəkil, sonra düymələr
+ * - şəkillər alçaq (kvadrat), kartlar kiçik, bölmələr arası məsafə az
+ */
+@media (max-width: 640px) {
+  /* Yuxarı panel: loqo solda, ikonlar və "Daxil ol" sağ kənarda */
+  html body .nav-inner {
+    gap: 8px;
+  }
+
+  html body .nav-actions {
+    margin-left: auto;
+    gap: 4px;
+  }
+
+  html body .nav-actions .icon-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  html body .nav-actions .btn {
+    height: 38px;
+    padding: 0 14px;
+    font-size: 13.5px;
+  }
+
+  /* Ana səhifə: başlıq → şəkil → düymələr → üstünlüklər */
+  html body .hero4 {
+    padding: 22px 0 4px;
+  }
+
+  html body .hero4-inner,
+  html body .hero4-copy {
+    display: contents;
+  }
+
+  html body .hero4-title {
+    order: 1;
+    margin: 0 var(--m-gutter);
+    font-size: 38px;
+    line-height: 1.02;
+  }
+
+  html body .hero4-media {
+    order: 2;
+    height: 170px;
+    margin: 16px var(--m-gutter) 0;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  html body .hero4-ctas {
+    order: 3;
+    margin: 16px var(--m-gutter) 0;
+    gap: 8px;
+  }
+
+  html body .hero4-ctas .btn {
+    height: 46px;
+    font-size: 14.5px;
+  }
+
+  html body .hero4-features {
+    order: 4;
+    margin: 14px var(--m-gutter) 0;
+    justify-content: space-between;
+    gap: 6px 10px;
+  }
+
+  html body .hero4-features li {
+    gap: 6px;
+    font-size: 12.5px;
+  }
+
+  /* Bölmələr */
+  html body .block {
+    padding-top: 32px;
+  }
+
+  html body .section-head {
+    margin-bottom: 14px;
+  }
+
+  html body .section-head .h2 {
+    font-size: 26px;
+  }
+
+  /* Ən çox bəyənilənlər: kiçik kvadrat kartlar */
+  html body .likes-card {
+    flex: 0 0 128px;
+    width: 128px;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  html body .likes-body,
+  html body .likes-text {
+    min-width: 0;
+  }
+
+  html body .likes-text strong {
+    display: block;
+    overflow: hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Yana sürüşən elan sırası */
+  html body .rail2-track {
+    gap: 10px;
+    grid-auto-columns: 144px;
+  }
+
+  html body .rail2-item {
+    flex: 0 0 144px;
+    width: 144px;
+  }
+
+  /* Elan şəkilləri: hündür yox, kvadrat */
+  html body .card-media,
+  html body .swapcard-media {
+    aspect-ratio: 1;
+  }
+
+  html body .card-body {
+    padding-top: 9px;
+  }
+
+  html body .card-title {
+    font-size: 13px;
+  }
+
+  /* Elan səhifəsi: əsas şəkil alçaq */
+  html body .gallery-main {
+    height: auto;
+    aspect-ratio: 6 / 5;
+  }
+
+  /* Dəyiş-düyüş bannerı */
+  html body .swap4 {
+    gap: 18px;
+    padding: 24px 18px 26px;
+    border-radius: 22px;
+  }
+
+  html body .swap4 .h2,
+  html body .swap4 h2 {
+    font-size: 26px;
+  }
+
+  html body .swap4-visual {
+    height: 150px;
+  }
+
+  html body .swap4-photo {
+    width: 108px;
+    height: auto;
+  }
+
+  /* Kolleksiyalar və İkinci şans */
+  html body .col-card {
+    flex: 0 0 132px;
+    width: 132px;
+  }
+
+  html body .col-card-media {
+    height: 96px;
+  }
+
+  html body .sc-teaser {
+    padding: 20px 16px;
+  }
+
+  html body .sc-teaser-photo {
+    width: 84px;
+    height: 84px;
+  }
+}
