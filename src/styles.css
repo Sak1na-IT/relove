@@ -12525,8 +12525,8 @@ body {
 
   /* Ən çox bəyənilənlər: kiçik kvadrat kartlar */
   html body .likes-card {
-    flex: 0 0 128px;
-    width: 128px;
+    flex: 0 0 150px;
+    width: 150px;
     min-width: 0;
     gap: 8px;
   }
@@ -12547,12 +12547,12 @@ body {
   /* Yana sürüşən elan sırası */
   html body .rail2-track {
     gap: 10px;
-    grid-auto-columns: 144px;
+    grid-auto-columns: 168px;
   }
 
   html body .rail2-item {
-    flex: 0 0 144px;
-    width: 144px;
+    flex: 0 0 168px;
+    width: 168px;
   }
 
   /* Elan şəkilləri: hündür yox, kvadrat */
@@ -12610,12 +12610,12 @@ body {
 
   /* Kolleksiyalar və İkinci şans */
   html body .col-card {
-    flex: 0 0 132px;
-    width: 132px;
+    flex: 0 0 150px;
+    width: 150px;
   }
 
   html body .col-card-media {
-    height: 96px;
+    height: 112px;
   }
 
   html body .sc-teaser {
