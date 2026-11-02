@@ -12363,3 +12363,39 @@ body {
     margin-top: 28px;
   }
 }
+
+/*
+ * TELEFON: VAHİD YAN BOŞLUQ
+ * Loqo, başlıqlar və kartlar hər telefonda ekranın kənarından eyni
+ * məsafədə (12px) dursun. Kənara qədər sürüşən zolaqlar da bu boşluğa uyğundur.
+ */
+@media (max-width: 640px) {
+  :root {
+    --m-gutter: 12px;
+  }
+
+  html body .container {
+    padding-left: var(--m-gutter);
+    padding-right: var(--m-gutter);
+  }
+
+  html body .cat-row,
+  html body .collections-strip,
+  html body .filters,
+  html body .cat-cards,
+  html body .col-grid,
+  html body .filter-group,
+  html body .cat-chips,
+  html body .explore2-filters,
+  html body .dept-tiles,
+  html body .browse-filters,
+  html body .sub-pills,
+  html body .topcat-subs,
+  html body .likes-row {
+    margin-left: calc(-1 * var(--m-gutter));
+    margin-right: calc(-1 * var(--m-gutter));
+    padding-left: var(--m-gutter);
+    padding-right: var(--m-gutter);
+    scroll-padding-inline: var(--m-gutter);
+  }
+}
