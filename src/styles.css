@@ -13252,3 +13252,11 @@ body {
     font-size: 11.5px;
   }
 }
+
+/* TELEFON: siyahılarda şəkillər Trendyol kimi şaquli düzbucaqlı (3:4) */
+@media (max-width: 640px) {
+  html body .browse-grid .card-media,
+  html body .browse-grid .swapcard-media {
+    aspect-ratio: 3 / 4;
+  }
+}
