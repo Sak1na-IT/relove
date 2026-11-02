@@ -12531,8 +12531,20 @@ body {
     padding-top: 9px;
   }
 
+  html body .rail2-item,
+  html body .card,
+  html body .card-body {
+    min-width: 0;
+  }
+
+  /* Uzun ad qonşu karta keçməsin: bir sətir, sonu "..." */
   html body .card-title {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
     font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* Elan səhifəsi: əsas şəkil alçaq */
