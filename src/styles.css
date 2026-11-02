@@ -13260,3 +13260,141 @@ body {
     aspect-ratio: 3 / 4;
   }
 }
+
+/* TELEFON: Dəyiş-düyüş səhifəsi İkinci əl kimi yığcam */
+@media (max-width: 640px) {
+  /* Başlıq solda, "Dəyiş elanı yerləşdir" sağda */
+  html body .swap3-intro {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 14px;
+    padding-bottom: 12px;
+    text-align: left;
+  }
+
+  html body .swap3-intro-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+  }
+
+  html body .swap3-intro .page-title {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.05;
+  }
+
+  html body .swap3-intro-text p {
+    display: none;
+  }
+
+  html body .swap3-intro > .btn {
+    flex: 0 0 auto;
+    height: 36px;
+    margin: 0;
+    padding: 0 12px;
+    gap: 6px;
+    font-size: 12.5px;
+  }
+
+  html body .swap3-intro > .btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* Dəyiş elanları / Sənə uyğun / Mənim...: kiçik, yana sürüşən */
+  html body .swap3 .block-sm {
+    padding-top: 0;
+  }
+
+  html body .tabs2-big {
+    flex-wrap: nowrap;
+    gap: 18px;
+    margin: 0 0 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  html body .tabs2-big::-webkit-scrollbar {
+    display: none;
+  }
+
+  html body .tabs2-big button {
+    flex: 0 0 auto;
+    height: 34px;
+    padding: 0;
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+
+  /* Kartlar */
+  html body .swap2-grid {
+    gap: 18px 10px;
+  }
+
+  html body .swap2-grid .swapcard-media {
+    border-radius: 14px;
+  }
+
+  html body .swap2-grid .card-heart {
+    top: 8px;
+    right: 8px;
+  }
+
+  html body .swap2-grid .card-collect {
+    display: none;
+  }
+
+  html body .swapcard-body {
+    gap: 2px;
+    padding-top: 8px;
+  }
+
+  html body .swapcard-title {
+    display: block;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html body .swapcard-meta {
+    gap: 6px;
+    font-size: 11.5px;
+  }
+
+  html body .swapcard-meta > * {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* "Əvəzində istəyir": bir sətirlik qısa qeyd */
+  html body .swapcard-wants {
+    margin: 6px 0 8px;
+    padding: 6px 0 0;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html body .swapcard-wants span {
+    display: block;
+    margin-bottom: 1px;
+    font-size: 9.5px;
+  }
+
+  html body .swapcard-body > .btn {
+    width: 100%;
+    height: 34px;
+    gap: 6px;
+    font-size: 12.5px;
+  }
+}
