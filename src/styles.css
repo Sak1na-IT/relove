@@ -12906,7 +12906,7 @@ body {
   }
 
   html body .block:has(> .col-grid) {
-    padding-bottom: 32px;
+    padding-bottom: 12px;
   }
 
   /* Kolleksiyalar: "Ən çox bəyənilənlər" kartları boyda */
@@ -12980,8 +12980,8 @@ body {
  */
 @media (max-width: 640px) {
   html body .footer2 {
-    margin-top: 8px;
-    padding: 18px 0 14px;
+    margin-top: 0;
+    padding: 8px 0 10px;
     background: transparent;
     color: var(--muted);
   }
@@ -12997,14 +12997,14 @@ body {
     justify-content: center;
     gap: 2px 10px;
     margin: 0;
-    padding-top: 14px;
+    padding-top: 10px;
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 11.5px;
     text-align: center;
   }
 
-  /* Aşağı menyu: üzən tünd yaşıl panel, aktiv bölmə mis rəngli */
+  /* Aşağı menyu: səhifə rəngində üzən panel, aktiv bölmə yumşaq yaşıl */
   html body .mobile-nav {
     left: 10px;
     right: 10px;
@@ -13012,18 +13012,18 @@ body {
     height: 62px;
     padding: 6px;
     gap: 2px;
-    border: 1px solid rgba(176, 141, 87, 0.35);
+    border: 1px solid var(--line);
     border-radius: 22px;
-    background: linear-gradient(180deg, #24463a 0%, var(--forest-2) 100%);
-    box-shadow:
-      0 16px 32px -14px rgba(16, 36, 29, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(1.4) blur(16px);
+    -webkit-backdrop-filter: saturate(1.4) blur(16px);
+    box-shadow: 0 12px 30px -16px rgba(31, 61, 51, 0.35);
   }
 
   html body .mnav-item {
     gap: 2px;
     border-radius: 16px;
-    color: rgba(246, 243, 236, 0.62);
+    color: var(--muted);
     font-size: 10px;
     font-weight: 600;
     transition:
@@ -13032,13 +13032,9 @@ body {
   }
 
   html body .mnav-item.active {
-    background: rgba(176, 141, 87, 0.18);
-    color: var(--ivory);
+    background: var(--lime);
+    color: var(--forest);
     font-weight: 700;
-  }
-
-  html body .mnav-item.active .mnav-icon {
-    color: #dcbc84;
   }
 
   html body .mnav-icon svg {
@@ -13047,11 +13043,11 @@ body {
   }
 
   html body .mnav-dot {
-    border-color: var(--forest-2);
+    border-color: var(--white);
   }
 
   /* Üzən menyu son məzmunu örtməsin */
   html body .app {
-    padding-bottom: calc(86px + env(safe-area-inset-bottom));
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }
