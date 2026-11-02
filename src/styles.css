@@ -12897,3 +12897,78 @@ body {
     font-size: 11.5px;
   }
 }
+
+/* TELEFON: ana səhifənin sonu daha qısa */
+@media (max-width: 640px) {
+  /* "Davamlı seçim..." bəndləri telefonda göstərilmir */
+  html body .block:has(> .values) {
+    display: none;
+  }
+
+  html body .block:has(> .col-grid) {
+    padding-bottom: 32px;
+  }
+
+  /* Kolleksiyalar: "Ən çox bəyənilənlər" kartları boyda */
+  html body .col-card {
+    flex: 0 0 150px;
+    width: 150px;
+  }
+
+  html body .col-card-media {
+    height: 150px;
+  }
+
+  /* Footer: daha yığcam */
+  html body .footer2 .footer-leaves {
+    display: none;
+  }
+
+  html body .footer2 {
+    padding-top: 22px;
+    padding-bottom: 14px;
+  }
+
+  html body .f2-top {
+    gap: 12px;
+    padding-bottom: 14px;
+  }
+
+  html body .f2-brand {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  html body .f2-brand .wordmark {
+    font-size: 22px;
+  }
+
+  html body .footer-claim {
+    margin: 0;
+    font-size: 13px;
+  }
+
+  html body .f2-news p {
+    display: none;
+  }
+
+  html body .footer-form {
+    height: 40px;
+  }
+
+  html body .f2-links {
+    gap: 8px 10px;
+    padding: 14px 0;
+  }
+
+  html body .f2-links > * {
+    font-size: 12.5px;
+  }
+
+  html body .footer2 .f2-bottom {
+    padding-top: 12px;
+    font-size: 11px;
+  }
+}
