@@ -164,6 +164,14 @@ export default function CategoryBrowser({
 
   const d = dept ? deptById(dept) : null
   const activeFilters = filters.filter((f) => get(f.key))
+  // Telefonda alt kateqoriyalar ayrıca sıra yox, filtr menyusu kimi göstərilir
+  const subOptions = d
+    ? d.groups
+        .flatMap((g) => g.items)
+        .map((it) => ({ it, n: pool.filter((l) => l.dept === dept && l.sub === it).length }))
+        .filter(({ n }) => n > 0)
+        .map(({ it, n }) => ({ value: it, label: `${it} (${n})` }))
+    : []
   const pick = (dd, ss) => setMany({ dept: dd, sub: ss })
 
   return (
@@ -188,6 +196,11 @@ export default function CategoryBrowser({
             <span className="browse-count">
               <b>{results.length}</b> {unit}
             </span>
+            {d && subOptions.length > 0 && (
+              <div className="sub-dd">
+                <Dropdown label="Növ" allLabel={`Bütün “${d.label}”`} value={sub} onChange={(v) => set('sub', v)} options={subOptions} />
+              </div>
+            )}
             {filters.map((f) => (
               <Dropdown key={f.key} label={f.label} allLabel={f.allLabel} value={get(f.key)} onChange={(v) => set(f.key, v)} options={f.options} />
             ))}
