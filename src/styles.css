@@ -12627,3 +12627,273 @@ body {
     height: 84px;
   }
 }
+
+/*
+ * TELEFON: yığcam bölmələr
+ * Dəyiş-düyüş bannerı, İkinci şans, Niyə Relove və footer
+ * daha az yer tutsun, amma premium görünüş qalsın.
+ */
+@media (max-width: 640px) {
+  /* ----- Dəyiş-düyüş: yazı solda, iki şəkil sağda ----- */
+  html body .swap4 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 16px 20px 18px;
+    border-radius: 22px;
+  }
+
+  html body .swap4-leaves {
+    width: 110px;
+    height: auto;
+    opacity: 0.5;
+  }
+
+  html body .swap4-copy {
+    min-width: 0;
+  }
+
+  html body .swap4-copy h2 {
+    font-size: 22px;
+    line-height: 1.12;
+  }
+
+  html body .swap4-copy p {
+    display: -webkit-box;
+    margin: 8px 0 14px;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  html body .swap4-copy .btn {
+    height: 38px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  html body .swap4-visual {
+    position: relative;
+    display: block;
+    width: 112px;
+    height: 150px;
+    margin: 0;
+  }
+
+  html body .swap4-photo {
+    position: absolute;
+    width: 76px;
+    height: 94px;
+    margin: 0;
+    padding: 4px;
+  }
+
+  html body .swap4-photo .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  html body .swap4-photo-a {
+    top: 0;
+    left: 0;
+    transform: rotate(-6deg);
+  }
+
+  html body .swap4-photo-b {
+    right: 0;
+    bottom: 0;
+    transform: rotate(6deg);
+  }
+
+  html body .swap4-icon {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  html body .swap4-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  html body .swap4-note {
+    display: none;
+  }
+
+  /* ----- İkinci şans: qısa mətn, kiçik şəkillər ----- */
+  html body .sc-teaser {
+    gap: 14px;
+    padding: 18px 16px;
+    border-radius: 22px;
+  }
+
+  html body .sc-teaser-copy .h2 {
+    font-size: 24px;
+  }
+
+  html body .sc-teaser-copy p {
+    margin: 6px 0 12px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  html body .sc-teaser-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+  }
+
+  html body .sc-teaser-ctas .btn {
+    height: 38px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  html body .sc-teaser-ctas .link-arrow {
+    font-size: 13px;
+  }
+
+  html body .sc-teaser-items {
+    gap: 10px;
+  }
+
+  html body .sc-teaser-item {
+    min-width: 0;
+    gap: 4px;
+  }
+
+  html body .sc-teaser-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    max-width: 72px;
+    border-radius: 12px;
+  }
+
+  html body .sc-teaser-item strong {
+    display: block;
+    overflow: hidden;
+    font-size: 12.5px;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html body .sc-teaser-item small {
+    font-size: 11px;
+  }
+
+  /* ----- Niyə Relove: 2×2 kiçik plitələr, izahsız ----- */
+  html body .values {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+    border-radius: 22px;
+  }
+
+  html body .values li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    margin: 0;
+    padding: 12px 10px;
+    border: 0;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  html body .values-icon {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+  }
+
+  html body .values-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  html body .values li strong {
+    display: block;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  html body .values li p {
+    display: none;
+  }
+
+  /* ----- Footer: yığcam və səliqəli ----- */
+  html body .footer2 {
+    padding-top: 30px;
+    padding-bottom: 18px;
+  }
+
+  html body .footer2 .footer-leaves {
+    width: 130px;
+    height: auto;
+    opacity: 0.35;
+  }
+
+  html body .f2-top {
+    gap: 18px;
+    padding-bottom: 18px;
+  }
+
+  html body .f2-brand .wordmark {
+    font-size: 24px;
+  }
+
+  html body .footer-claim {
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  html body .f2-news p {
+    margin-bottom: 8px;
+    font-size: 12.5px;
+  }
+
+  html body .footer-form {
+    height: 44px;
+  }
+
+  html body .f2-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 12px;
+    margin-top: 0;
+    padding: 16px 0;
+  }
+
+  html body .f2-links > * {
+    overflow: hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html body .f2-links .f2-sep {
+    display: none;
+  }
+
+  html body .footer2 .f2-bottom {
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-top: 0;
+    padding-top: 14px;
+    font-size: 11.5px;
+  }
+}
