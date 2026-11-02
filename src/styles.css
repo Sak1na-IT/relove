@@ -12909,6 +12909,11 @@ body {
     padding-bottom: 12px;
   }
 
+  /* Səhifənin altındakı boşluq: 56px əvəzinə 16px */
+  html body main.page {
+    padding-bottom: 16px;
+  }
+
   /* Kolleksiyalar: "Ən çox bəyənilənlər" kartları boyda */
   html body .col-card {
     flex: 0 0 150px;
@@ -13012,18 +13017,20 @@ body {
     height: 62px;
     padding: 6px;
     gap: 2px;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(31, 61, 51, 0.22);
     border-radius: 22px;
-    background: rgba(255, 255, 255, 0.92);
+    background: linear-gradient(180deg, rgba(251, 250, 246, 0.96) 0%, rgba(233, 237, 227, 0.96) 100%);
     backdrop-filter: saturate(1.4) blur(16px);
     -webkit-backdrop-filter: saturate(1.4) blur(16px);
-    box-shadow: 0 12px 30px -16px rgba(31, 61, 51, 0.35);
+    box-shadow:
+      0 12px 28px -12px rgba(31, 61, 51, 0.4),
+      0 2px 6px rgba(31, 61, 51, 0.08);
   }
 
   html body .mnav-item {
     gap: 2px;
     border-radius: 16px;
-    color: var(--muted);
+    color: var(--ink-2);
     font-size: 10px;
     font-weight: 600;
     transition:
@@ -13031,10 +13038,12 @@ body {
       background-color 0.2s;
   }
 
+  /* Aktiv bölmə: "Kəşfə başla" düyməsi kimi yaşıl */
   html body .mnav-item.active {
-    background: var(--lime);
-    color: var(--forest);
+    background: var(--forest);
+    color: var(--ivory);
     font-weight: 700;
+    box-shadow: 0 6px 14px -8px rgba(31, 61, 51, 0.7);
   }
 
   html body .mnav-icon svg {
